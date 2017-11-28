@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.towersvault.halloween.render.Renderer;
-import com.towersvault.halloween.utils.AspectRatioHelper;
 
 public class MainScreen extends AbstractGameScreen
 {

@@ -12,7 +12,7 @@ public class MapLoader
 	
 	public enum Map
 	{
-		WORLD1;
+		WORLD1
 	}
 	
 	private TiledMap tiledMap;
