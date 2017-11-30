@@ -51,11 +51,11 @@ public class Renderer implements Disposable
 		orthographicCamera.position.set(0f, 0f, 0f);
 		orthographicCamera.update();
 		
+		WorldHandler.inst.init();
+		
 		BoxesHandler.inst.init(new DecalBatch(new CustomCameraStrategy(camera)));
 		
 		MapLoader.inst.loadMap(MapLoader.Map.WORLD1);
-		
-		WorldHandler.inst.init();
 		
 		Gdx.input.setInputProcessor(new InputProcessor()
 		{

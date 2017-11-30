@@ -29,6 +29,8 @@ public class MapLoader
 		}
 		
 		tiledMap = new TmxMapLoader().load("maps/world1.tmx");
+		//WorldHandler.inst.buildMapShapes(tiledMap, "Collision");
+		
 		TiledMapTileLayer layer = (TiledMapTileLayer)tiledMap.getLayers().get(0);
 		Cell cell;
 		
@@ -42,7 +44,7 @@ public class MapLoader
 				{
 					if(cell.getTile().getProperties().containsKey("wall"))
 					{
-						BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.WALL, false, x, y, 0f);
+						BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.WALL, true, x, y, 0f);
 					}
 					else if(cell.getTile().getProperties().containsKey("floor"))
 					{
@@ -84,7 +86,7 @@ public class MapLoader
 				{
 					if(cell.getTile().getProperties().containsKey("ceiling"))
 					{
-						BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.CEILING, true, x, y, 0f);
+						BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.CEILING, false, x, y, 0f);
 					}
 					else if(cell.getTile().getProperties().containsKey("wall"))
 					{
@@ -98,6 +100,32 @@ public class MapLoader
 				catch(Exception e)
 				{
 					
+				}
+			}
+		}
+		
+		layer = (TiledMapTileLayer)tiledMap.getLayers().get(2);
+		
+		for(int x = 0; x < layer.getWidth(); x++)
+		{
+			for(int y = 0; y < layer.getHeight(); y++)
+			{
+				cell = layer.getCell(x, y);
+				
+				try
+				{
+					if(cell.getTile().getProperties().containsKey("roof"))
+					{
+						BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.ROOF, false, x, y, 0f);
+					}
+					/*else if(cell.getTile().getProperties().containsKey("chimney"))
+					{
+						BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.WALL, false, x, y, BoxesHandler.TILE_SIZE * 2f);
+					}*/
+				}
+				catch(Exception e)
+				{
+				
 				}
 			}
 		}

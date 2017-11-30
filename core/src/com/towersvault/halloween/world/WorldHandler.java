@@ -1,5 +1,6 @@
 package com.towersvault.halloween.world;
 
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -34,7 +35,7 @@ public class WorldHandler implements Disposable
 		
 		PolygonShape shape = new PolygonShape();
 		
-		shape.setAsBox(3f, 3f);
+		shape.setAsBox(4f, 4f);
 		
 		FixtureDef fd = new FixtureDef();
 		fd.shape = shape;
@@ -45,7 +46,7 @@ public class WorldHandler implements Disposable
 		shape.dispose();
 		
 		// Wall
-		BodyDef bd2 = new BodyDef();
+		/*BodyDef bd2 = new BodyDef();
 		bd2.type = BodyDef.BodyType.StaticBody;
 		
 		Body wall = world.createBody(bd2);
@@ -93,14 +94,43 @@ public class WorldHandler implements Disposable
 		wall3.createFixture(fd4);
 		wall3.setSleepingAllowed(false);
 		
-		es3.dispose();
+		es3.dispose();*/
 	}
 	
-	public Body createWallBody(Body body, BodyDef bd)
+	public void createWallBody(float x, float y)
 	{
-		body = world.createBody(bd);
+		BodyDef bd = new BodyDef();
+		bd.type = BodyDef.BodyType.StaticBody;
+		bd.position.set(x * TILE_WIDTH, y * TILE_WIDTH - TILE_WIDTH / 2f);
 		
-		return body;
+		Body body = world.createBody(bd);
+		
+		PolygonShape shape = new PolygonShape();
+		
+		shape.setAsBox(TILE_WIDTH / 2f, TILE_WIDTH / 2f);
+		
+		FixtureDef fd = new FixtureDef();
+		fd.shape = shape;
+		
+		body.createFixture(fd);
+		body.setSleepingAllowed(false);
+		
+		shape.dispose();
+		
+		System.out.println("Bodies Loaded: " + world.getBodyCount());
+	}
+	
+	public void buildMapShapes(TiledMap tiledMap, String layerName)
+	{
+		try
+		{
+			MapBodyBuilder.buildShapes(tiledMap, 1f, world, layerName);
+		}
+		catch(Exception e)
+		{
+			System.out.println("Tiledmap missing layer " + layerName + ".");
+			e.printStackTrace();
+		}
 	}
 	
 	public void resetBodyVelocity()

@@ -86,7 +86,8 @@ public class BoxesHandler implements Disposable
 		SIDEWALK,
 		ROAD,
 		GRASS,
-		GRASS_SIDE;
+		GRASS_SIDE,
+		ROOF
 	}
 	
 	public void init(DecalBatch batch)
@@ -128,6 +129,11 @@ public class BoxesHandler implements Disposable
 			decals.add(dRight);
 			decals.add(dBottom);
 			decals.add(dLeft);
+			
+			if(addY == 0)
+			{
+				WorldHandler.inst.createWallBody((float)x, (float)z);
+			}
 		}
 		else if(boxType.equals(BoxType.FLOOR))
 		{
@@ -256,6 +262,15 @@ public class BoxesHandler implements Disposable
 			dRoad.rotateX(90f);
 			
 			decals.add(dRoad);
+		}
+		else if(boxType.equals(BoxType.ROOF))
+		{
+			Decal dRoof = Decal.newDecal(TILE_SIZE, TILE_SIZE, tex);
+			dRoof.setPosition(x * TILE_SIZE, TILE_SIZE * 2f, z * TILE_SIZE - TILE_SIZE / 2f);
+			dRoof.rotateX(90f);
+			//dRoof.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+			
+			decals.add(dRoof);
 		}
 	}
 	
