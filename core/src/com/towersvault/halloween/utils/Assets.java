@@ -27,6 +27,8 @@ public class Assets implements Disposable, AssetErrorListener
 		public AtlasRegion floorGrass;
 		public AtlasRegion stopFront;
 		public AtlasRegion stopBack;
+		public AtlasRegion stopBoxBack;
+		public AtlasRegion stopBoxSide;
 		
 		public StaticSprite(TextureAtlas atlas)
 		{
@@ -39,6 +41,8 @@ public class Assets implements Disposable, AssetErrorListener
 			floorGrass = atlas.findRegion("static_floor_grass");
 			stopFront = atlas.findRegion("static_stop_front");
 			stopBack = atlas.findRegion("static_stop_back");
+			stopBoxBack = atlas.findRegion("static_stop_box_back");
+			stopBoxSide = atlas.findRegion("static_stop_box_side");
 		}
 	}
 	

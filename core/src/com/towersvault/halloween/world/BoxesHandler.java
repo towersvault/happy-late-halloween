@@ -238,20 +238,61 @@ public class BoxesHandler implements Disposable
 			
 			decals.add(dFloor);
 		}
-		else if(boxType.equals(BoxType.STOP_E))
+		else if((boxType.equals(BoxType.STOP_N))
+				|| (boxType.equals(BoxType.STOP_S))
+				|| (boxType.equals(BoxType.STOP_E))
+				|| (boxType.equals(BoxType.STOP_W)))
 		{
 			Decal dStopFront = Decal.newDecal(15f, 33f, Assets.inst.staticSprite.stopFront, true);
-			dStopFront.setPosition(x * TILE_SIZE + 0.2f, dStopFront.getHeight() / 2f, z * TILE_SIZE - TILE_SIZE / 2f);
+			dStopFront.setPosition(x * TILE_SIZE, dStopFront.getHeight() / 2f, z * TILE_SIZE - TILE_SIZE / 2f);
 			dStopFront.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-			dStopFront.rotateY(90f);
 			Decal dStopBack = Decal.newDecal(15f, 33f, Assets.inst.staticSprite.stopBack, true);
-			dStopBack.setPosition(x * TILE_SIZE - 0.2f, dStopFront.getHeight() / 2f, z * TILE_SIZE - TILE_SIZE / 2f);
+			dStopBack.setPosition(x * TILE_SIZE, dStopFront.getHeight() / 2f, z * TILE_SIZE - TILE_SIZE / 2f);
 			dStopBack.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-			dStopBack.rotateY(270f);
 			
-			//plantDecals.add(new PlantDecal(dStopFront, dStopBack));
-			//alphaDecals.add(new PlantDecal(dStopFront, dStopBack));
-			alphaDecals.add(new StopDecal(dStopFront, dStopBack, "E"));
+			Decal dBoxBack = Decal.newDecal(3f, 30f, Assets.inst.staticSprite.stopBoxBack);
+			Decal dBoxSide1 = Decal.newDecal(1f, 30f, Assets.inst.staticSprite.stopBoxSide);
+			Decal dBoxSide2 = Decal.newDecal(1f, 30f, Assets.inst.staticSprite.stopBoxSide);
+			
+			switch(boxType)
+			{
+				case STOP_N:
+					dStopFront.rotateY(180f);
+					alphaDecals.add(new StopDecal(dStopFront, dStopBack, "N"));
+					break;
+				case STOP_S:
+					dStopBack.rotateY(180f);
+					alphaDecals.add(new StopDecal(dStopFront, dStopBack, "S"));
+					break;
+				case STOP_E:
+					dStopFront.rotateY(90f);
+					dStopBack.rotateY(270f);
+					alphaDecals.add(new StopDecal(dStopFront, dStopBack, "E"));
+					
+					dBoxBack.rotateY(90f);
+					
+					dBoxBack.setPosition(dStopFront.getX() - 1f, dBoxBack.getHeight() / 2f, dStopFront.getZ());
+					dBoxSide1.setPosition(dStopFront.getX() - 0.5f, dBoxSide1.getHeight() / 2f, dStopFront.getZ() - 1.5f);
+					dBoxSide2.setPosition(dStopFront.getX() - 0.5f, dBoxSide2.getHeight() / 2f, dStopFront.getZ() + 1.5f);
+					break;
+				case STOP_W:
+					dStopFront.rotateY(270f);
+					dStopBack.rotateY(90f);
+					alphaDecals.add(new StopDecal(dStopFront, dStopBack, "W"));
+					
+					dBoxBack.rotateY(90f);
+					
+					dBoxBack.setPosition(dStopFront.getX() + 1f, dBoxBack.getHeight() / 2f, dStopFront.getZ());
+					dBoxSide1.setPosition(dStopFront.getX() + 0.5f, dBoxSide1.getHeight() / 2f, dStopFront.getZ() - 1.5f);
+					dBoxSide2.setPosition(dStopFront.getX() + 0.5f, dBoxSide2.getHeight() / 2f, dStopFront.getZ() + 1.5f);
+					break;
+				default:
+					break;
+			}
+			
+			decals.add(dBoxBack);
+			decals.add(dBoxSide1);
+			decals.add(dBoxSide2);
 			
 			Decal dFloor = Decal.newDecal(TILE_SIZE, TILE_SIZE, Assets.inst.staticSprite.floorGrass);
 			dFloor.setPosition(x * TILE_SIZE, 0f, z * TILE_SIZE - TILE_SIZE / 2f);
@@ -377,8 +418,15 @@ public class BoxesHandler implements Disposable
 		{
 			alphaDecals.get(i).updateRenderOrder();
 			
-			batch.add(alphaDecals.get(i).decals.get(0));
-			batch.add(alphaDecals.get(i).decals.get(1));
+			if(!alphaDecals.get(i).renderOnlyOneSide)
+			{
+				batch.add(alphaDecals.get(i).decals.get(0));
+				batch.add(alphaDecals.get(i).decals.get(1));
+			}
+			else
+			{
+				batch.add(alphaDecals.get(i).decals.get(0));
+			}
 		}
 		batch.flush();
 	}

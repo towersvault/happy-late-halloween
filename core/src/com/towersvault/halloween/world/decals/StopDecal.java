@@ -17,6 +17,7 @@ public class StopDecal extends AbstractDecal
 	public StopDecal(Decal d1, Decal d2, String pointingDirection)
 	{
 		super(d1, d2);
+		super.renderOnlyOneSide = true;
 		this.pointingDirection = pointingDirection;
 	}
 	
@@ -76,12 +77,12 @@ public class StopDecal extends AbstractDecal
 		}
 		else if(pointingDirection.equals("E"))
 		{
-			if(decals.get(0).getX() > WorldHandler.inst.getBodyX())
+			if(super.decals.get(0).getX() > WorldHandler.inst.getBodyX())
 			{
 				if(frontIndex == 0)
 				{
 					frontIndex = 1;
-					decals.reverse();
+					super.decals.reverse();
 				}
 			}
 			else
@@ -89,7 +90,7 @@ public class StopDecal extends AbstractDecal
 				if(frontIndex == 1)
 				{
 					frontIndex = 0;
-					decals.reverse();
+					super.decals.reverse();
 				}
 			}
 		}
