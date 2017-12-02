@@ -66,6 +66,16 @@ public class MapLoader
 					{
 						BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.GRASS, false, x, y, 0f);
 					}
+					else if(cell.getTile().getProperties().containsKey("fire_hydrant"))
+						BoxesHandler.inst.loadBox(null, BoxType.FIRE_HYDRANT, false, x, y, 0f);
+					else if(cell.getTile().getProperties().containsKey("stop_n"))
+						BoxesHandler.inst.loadBox(null, BoxType.STOP_N, false, x, y, 0f);
+					else if(cell.getTile().getProperties().containsKey("stop_s"))
+						BoxesHandler.inst.loadBox(null, BoxType.STOP_S, false, x, y, 0f);
+					else if(cell.getTile().getProperties().containsKey("stop_e"))
+						BoxesHandler.inst.loadBox(null, BoxType.STOP_E, false, x, y, 0f);
+					else if(cell.getTile().getProperties().containsKey("stop_w"))
+						BoxesHandler.inst.loadBox(null, BoxType.STOP_W, false, x, y, 0f);
 				}
 				catch(Exception e)
 				{

@@ -11,6 +11,10 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.IntArray;
+import com.towersvault.halloween.utils.Assets;
+import com.towersvault.halloween.world.decals.AbstractDecal;
+import com.towersvault.halloween.world.decals.PlantDecal;
+import com.towersvault.halloween.world.decals.StopDecal;
 
 public class BoxesHandler implements Disposable
 {
@@ -18,19 +22,14 @@ public class BoxesHandler implements Disposable
 
 	private DecalBatch batch;
 	private Array<Decal> decals = new Array<Decal>();
-	private Array<PlantDecal> plantDecals = new Array<PlantDecal>();
+	//private Array<PlantDecal> plantDecals = new Array<PlantDecal>();
+	private Array<AbstractDecal> alphaDecals = new Array<AbstractDecal>();
 	
 	public static final float TILE_SIZE = 20f;
 	
-	private TextureRegion tSidewalk;
-	private TextureRegion tGrass;
-	private TextureRegion tGrassBlades;
-	
 	private Decal dMoon;
 	
-	private float PLANT_ROTATION = 0f;
-	
-	private class PlantDecal
+	/*private class PlantDecal
 	{
 		public Array<Decal> decals = new Array<Decal>();
 		private int order = 0;
@@ -41,7 +40,7 @@ public class BoxesHandler implements Disposable
 			decals.add(decal2);
 		}
 		
-		/*
+		*//*
 		 * Used for alphaDecals.
 		 * 
 		 * 	0		1
@@ -49,7 +48,7 @@ public class BoxesHandler implements Disposable
 		 * 		S	
 		 * 
 		 * 	1		0
-		 */
+		 *//*
 		public void updateRenderOrder()
 		{
 			if((decals.get(0).getPosition().x < WorldHandler.inst.getBodyX()
@@ -75,7 +74,7 @@ public class BoxesHandler implements Disposable
 				}
 			}
 		}
-	}
+	}*/
 	
 	public enum BoxType
 	{
@@ -87,21 +86,22 @@ public class BoxesHandler implements Disposable
 		ROAD,
 		GRASS,
 		GRASS_SIDE,
-		ROOF
+		ROOF,
+		FIRE_HYDRANT,
+		STOP_N,
+		STOP_S,
+		STOP_E,
+		STOP_W
 	}
 	
 	public void init(DecalBatch batch)
 	{
 		this.batch = batch;
 		decals.clear();
-		plantDecals.clear();
+		//plantDecals.clear();
+		alphaDecals.clear();
 		
-		tSidewalk = new TextureRegion(new Texture(Gdx.files.internal("side_walk.png")));
-		tGrass = new TextureRegion(new Texture(Gdx.files.internal("grass.png")));
-		tGrassBlades = new TextureRegion(new Texture(Gdx.files.internal("grass_blades.png")));
-		TextureRegion tMoon = new TextureRegion(new Texture(Gdx.files.internal("moon-2.png")));
-		
-		dMoon = Decal.newDecal(144f, 80f, tMoon);
+		dMoon = Decal.newDecal(144f, 80f, Assets.inst.staticSprite.moon);
 		dMoon.setPosition(40f, 60f, 40f);
 		
 		decals.add(dMoon);
@@ -145,10 +145,10 @@ public class BoxesHandler implements Disposable
 		}
 		else if(boxType.equals(BoxType.GRASS_SIDE))
 		{
-			Decal dTop = Decal.newDecal(TILE_SIZE, 1f, tSidewalk);
-			Decal dRight = Decal.newDecal(TILE_SIZE, 1f, tSidewalk);
-			Decal dBottom = Decal.newDecal(TILE_SIZE, 1f, tSidewalk);
-			Decal dLeft = Decal.newDecal(TILE_SIZE, 1f, tSidewalk);
+			Decal dTop = Decal.newDecal(TILE_SIZE, 1f, Assets.inst.staticSprite.pavementSide);
+			Decal dRight = Decal.newDecal(TILE_SIZE, 1f, Assets.inst.staticSprite.pavementSide);
+			Decal dBottom = Decal.newDecal(TILE_SIZE, 1f, Assets.inst.staticSprite.pavementSide);
+			Decal dLeft = Decal.newDecal(TILE_SIZE, 1f, Assets.inst.staticSprite.pavementSide);
 			
 			dTop.setPosition(TILE_SIZE * x, 
 					-1f / 2f, 
@@ -180,21 +180,39 @@ public class BoxesHandler implements Disposable
 		}
 		else if(boxType.equals(BoxType.BUSH))
 		{
-			Decal dBush = Decal.newDecal(TILE_SIZE, TILE_SIZE, tex, true);
-			dBush.setPosition(x * TILE_SIZE, TILE_SIZE / 2f, z * TILE_SIZE - TILE_SIZE / 2f);
+			Decal dBush = Decal.newDecal(TILE_SIZE, 12f, Assets.inst.staticSprite.bush, true);
+			dBush.setPosition(x * TILE_SIZE, 12f / 2f, z * TILE_SIZE - TILE_SIZE / 2f);
 			dBush.rotateY(45f);
 			dBush.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-			Decal dBush2 = Decal.newDecal(TILE_SIZE, TILE_SIZE, tex, true);
-			dBush2.setPosition(x * TILE_SIZE, TILE_SIZE / 2f, z * TILE_SIZE - TILE_SIZE / 2f);
+			Decal dBush2 = Decal.newDecal(TILE_SIZE, 12f, Assets.inst.staticSprite.bush, true);
+			dBush2.setPosition(x * TILE_SIZE, 12f / 2f, z * TILE_SIZE - TILE_SIZE / 2f);
 			dBush2.rotateY(45f + 90f);
 			dBush2.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 			
-			//alphaDecals.add(dBush);
-			//alphaDecals.add(dBush2);
+			//plantDecals.add(new PlantDecal(dBush, dBush2));
+			alphaDecals.add(new PlantDecal(dBush, dBush2));
 			
-			plantDecals.add(new PlantDecal(dBush, dBush2));
+			Decal dFloor = Decal.newDecal(TILE_SIZE, TILE_SIZE, Assets.inst.staticSprite.floorGrass);
+			dFloor.setPosition(x * TILE_SIZE, 0f, z * TILE_SIZE - TILE_SIZE / 2f);
+			dFloor.rotateX(90f);
 			
-			Decal dFloor = Decal.newDecal(TILE_SIZE, TILE_SIZE, tGrass);
+			decals.add(dFloor);
+		}
+		else if(boxType.equals(BoxType.FIRE_HYDRANT))
+		{
+			Decal dFireHydrant1 = Decal.newDecal(8f, 11f, Assets.inst.staticSprite.fireHydrant, true);
+			dFireHydrant1.setPosition(x * TILE_SIZE, 11f / 2f, z * TILE_SIZE - TILE_SIZE / 2f);
+			dFireHydrant1.rotateY(45f);
+			dFireHydrant1.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+			Decal dFireHydrant2 = Decal.newDecal(8f, 11f, Assets.inst.staticSprite.fireHydrant, true);
+			dFireHydrant2.setPosition(dFireHydrant1.getX(), dFireHydrant1.getY(), dFireHydrant1.getZ());
+			dFireHydrant2.rotateY(45f + 90f);
+			dFireHydrant2.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+			
+			//plantDecals.add(new PlantDecal(dFireHydrant1, dFireHydrant2));
+			alphaDecals.add(new PlantDecal(dFireHydrant1, dFireHydrant2));
+			
+			Decal dFloor = Decal.newDecal(TILE_SIZE, TILE_SIZE, Assets.inst.staticSprite.floorGrass);
 			dFloor.setPosition(x * TILE_SIZE, 0f, z * TILE_SIZE - TILE_SIZE / 2f);
 			dFloor.rotateX(90f);
 			
@@ -202,21 +220,40 @@ public class BoxesHandler implements Disposable
 		}
 		else if(boxType.equals(BoxType.GRASS))
 		{
-			Decal dBush = Decal.newDecal(TILE_SIZE, 1f, tGrassBlades, true);
-			dBush.setPosition(x * TILE_SIZE, 0.5f, z * TILE_SIZE - TILE_SIZE / 2f);
-			dBush.rotateY(45f);
-			dBush.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-			Decal dBush2 = Decal.newDecal(TILE_SIZE, 1f, tGrassBlades, true);
-			dBush2.setPosition(x * TILE_SIZE, 0.5f, z * TILE_SIZE - TILE_SIZE / 2f);
-			dBush2.rotateY(45f + 90f);
-			dBush2.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+			Decal dGrassBlades1 = Decal.newDecal(TILE_SIZE, 1f, Assets.inst.staticSprite.grassBlades, true);
+			dGrassBlades1.setPosition(x * TILE_SIZE, dGrassBlades1.getHeight() / 2f, z * TILE_SIZE - TILE_SIZE / 2f);
+			dGrassBlades1.rotateY(45f);
+			dGrassBlades1.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+			Decal dGrassBlades2 = Decal.newDecal(TILE_SIZE, 1f, Assets.inst.staticSprite.grassBlades, true);
+			dGrassBlades2.setPosition(dGrassBlades1.getX(), dGrassBlades1.getY(), dGrassBlades1.getZ());
+			dGrassBlades2.rotateY(45f + 90f);
+			dGrassBlades2.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 			
-			//alphaDecals.add(dBush);
-			//alphaDecals.add(dBush2);
+			//plantDecals.add(new PlantDecal(dGrassBlades1, dGrassBlades2));
+			alphaDecals.add(new PlantDecal(dGrassBlades1, dGrassBlades2));
 			
-			plantDecals.add(new PlantDecal(dBush, dBush2));
+			Decal dFloor = Decal.newDecal(TILE_SIZE, TILE_SIZE, Assets.inst.staticSprite.floorGrass);
+			dFloor.setPosition(x * TILE_SIZE, 0f, z * TILE_SIZE - TILE_SIZE / 2f);
+			dFloor.rotateX(90f);
 			
-			Decal dFloor = Decal.newDecal(TILE_SIZE, TILE_SIZE, tGrass);
+			decals.add(dFloor);
+		}
+		else if(boxType.equals(BoxType.STOP_E))
+		{
+			Decal dStopFront = Decal.newDecal(15f, 33f, Assets.inst.staticSprite.stopFront, true);
+			dStopFront.setPosition(x * TILE_SIZE + 0.2f, dStopFront.getHeight() / 2f, z * TILE_SIZE - TILE_SIZE / 2f);
+			dStopFront.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+			dStopFront.rotateY(90f);
+			Decal dStopBack = Decal.newDecal(15f, 33f, Assets.inst.staticSprite.stopBack, true);
+			dStopBack.setPosition(x * TILE_SIZE - 0.2f, dStopFront.getHeight() / 2f, z * TILE_SIZE - TILE_SIZE / 2f);
+			dStopBack.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+			dStopBack.rotateY(270f);
+			
+			//plantDecals.add(new PlantDecal(dStopFront, dStopBack));
+			//alphaDecals.add(new PlantDecal(dStopFront, dStopBack));
+			alphaDecals.add(new StopDecal(dStopFront, dStopBack, "E"));
+			
+			Decal dFloor = Decal.newDecal(TILE_SIZE, TILE_SIZE, Assets.inst.staticSprite.floorGrass);
 			dFloor.setPosition(x * TILE_SIZE, 0f, z * TILE_SIZE - TILE_SIZE / 2f);
 			dFloor.rotateX(90f);
 			
@@ -230,10 +267,10 @@ public class BoxesHandler implements Disposable
 			
 			decals.add(dSideWalk);
 			
-			Decal dTop = Decal.newDecal(TILE_SIZE, 1f, tSidewalk);
-			Decal dRight = Decal.newDecal(TILE_SIZE, 1f, tSidewalk);
-			Decal dBottom = Decal.newDecal(TILE_SIZE, 1f, tSidewalk);
-			Decal dLeft = Decal.newDecal(TILE_SIZE, 1f, tSidewalk);
+			Decal dTop = Decal.newDecal(TILE_SIZE, 1f, Assets.inst.staticSprite.pavementSide);
+			Decal dRight = Decal.newDecal(TILE_SIZE, 1f, Assets.inst.staticSprite.pavementSide);
+			Decal dBottom = Decal.newDecal(TILE_SIZE, 1f, Assets.inst.staticSprite.pavementSide);
+			Decal dLeft = Decal.newDecal(TILE_SIZE, 1f, Assets.inst.staticSprite.pavementSide);
 			
 			dTop.setPosition(TILE_SIZE * x, 
 					dSideWalk.getY() - 1f / 2f, 
@@ -316,60 +353,32 @@ public class BoxesHandler implements Disposable
 		}
 		batch.flush();
 		
-		/*if(determineQuadrant() == 1)
-		{
-			for(int i = alphaDecals.size - 1; i >= 0; i--)
-			{
-				batch.add(alphaDecals.get(i));
-			}
-			batch.flush();
-		}
-		else
-		{
-			for(int i = 0; i < alphaDecals.size; i++)
-			{
-				batch.add(alphaDecals.get(i));
-			}
-			batch.flush();
-		}*/
+		dMoon.setPosition(WorldHandler.inst.getBodyX() + 120f, 80f, WorldHandler.inst.getBodyY() - 120f);
+		dMoon.lookAt(camPosition, cam.up);
 		
 		/*for(int i = 0; i < plantDecals.size; i++)
 		{
 			plantDecals.get(i).updateRenderOrder();
 			
-			PLANT_ROTATION = (float)(Math.atan2(
+			*//*PLANT_ROTATION = (float)(Math.atan2(
 					plantDecals.get(i).decals.get(0).getX() - camPosition.x,
 					plantDecals.get(i).decals.get(0).getZ() - camPosition.z
 				) * 180.0d / Math.PI);
-			plantDecals.get(i).decals.get(0).setRotationY(PLANT_ROTATION);
-			
-			//plantDecals.get(i).decals.get(0).lookAt(camPosition, cam.up);
-			
-			batch.add(plantDecals.get(i).decals.get(0));
-			//batch.add(plantDecals.get(i).decals.get(1));
-		}
-		batch.flush();*/
-		
-		dMoon.setPosition(WorldHandler.inst.getBodyX() + 120f, 80f, WorldHandler.inst.getBodyY() - 120f);
-		dMoon.lookAt(camPosition, cam.up);
-		
-		/*dSky1.setPosition(WorldHandler.inst.getBodyX() - dSky1.getWidth() / 2f, 8f, WorldHandler.inst.getBodyY() - 120f);
-		dSky1.lookAt(camPosition, cam.up);*/
-		
-		for(int i = 0; i < plantDecals.size; i++)
-		{
-			plantDecals.get(i).updateRenderOrder();
-			
-			/*PLANT_ROTATION = (float)(Math.atan2(
-					plantDecals.get(i).decals.get(0).getX() - camPosition.x,
-					plantDecals.get(i).decals.get(0).getZ() - camPosition.z
-				) * 180.0d / Math.PI);
-			plantDecals.get(i).decals.get(0).setRotationY(PLANT_ROTATION);*/
+			plantDecals.get(i).decals.get(0).setRotationY(PLANT_ROTATION);*//*
 			
 			//plantDecals.get(i).decals.get(0).lookAt(camPosition, cam.up);
 			
 			batch.add(plantDecals.get(i).decals.get(0));
 			batch.add(plantDecals.get(i).decals.get(1));
+		}
+		batch.flush();*/
+		
+		for(int i = 0; i < alphaDecals.size; i++)
+		{
+			alphaDecals.get(i).updateRenderOrder();
+			
+			batch.add(alphaDecals.get(i).decals.get(0));
+			batch.add(alphaDecals.get(i).decals.get(1));
 		}
 		batch.flush();
 	}

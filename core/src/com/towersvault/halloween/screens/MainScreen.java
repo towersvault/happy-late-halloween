@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.towersvault.halloween.render.Renderer;
+import com.towersvault.halloween.utils.Assets;
 
 public class MainScreen extends AbstractGameScreen
 {
@@ -51,6 +52,8 @@ public class MainScreen extends AbstractGameScreen
 	public void show()
 	{
 		//AspectRatioHelper.inst.findAspectRatio();
+		
+		Assets.inst.init();
 		
 		stage = new Stage(new StretchViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		stack = new Stack();
