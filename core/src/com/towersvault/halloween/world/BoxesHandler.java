@@ -259,10 +259,24 @@ public class BoxesHandler implements Disposable
 				case STOP_N:
 					dStopFront.rotateY(180f);
 					alphaDecals.add(new StopDecal(dStopFront, dStopBack, "N"));
+					
+					dBoxSide1.rotateY(90f);
+					dBoxSide2.rotateY(90f);
+					
+					dBoxBack.setPosition(dStopFront.getX(), dBoxBack.getHeight() / 2f, dStopFront.getZ() + 1.05f);
+					dBoxSide1.setPosition(dStopFront.getX() - 1.5f, dBoxSide1.getHeight() / 2f, dStopFront.getZ() + 0.55f);
+					dBoxSide2.setPosition(dStopFront.getX() + 1.5f, dBoxSide2.getHeight() / 2f, dStopFront.getZ() + 0.55f);
 					break;
 				case STOP_S:
 					dStopBack.rotateY(180f);
 					alphaDecals.add(new StopDecal(dStopFront, dStopBack, "S"));
+					
+					dBoxSide1.rotateY(90f);
+					dBoxSide2.rotateY(90f);
+					
+					dBoxBack.setPosition(dStopFront.getX(), dBoxBack.getHeight() / 2f, dStopFront.getZ() - 1.05f);
+					dBoxSide1.setPosition(dStopFront.getX() - 1.5f, dBoxSide1.getHeight() / 2f, dStopFront.getZ() - 0.55f);
+					dBoxSide2.setPosition(dStopFront.getX() + 1.5f, dBoxSide2.getHeight() / 2f, dStopFront.getZ() - 0.55f);
 					break;
 				case STOP_E:
 					dStopFront.rotateY(90f);
@@ -271,9 +285,9 @@ public class BoxesHandler implements Disposable
 					
 					dBoxBack.rotateY(90f);
 					
-					dBoxBack.setPosition(dStopFront.getX() - 1f, dBoxBack.getHeight() / 2f, dStopFront.getZ());
-					dBoxSide1.setPosition(dStopFront.getX() - 0.5f, dBoxSide1.getHeight() / 2f, dStopFront.getZ() - 1.5f);
-					dBoxSide2.setPosition(dStopFront.getX() - 0.5f, dBoxSide2.getHeight() / 2f, dStopFront.getZ() + 1.5f);
+					dBoxBack.setPosition(dStopFront.getX() - 1.05f, dBoxBack.getHeight() / 2f, dStopFront.getZ());
+					dBoxSide1.setPosition(dStopFront.getX() - 0.55f, dBoxSide1.getHeight() / 2f, dStopFront.getZ() - 1.5f);
+					dBoxSide2.setPosition(dStopFront.getX() - 0.55f, dBoxSide2.getHeight() / 2f, dStopFront.getZ() + 1.5f);
 					break;
 				case STOP_W:
 					dStopFront.rotateY(270f);
@@ -282,9 +296,9 @@ public class BoxesHandler implements Disposable
 					
 					dBoxBack.rotateY(90f);
 					
-					dBoxBack.setPosition(dStopFront.getX() + 1f, dBoxBack.getHeight() / 2f, dStopFront.getZ());
-					dBoxSide1.setPosition(dStopFront.getX() + 0.5f, dBoxSide1.getHeight() / 2f, dStopFront.getZ() - 1.5f);
-					dBoxSide2.setPosition(dStopFront.getX() + 0.5f, dBoxSide2.getHeight() / 2f, dStopFront.getZ() + 1.5f);
+					dBoxBack.setPosition(dStopFront.getX() + 1.05f, dBoxBack.getHeight() / 2f, dStopFront.getZ());
+					dBoxSide1.setPosition(dStopFront.getX() + 0.55f, dBoxSide1.getHeight() / 2f, dStopFront.getZ() - 1.5f);
+					dBoxSide2.setPosition(dStopFront.getX() + 0.55f, dBoxSide2.getHeight() / 2f, dStopFront.getZ() + 1.5f);
 					break;
 				default:
 					break;

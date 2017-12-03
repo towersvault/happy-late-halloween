@@ -31,6 +31,13 @@ static_stop_box_back
   orig: 3, 30
   offset: 0, 0
   index: -1
+static_stop_box_front
+  rotate: false
+  xy: 147, 51
+  size: 3, 30
+  orig: 3, 30
+  offset: 0, 0
+  index: -1
 static_floor_grass
   rotate: false
   xy: 164, 100
@@ -40,21 +47,21 @@ static_floor_grass
   index: -1
 static_stop_box_side
   rotate: false
-  xy: 147, 51
+  xy: 23, 4
   size: 1, 30
   orig: 1, 30
   offset: 0, 0
   index: -1
 static_bush
   rotate: false
-  xy: 23, 24
+  xy: 164, 88
   size: 16, 10
   orig: 16, 10
   offset: 0, 0
   index: -1
 static_fire_hydrant
   rotate: false
-  xy: 164, 87
+  xy: 152, 70
   size: 8, 11
   orig: 8, 11
   offset: 0, 0
@@ -68,14 +75,14 @@ static_grass_blades
   index: -1
 static_grass_side
   rotate: false
-  xy: 23, 21
+  xy: 26, 33
   size: 16, 1
   orig: 16, 1
   offset: 0, 0
   index: -1
 static_side_walk
   rotate: false
-  xy: 41, 33
+  xy: 164, 85
   size: 16, 1
   orig: 16, 1
   offset: 0, 0
