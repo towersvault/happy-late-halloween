@@ -91,7 +91,15 @@ public class BoxesHandler implements Disposable
 		STOP_N,
 		STOP_S,
 		STOP_E,
-		STOP_W
+		STOP_W,
+		FENCE_TL,
+		FENCE_T,
+		FENCE_TR,
+		FENCE_CL,
+		FENCE_CR,
+		FENCE_BL,
+		FENCE_B,
+		FENCE_BR
 	}
 	
 	public void init(DecalBatch batch)
@@ -363,6 +371,17 @@ public class BoxesHandler implements Disposable
 			//dRoof.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 			
 			decals.add(dRoof);
+		}
+		else if((boxType.equals(BoxType.FENCE_TL))
+				|| (boxType.equals(BoxType.FENCE_T))
+				|| (boxType.equals(BoxType.FENCE_TR))
+				|| (boxType.equals(BoxType.FENCE_CL))
+				|| (boxType.equals(BoxType.FENCE_CR))
+				|| (boxType.equals(BoxType.FENCE_BL))
+				|| (boxType.equals(BoxType.FENCE_B))
+				|| (boxType.equals(BoxType.FENCE_BR)))
+		{
+			// TODO: Add fenceTile in Assets, and add Decal code below.
 		}
 	}
 	

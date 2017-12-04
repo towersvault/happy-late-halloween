@@ -76,6 +76,24 @@ public class MapLoader
 						BoxesHandler.inst.loadBox(null, BoxType.STOP_E, false, x, y, 0f);
 					else if(cell.getTile().getProperties().containsKey("stop_w"))
 						BoxesHandler.inst.loadBox(null, BoxType.STOP_W, false, x, y, 0f);
+					
+					else if(cell.getTile().getProperties().containsKey("fence_tl"))
+						BoxesHandler.inst.loadBox(null, BoxType.FENCE_TL, true, x, y, 0f);
+					else if(cell.getTile().getProperties().containsKey("fence_t"))
+						BoxesHandler.inst.loadBox(null, BoxType.FENCE_T, true, x, y, 0f);
+					else if(cell.getTile().getProperties().containsKey("fence_tr"))
+						BoxesHandler.inst.loadBox(null, BoxType.FENCE_TR, true, x, y, 0f);
+					else if(cell.getTile().getProperties().containsKey("fence_cl"))
+						BoxesHandler.inst.loadBox(null, BoxType.FENCE_CL, true, x, y, 0f);
+					else if(cell.getTile().getProperties().containsKey("fence_cr"))
+						BoxesHandler.inst.loadBox(null, BoxType.FENCE_CR, true, x, y, 0f);
+					else if(cell.getTile().getProperties().containsKey("fence_bl"))
+						BoxesHandler.inst.loadBox(null, BoxType.FENCE_BL, true, x, y, 0f);
+					else if(cell.getTile().getProperties().containsKey("fence_b"))
+						BoxesHandler.inst.loadBox(null, BoxType.FENCE_B, true, x, y, 0f);
+					else if(cell.getTile().getProperties().containsKey("fence_br"))
+						BoxesHandler.inst.loadBox(null, BoxType.FENCE_BR, true, x, y, 0f);
+					
 				}
 				catch(Exception e)
 				{
