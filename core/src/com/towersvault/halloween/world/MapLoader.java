@@ -34,17 +34,22 @@ public class MapLoader
 		TiledMapTileLayer layer = (TiledMapTileLayer)tiledMap.getLayers().get(0);
 		Cell cell;
 		
+		String[][] collision = new String[layer.getHeight()][layer.getWidth()];
+		
 		for(int x = 0; x < layer.getWidth(); x++)
 		{
 			for(int y = 0; y < layer.getHeight(); y++)
 			{
 				cell = layer.getCell(x, y);
 				
+				collision[y][x] = "";
+				
 				try
 				{
 					if(cell.getTile().getProperties().containsKey("wall"))
 					{
 						BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.WALL, true, x, y, 0f);
+						collision[y][x] = "W";
 					}
 					else if(cell.getTile().getProperties().containsKey("floor"))
 					{
@@ -159,5 +164,7 @@ public class MapLoader
 		}
 		
 		BoxesHandler.inst.optimizeBoxes();
+		
+		WorldHandler.inst.setCollsionMap(collision);
 	}
 }

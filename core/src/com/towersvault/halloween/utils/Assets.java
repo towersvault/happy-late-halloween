@@ -29,6 +29,7 @@ public class Assets implements Disposable, AssetErrorListener
 		public AtlasRegion stopBack;
 		public AtlasRegion stopBoxBack;
 		public AtlasRegion stopBoxSide;
+		public AtlasRegion fence;
 		
 		public StaticSprite(TextureAtlas atlas)
 		{
@@ -43,6 +44,7 @@ public class Assets implements Disposable, AssetErrorListener
 			stopBack = atlas.findRegion("static_stop_back");
 			stopBoxBack = atlas.findRegion("static_stop_box_back");
 			stopBoxSide = atlas.findRegion("static_stop_box_side");
+			fence = atlas.findRegion("static_fence");
 		}
 	}
 	

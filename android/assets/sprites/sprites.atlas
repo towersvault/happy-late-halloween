@@ -59,6 +59,13 @@ static_bush
   orig: 16, 10
   offset: 0, 0
   index: -1
+static_fence
+  rotate: false
+  xy: 182, 106
+  size: 16, 10
+  orig: 16, 10
+  offset: 0, 0
+  index: -1
 static_fire_hydrant
   rotate: false
   xy: 152, 70
@@ -68,21 +75,21 @@ static_fire_hydrant
   index: -1
 static_grass_blades
   rotate: false
-  xy: 182, 115
+  xy: 26, 33
   size: 16, 1
   orig: 16, 1
   offset: 0, 0
   index: -1
 static_grass_side
   rotate: false
-  xy: 26, 33
+  xy: 164, 85
   size: 16, 1
   orig: 16, 1
   offset: 0, 0
   index: -1
 static_side_walk
   rotate: false
-  xy: 164, 85
+  xy: 182, 103
   size: 16, 1
   orig: 16, 1
   offset: 0, 0

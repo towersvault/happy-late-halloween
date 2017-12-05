@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.IntArray;
 import com.towersvault.halloween.utils.Assets;
 import com.towersvault.halloween.world.decals.AbstractDecal;
+import com.towersvault.halloween.world.decals.FenceDecal;
 import com.towersvault.halloween.world.decals.PlantDecal;
 import com.towersvault.halloween.world.decals.StopDecal;
 
@@ -25,7 +26,7 @@ public class BoxesHandler implements Disposable
 	//private Array<PlantDecal> plantDecals = new Array<PlantDecal>();
 	private Array<AbstractDecal> alphaDecals = new Array<AbstractDecal>();
 	
-	public static final float TILE_SIZE = 20f;
+	public static final float TILE_SIZE = 16f;
 	
 	private Decal dMoon;
 	
@@ -381,7 +382,105 @@ public class BoxesHandler implements Disposable
 				|| (boxType.equals(BoxType.FENCE_B))
 				|| (boxType.equals(BoxType.FENCE_BR)))
 		{
-			// TODO: Add fenceTile in Assets, and add Decal code below.
+			Decal dFence1 = null;
+			Decal dFence2 = null;
+			
+			switch(boxType)
+			{
+				case FENCE_TL:
+					dFence1 = Decal.newDecal(16f, 10f, Assets.inst.staticSprite.fence);
+					dFence1.setPosition(x * TILE_SIZE,
+							dFence1.getHeight() / 2f,
+							z * TILE_SIZE);
+					dFence1.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+					dFence2 = Decal.newDecal(16f, 10f, Assets.inst.staticSprite.fence);
+					dFence2.setPosition(x * TILE_SIZE - TILE_SIZE / 2f,
+							dFence2.getHeight() / 2f,
+							z * TILE_SIZE - TILE_SIZE / 2f);
+					dFence2.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+					dFence2.rotateY(90f);
+					break;
+				case FENCE_T:
+					dFence1 = Decal.newDecal(16f, 10f, Assets.inst.staticSprite.fence);
+					dFence1.setPosition(x * TILE_SIZE,
+							dFence1.getHeight() / 2f,
+							z * TILE_SIZE);
+					dFence1.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+					break;
+				case FENCE_TR:
+					dFence1 = Decal.newDecal(16f, 10f, Assets.inst.staticSprite.fence);
+					dFence1.setPosition(x * TILE_SIZE,
+							dFence1.getHeight() / 2f,
+							z * TILE_SIZE);
+					dFence1.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+					dFence2 = Decal.newDecal(16f, 10f, Assets.inst.staticSprite.fence);
+					dFence2.setPosition(x * TILE_SIZE + TILE_SIZE / 2f,
+							dFence2.getHeight() / 2f,
+							z * TILE_SIZE - TILE_SIZE / 2f);
+					dFence2.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+					dFence2.rotateY(90f);
+					break;
+				case FENCE_CL:
+					dFence1 = Decal.newDecal(16f, 10f, Assets.inst.staticSprite.fence);
+					dFence1.setPosition(x * TILE_SIZE - TILE_SIZE / 2f,
+							dFence1.getHeight() / 2f,
+							z * TILE_SIZE - TILE_SIZE / 2f);
+					dFence1.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+					dFence1.rotateY(90f);
+					break;
+				case FENCE_CR:
+					dFence1 = Decal.newDecal(16f, 10f, Assets.inst.staticSprite.fence);
+					dFence1.setPosition(x * TILE_SIZE + TILE_SIZE / 2f,
+							dFence1.getHeight() / 2f,
+							z * TILE_SIZE - TILE_SIZE / 2f);
+					dFence1.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+					dFence1.rotateY(90f);
+					break;
+				case FENCE_BL:
+					dFence1 = Decal.newDecal(16f, 10f, Assets.inst.staticSprite.fence);
+					dFence1.setPosition(x * TILE_SIZE,
+							dFence1.getHeight() / 2f,
+							z * TILE_SIZE - TILE_SIZE);
+					dFence1.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+					dFence2 = Decal.newDecal(16f, 10f, Assets.inst.staticSprite.fence);
+					dFence2.setPosition(x * TILE_SIZE - TILE_SIZE / 2f,
+							dFence2.getHeight() / 2f,
+							z * TILE_SIZE - TILE_SIZE / 2f);
+					dFence2.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+					dFence2.rotateY(90f);
+					break;
+				case FENCE_B:
+					dFence1 = Decal.newDecal(16f, 10f, Assets.inst.staticSprite.fence);
+					dFence1.setPosition(x * TILE_SIZE,
+							dFence1.getHeight() / 2f,
+							z * TILE_SIZE - TILE_SIZE);
+					dFence1.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+					break;
+				case FENCE_BR:
+					dFence1 = Decal.newDecal(16f, 10f, Assets.inst.staticSprite.fence);
+					dFence1.setPosition(x * TILE_SIZE,
+							dFence1.getHeight() / 2f,
+							z * TILE_SIZE - TILE_SIZE);
+					dFence1.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+					dFence2 = Decal.newDecal(16f, 10f, Assets.inst.staticSprite.fence);
+					dFence2.setPosition(x * TILE_SIZE + TILE_SIZE / 2f,
+							dFence2.getHeight() / 2f,
+							z * TILE_SIZE - TILE_SIZE / 2f);
+					dFence2.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+					dFence2.rotateY(90f);
+					break;
+				default:
+					return;
+			}
+			
+			if(dFence2 == null)
+			{
+				alphaDecals.add(new FenceDecal(dFence1));
+			}
+			else
+			{
+				alphaDecals.add(new FenceDecal(dFence1, dFence2));
+			}
 		}
 	}
 	
@@ -451,7 +550,8 @@ public class BoxesHandler implements Disposable
 		{
 			alphaDecals.get(i).updateRenderOrder();
 			
-			if(!alphaDecals.get(i).renderOnlyOneSide)
+			if(!alphaDecals.get(i).renderOnlyOneSide
+					&& !alphaDecals.get(i).onlyOneDecal)
 			{
 				batch.add(alphaDecals.get(i).decals.get(0));
 				batch.add(alphaDecals.get(i).decals.get(1));

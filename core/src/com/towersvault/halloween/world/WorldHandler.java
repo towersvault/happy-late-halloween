@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 
 public class WorldHandler implements Disposable
@@ -16,13 +17,21 @@ public class WorldHandler implements Disposable
 	
 	private World world;
 	
-	public final float TILE_WIDTH = 20f;
+	public final float TILE_WIDTH = 16f;
 	
 	private Body playerBody;
+	
+	private static final int SEARCH_RANGE = 2; // The amount of tiles it should check for collision.
+	private String[][] collisionMap;
+	private Array<Body> wallBodies = new Array<Body>();
+	private int bodiesIterator = 0;
 	
 	public void init()
 	{
 		world = new World(new Vector2(0, 0), false);
+		
+		wallBodies.clear();
+		bodiesIterator = 0;
 		
 		// Player body
 		BodyDef bd = new BodyDef();
@@ -44,61 +53,29 @@ public class WorldHandler implements Disposable
 		playerBody.setSleepingAllowed(false);
 		
 		shape.dispose();
-		
-		// Wall
-		/*BodyDef bd2 = new BodyDef();
-		bd2.type = BodyDef.BodyType.StaticBody;
-		
-		Body wall = world.createBody(bd2);
-
-		EdgeShape es = new EdgeShape();
-		es.set(10f, -10f, -30f, -10f);
-		
-		FixtureDef fd2 = new FixtureDef();
-		fd2.shape = es;
-		
-		wall.createFixture(fd2);
-		wall.setSleepingAllowed(false);
-		
-		es.dispose();
-		
-		// Wall 2
-		BodyDef bd3 = new BodyDef();
-		bd3.type = BodyDef.BodyType.StaticBody;
-		
-		Body wall2 = world.createBody(bd3);
-
-		EdgeShape es2 = new EdgeShape();
-		es2.set(-30f, -10f, -30f, 10f);
-		
-		FixtureDef fd3 = new FixtureDef();
-		fd3.shape = es2;
-		
-		wall2.createFixture(fd3);
-		wall2.setSleepingAllowed(false);
-		
-		es2.dispose();
-		
-		// Wall 3
-		BodyDef bd4 = new BodyDef();
-		bd4.type = BodyDef.BodyType.StaticBody;
-		
-		Body wall3 = world.createBody(bd4);
-
-		EdgeShape es3 = new EdgeShape();
-		es3.set(-30f, 10f, -10f, 10f);
-		
-		FixtureDef fd4 = new FixtureDef();
-		fd4.shape = es3;
-		
-		wall3.createFixture(fd4);
-		wall3.setSleepingAllowed(false);
-		
-		es3.dispose();*/
 	}
 	
-	public void createWallBody(float x, float y)
+	public void setCollsionMap(String[][] collisionMap)
 	{
+		this.collisionMap = collisionMap;
+		
+		createWallBodies();
+		
+		for(int i = 0; i < wallBodies.size; i++)
+			System.out.println((int)(wallBodies.get(i).getPosition().x / TILE_WIDTH) + " " + (int)(wallBodies.get(i).getPosition().y / TILE_WIDTH));
+	}
+	
+	private void createWallBodies()
+	{
+		for(int i = 0; i < 9; i++)
+			createWallBody();
+	}
+	
+	private void createWallBody()
+	{
+		float x = 0f;
+		float y = 2f;
+		
 		BodyDef bd = new BodyDef();
 		bd.type = BodyDef.BodyType.StaticBody;
 		bd.position.set(x * TILE_WIDTH, y * TILE_WIDTH - TILE_WIDTH / 2f);
@@ -117,7 +94,54 @@ public class WorldHandler implements Disposable
 		
 		shape.dispose();
 		
+		wallBodies.add(body);
+		
 		System.out.println("Bodies Loaded: " + world.getBodyCount());
+	}
+	
+	private boolean collisionAt(float x, float z)
+	{
+		for(int i = 0; i < wallBodies.size; i++)
+			if((int)(wallBodies.get(i).getPosition().x / TILE_WIDTH) == x * TILE_WIDTH
+					&& (int)(wallBodies.get(i).getPosition().y / TILE_WIDTH) == z * TILE_WIDTH)
+				return true;
+		
+		System.out.println(x + " " + z);
+		
+		return false;
+	}
+	
+	private void moveWallBody(float x, float z)
+	{
+		
+		System.out.println("Move to " + (x * TILE_WIDTH) + " " + (z * TILE_WIDTH));
+		wallBodies.get(bodiesIterator).setTransform((x * TILE_WIDTH), (z * TILE_WIDTH), wallBodies.get(bodiesIterator).getAngle());
+		bodiesIterator++;
+		if(bodiesIterator >= wallBodies.size)
+			bodiesIterator = 0;
+	}
+	
+	public void createWallBody(float x, float y)
+	{
+		/*BodyDef bd = new BodyDef();
+		bd.type = BodyDef.BodyType.StaticBody;
+		bd.position.set(x * TILE_WIDTH, y * TILE_WIDTH - TILE_WIDTH / 2f);
+		
+		Body body = world.createBody(bd);
+		
+		PolygonShape shape = new PolygonShape();
+		
+		shape.setAsBox(TILE_WIDTH / 2f, TILE_WIDTH / 2f);
+		
+		FixtureDef fd = new FixtureDef();
+		fd.shape = shape;
+		
+		body.createFixture(fd);
+		body.setSleepingAllowed(false);
+		
+		shape.dispose();
+		
+		System.out.println("Bodies Loaded: " + world.getBodyCount());*/
 	}
 	
 	public void buildMapShapes(TiledMap tiledMap, String layerName)
@@ -164,11 +188,38 @@ public class WorldHandler implements Disposable
 		return playerBody.getPosition().y + 0f;
 	}
 	
+	public int getBodyTileX()
+	{
+		return (int)((getBodyX() + TILE_WIDTH / 2f) / TILE_WIDTH);
+	}
+	
+	public int getBodyTileZ()
+	{
+		return (int)((getBodyY() - 2f) / TILE_WIDTH);
+	}
+	
 	public void update()
 	{
 		world.step(1f / 60f, 6, 2);
 		
-		//System.out.println((int)getBodyX() + " " + (int)getBodyY());
+		for(int x = -SEARCH_RANGE; x <= SEARCH_RANGE; x++)
+		{
+			for(int z = -SEARCH_RANGE; z <= SEARCH_RANGE; z++)
+			{
+				try
+				{
+					if(collisionMap[z + getBodyTileZ()][x + getBodyTileX()].equals("W")
+							&& !collisionAt(x + getBodyTileX(), z + getBodyTileZ()))
+						//System.out.println("Wall at (" + (x + getBodyTileX()) + ", " + (z + getBodyTileZ()) + ")");
+						moveWallBody(x, z);
+				}
+				catch(Exception e) {}
+			}
+		}
+		
+		//System.out.println("x: " + getBodyTileX() + " z: " + getBodyTileZ());
+		
+		//System.out.println((int)(getBodyX() / TILE_WIDTH) + " " + (int)(getBodyY() / TILE_WIDTH));
 	}
 	
 	@Override
