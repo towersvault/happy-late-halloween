@@ -30,4 +30,7 @@ public class Constants
 		
 		return cal.get(Calendar.YEAR) + "_" + (cal.get(Calendar.MONTH) + 1) + "_" + cal.get(Calendar.DAY_OF_MONTH);
 	}
+	
+	// GAME SETTING VARIABLES
+	public static boolean DYNAMIC_PHYSICS = true; // Handles physics boxes tracking based on player location.
 }

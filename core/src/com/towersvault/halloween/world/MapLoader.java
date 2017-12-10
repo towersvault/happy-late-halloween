@@ -34,7 +34,8 @@ public class MapLoader
 		TiledMapTileLayer layer = (TiledMapTileLayer)tiledMap.getLayers().get(0);
 		Cell cell;
 		
-		String[][] collision = new String[layer.getHeight()][layer.getWidth()];
+		String[][] collisionMap0 = new String[layer.getHeight()][layer.getWidth()];
+		String[][] collisionMap1 = new String[layer.getHeight()][layer.getWidth()];
 		
 		for(int x = 0; x < layer.getWidth(); x++)
 		{
@@ -42,14 +43,14 @@ public class MapLoader
 			{
 				cell = layer.getCell(x, y);
 				
-				collision[y][x] = "";
+				collisionMap0[y][x] = "";
 				
 				try
 				{
 					if(cell.getTile().getProperties().containsKey("wall"))
 					{
 						BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.WALL, true, x, y, 0f);
-						collision[y][x] = "W";
+						collisionMap0[y][x] = "W";
 					}
 					else if(cell.getTile().getProperties().containsKey("floor"))
 					{
@@ -115,6 +116,8 @@ public class MapLoader
 			{
 				cell = layer.getCell(x, y);
 				
+				collisionMap1[y][x] = "";
+				
 				try
 				{
 					if(cell.getTile().getProperties().containsKey("ceiling"))
@@ -124,11 +127,15 @@ public class MapLoader
 					else if(cell.getTile().getProperties().containsKey("wall"))
 					{
 						BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.WALL, false, x, y, BoxesHandler.TILE_SIZE);
+						collisionMap1[y][x] = "W";
 					}
 					else if(cell.getTile().getProperties().containsKey("grass_side"))
 					{
 						BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.GRASS_SIDE, false, x, y, 0f);
 					}
+					
+					else if(cell.getTile().getProperties().containsKey("vending"))
+						BoxesHandler.inst.loadBox(null, BoxType.VENDING_MACHINE, false, x, y, 0f);
 				}
 				catch(Exception e)
 				{
@@ -163,8 +170,30 @@ public class MapLoader
 			}
 		}
 		
-		BoxesHandler.inst.optimizeBoxes();
+		layer = (TiledMapTileLayer)tiledMap.getLayers().get(3);
 		
-		WorldHandler.inst.setCollsionMap(collision);
+		for(int x = 0; x < layer.getWidth(); x++)
+		{
+			for(int y = 0; y < layer.getHeight(); y++)
+			{
+				cell = layer.getCell(x, y);
+				
+				try
+				{
+					if(cell.getTile().getProperties().containsKey("burger"))
+					{
+						BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.ITEM_BURGER, false, x, y, 0f);
+					}
+				}
+				catch(Exception e)
+				{
+				
+				}
+			}
+		}
+		
+		BoxesHandler.inst.optimizeBoxes(collisionMap0, collisionMap1);
+		
+		WorldHandler.inst.setCollsionMap(collisionMap0);
 	}
 }

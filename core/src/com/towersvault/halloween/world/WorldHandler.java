@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.towersvault.halloween.utils.Constants;
 
 public class WorldHandler implements Disposable
 {
@@ -95,30 +96,34 @@ public class WorldHandler implements Disposable
 		shape.dispose();
 		
 		wallBodies.add(body);
-		
-		System.out.println("Bodies Loaded: " + world.getBodyCount());
 	}
 	
 	private boolean collisionAt(float x, float z)
 	{
+		//System.out.println("Body: " + x + " " + z);
 		for(int i = 0; i < wallBodies.size; i++)
-			if((int)(wallBodies.get(i).getPosition().x / TILE_WIDTH) == x * TILE_WIDTH
-					&& (int)(wallBodies.get(i).getPosition().y / TILE_WIDTH) == z * TILE_WIDTH)
+		{
+			if(wallBodies.get(i).getPosition().x == x
+					&& wallBodies.get(i).getPosition().y == z)
 				return true;
-		
-		System.out.println(x + " " + z);
+		}
 		
 		return false;
 	}
 	
 	private void moveWallBody(float x, float z)
 	{
-		
-		System.out.println("Move to " + (x * TILE_WIDTH) + " " + (z * TILE_WIDTH));
-		wallBodies.get(bodiesIterator).setTransform((x * TILE_WIDTH), (z * TILE_WIDTH), wallBodies.get(bodiesIterator).getAngle());
-		bodiesIterator++;
-		if(bodiesIterator >= wallBodies.size)
-			bodiesIterator = 0;
+		if(!collisionAt(x * TILE_WIDTH, z * TILE_WIDTH))
+		{
+			//System.out.println("Moved body to (" + (x * TILE_WIDTH) + ", " + (z * TILE_WIDTH) + ").");
+			
+			wallBodies.get(bodiesIterator).setTransform((x * TILE_WIDTH),
+					(z * TILE_WIDTH),
+					wallBodies.get(bodiesIterator).getAngle());
+			bodiesIterator += 1;
+			if(bodiesIterator >= wallBodies.size)
+				bodiesIterator = 0;
+		}
 	}
 	
 	public void createWallBody(float x, float y)
@@ -142,6 +147,46 @@ public class WorldHandler implements Disposable
 		shape.dispose();
 		
 		System.out.println("Bodies Loaded: " + world.getBodyCount());*/
+	}
+	
+	public void createBodyBox(float x, float y, float sideLength)
+	{
+		BodyDef bd = new BodyDef();
+		bd.type = BodyDef.BodyType.StaticBody;
+		bd.position.set(x * TILE_WIDTH, y * TILE_WIDTH - TILE_WIDTH / 2f);
+		
+		Body body = world.createBody(bd);
+		
+		PolygonShape shape = new PolygonShape();
+		
+		shape.setAsBox(sideLength / 2f, sideLength / 2f);
+		
+		FixtureDef fd = new FixtureDef();
+		fd.shape = shape;
+		
+		body.createFixture(fd);
+		body.setSleepingAllowed(false);
+		
+		shape.dispose();
+	}
+	
+	public void createBodyLine(float x1, float y1, float x2, float y2)
+	{
+		BodyDef bd = new BodyDef();
+		bd.type = BodyDef.BodyType.StaticBody;
+		//bd.position.set(x1 * TILE_WIDTH, y1 * TILE_WIDTH);
+		
+		Body body = world.createBody(bd);
+		
+		EdgeShape shape = new EdgeShape();
+		shape.set(x1 * TILE_WIDTH, y1 * TILE_WIDTH,
+				x2 * TILE_WIDTH, y2 * TILE_WIDTH);
+		
+		FixtureDef fd = new FixtureDef();
+		fd.shape = shape;
+		
+		body.createFixture(fd);
+		shape.dispose();
 	}
 	
 	public void buildMapShapes(TiledMap tiledMap, String layerName)
@@ -202,24 +247,23 @@ public class WorldHandler implements Disposable
 	{
 		world.step(1f / 60f, 6, 2);
 		
-		for(int x = -SEARCH_RANGE; x <= SEARCH_RANGE; x++)
+		if(Constants.DYNAMIC_PHYSICS)
 		{
-			for(int z = -SEARCH_RANGE; z <= SEARCH_RANGE; z++)
+			for(int x = -SEARCH_RANGE; x <= SEARCH_RANGE; x++)
 			{
-				try
+				for(int z = -SEARCH_RANGE; z <= SEARCH_RANGE; z++)
 				{
-					if(collisionMap[z + getBodyTileZ()][x + getBodyTileX()].equals("W")
-							&& !collisionAt(x + getBodyTileX(), z + getBodyTileZ()))
-						//System.out.println("Wall at (" + (x + getBodyTileX()) + ", " + (z + getBodyTileZ()) + ")");
-						moveWallBody(x, z);
+					try
+					{
+						if (collisionMap[z + getBodyTileZ()][x + getBodyTileX()].equals("W"))
+						{
+							moveWallBody(x + getBodyTileX(), z + getBodyTileZ() - 0.5f);
+						}
+					}
+					catch(Exception e) {}
 				}
-				catch(Exception e) {}
 			}
 		}
-		
-		//System.out.println("x: " + getBodyTileX() + " z: " + getBodyTileZ());
-		
-		//System.out.println((int)(getBodyX() / TILE_WIDTH) + " " + (int)(getBodyY() / TILE_WIDTH));
 	}
 	
 	@Override

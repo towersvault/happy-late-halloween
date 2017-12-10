@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.towersvault.halloween.render.Renderer;
 import com.towersvault.halloween.utils.Assets;
+import com.towersvault.halloween.utils.InputHandler;
 
 public class MainScreen extends AbstractGameScreen
 {
@@ -32,8 +33,7 @@ public class MainScreen extends AbstractGameScreen
 	@Override
 	public void render(float deltaTime)
 	{
-		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
-			Gdx.app.exit();
+		InputHandler.inst.checkInput();
 		
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		Gdx.gl.glClearColor(0f / 255f, 25f / 255f, 38f / 255f, 1f);

@@ -15,6 +15,7 @@ public class Assets implements Disposable, AssetErrorListener
 	private AssetManager am;
 	
 	public StaticSprite staticSprite;
+	public ItemSprite itemSprite;
 	
 	public class StaticSprite
 	{
@@ -30,6 +31,8 @@ public class Assets implements Disposable, AssetErrorListener
 		public AtlasRegion stopBoxBack;
 		public AtlasRegion stopBoxSide;
 		public AtlasRegion fence;
+		public AtlasRegion vendingMachineFront;
+		public AtlasRegion vendingMachineSide;
 		
 		public StaticSprite(TextureAtlas atlas)
 		{
@@ -45,6 +48,18 @@ public class Assets implements Disposable, AssetErrorListener
 			stopBoxBack = atlas.findRegion("static_stop_box_back");
 			stopBoxSide = atlas.findRegion("static_stop_box_side");
 			fence = atlas.findRegion("static_fence");
+			vendingMachineFront = atlas.findRegion("static_vending_machine_front");
+			vendingMachineSide = atlas.findRegion("static_vending_machine_side");
+		}
+	}
+	
+	public class ItemSprite
+	{
+		public AtlasRegion burger;
+		
+		public ItemSprite(TextureAtlas atlas)
+		{
+			burger = atlas.findRegion("item_burger");
 		}
 	}
 	
@@ -62,6 +77,7 @@ public class Assets implements Disposable, AssetErrorListener
 			t.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 		
 		staticSprite = new StaticSprite(atlas);
+		itemSprite = new ItemSprite(atlas);
 	}
 	
 	@Override
