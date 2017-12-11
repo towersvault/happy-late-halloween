@@ -2,12 +2,7 @@ package com.towersvault.halloween.world;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.towersvault.halloween.utils.Constants;
@@ -27,12 +22,16 @@ public class WorldHandler implements Disposable
 	private Array<Body> wallBodies = new Array<Body>();
 	private int bodiesIterator = 0;
 	
+	private Array<Body> interactionBodies = new Array<Body>();
+	
 	public void init()
 	{
 		world = new World(new Vector2(0, 0), false);
 		
 		wallBodies.clear();
 		bodiesIterator = 0;
+		
+		interactionBodies.clear();
 		
 		// Player body
 		BodyDef bd = new BodyDef();
@@ -54,6 +53,39 @@ public class WorldHandler implements Disposable
 		playerBody.setSleepingAllowed(false);
 		
 		shape.dispose();
+		
+		world.setContactListener(new ContactListener()
+		{
+			@Override
+			public void beginContact(Contact contact)
+			{
+				for(int i = interactionBodies.size; --i >= 0;)
+				{
+					if((contact.getFixtureA().getBody() == playerBody
+						&& contact.getFixtureB().getBody() == interactionBodies.get(i))
+						||
+						(contact.getFixtureA().getBody() == interactionBodies.get(i)
+						&& contact.getFixtureB().getBody() == playerBody))
+					{
+						// TODO: Add code for adding item to inventory.
+						ItemHandler.inst.destroyItem((int)interactionBodies.get(i).getPosition().x, (int)interactionBodies.get(i).getPosition().y);
+						interactionBodies.removeIndex(i);
+					}
+				}
+			}
+			
+			@Override
+			public void endContact(Contact contact)
+			{
+			
+			}
+			
+			@Override
+			public void preSolve(Contact contact, Manifold oldManifold) {}
+			
+			@Override
+			public void postSolve(Contact contact, ContactImpulse impulse) {}
+		});
 	}
 	
 	public void setCollsionMap(String[][] collisionMap)
@@ -74,8 +106,8 @@ public class WorldHandler implements Disposable
 	
 	private void createWallBody()
 	{
-		float x = 0f;
-		float y = 2f;
+		float x = -200f;
+		float y = -200f;
 		
 		BodyDef bd = new BodyDef();
 		bd.type = BodyDef.BodyType.StaticBody;
@@ -147,6 +179,31 @@ public class WorldHandler implements Disposable
 		shape.dispose();
 		
 		System.out.println("Bodies Loaded: " + world.getBodyCount());*/
+	}
+	
+	public void createInteractionBody(int x, int z)
+	{
+		BodyDef bd = new BodyDef();
+		bd.type = BodyDef.BodyType.StaticBody;
+		bd.position.set(x * TILE_WIDTH, z * TILE_WIDTH - TILE_WIDTH / 2f);
+		
+		Body body = world.createBody(bd);
+		
+		PolygonShape shape = new PolygonShape();
+		
+		shape.setAsBox(3f, 3f);
+		
+		FixtureDef fd = new FixtureDef();
+		fd.shape = shape;
+		fd.isSensor = true;
+		
+		body.createFixture(fd);
+		body.setFixedRotation(true);
+		body.setSleepingAllowed(false);
+		
+		shape.dispose();
+		
+		interactionBodies.add(body);
 	}
 	
 	public void createBodyBox(float x, float y, float sideLength)

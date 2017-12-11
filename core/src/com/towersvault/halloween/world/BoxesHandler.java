@@ -195,14 +195,14 @@ public class BoxesHandler implements Disposable
 			
 			decals.add(dFloor);
 		}
-		else if(boxType.equals(BoxType.ITEM_BURGER))
+		/*else if(boxType.equals(BoxType.ITEM_BURGER))
 		{
 			Decal dBurger = Decal.newDecal(9f, 9f, Assets.inst.itemSprite.burger);
 			dBurger.setPosition(x * TILE_SIZE, dBurger.getHeight() / 2f + 2f, z * TILE_SIZE);
 			dBurger.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 			
 			alphaDecals.add(new ItemDecal(dBurger));
-		}
+		}*/
 		else if((boxType.equals(BoxType.STOP_N))
 				|| (boxType.equals(BoxType.STOP_S))
 				|| (boxType.equals(BoxType.STOP_E))
@@ -491,6 +491,34 @@ public class BoxesHandler implements Disposable
 			decals.add(dVendingFront);
 			decals.add(dVendingSide1);
 			decals.add(dVendingSide2);
+		}
+	}
+	
+	public void createItemDecal(int x, int z, ItemHandler.Item item)
+	{
+		switch(item)
+		{
+			case BURGER:
+				Decal dBurger = Decal.newDecal(9f, 9f, Assets.inst.itemSprite.burger);
+				dBurger.setPosition(x * TILE_SIZE, dBurger.getHeight() / 2f + 2f, z * TILE_SIZE - TILE_SIZE / 2f);
+				dBurger.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+				
+				alphaDecals.add(new ItemDecal(dBurger));
+				
+				System.out.println((dBurger.getPosition().x) + " " + (dBurger.getPosition().z));
+				break;
+			default:
+				break;
+		}
+	}
+	
+	public void destroyItemDecal(int x, int z)
+	{
+		for(int i = alphaDecals.size; --i >= 0;)
+		{
+			if(alphaDecals.get(i).decals.get(0).getX() == x
+					&& alphaDecals.get(i).decals.get(0).getZ() == z)
+				alphaDecals.removeIndex(i);
 		}
 	}
 	

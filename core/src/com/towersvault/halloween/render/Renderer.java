@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import com.towersvault.halloween.utils.CustomCameraStrategy;
 import com.towersvault.halloween.world.BoxesHandler;
+import com.towersvault.halloween.world.ItemHandler;
 import com.towersvault.halloween.world.MapLoader;
 import com.towersvault.halloween.world.WorldHandler;
 import com.badlogic.gdx.Input.Keys;
@@ -106,6 +107,8 @@ public class Renderer implements Disposable
 			@Override
 			public boolean scrolled(int amount) { return false; }
 		});
+		
+		ItemHandler.inst.createItem(ItemHandler.Item.BURGER, 5, 5);
 	}
 	
 	public void render()
