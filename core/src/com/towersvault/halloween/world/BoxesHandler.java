@@ -52,7 +52,8 @@ public class BoxesHandler implements Disposable
 		FENCE_B,
 		FENCE_BR,
 		VENDING_MACHINE,
-		ITEM_BURGER
+		ITEM_BURGER,
+		CORN
 	}
 	
 	public void init(DecalBatch batch)
@@ -150,6 +151,27 @@ public class BoxesHandler implements Disposable
 			alphaDecals.add(new PlantDecal(dBush, dBush2));
 			
 			Decal dFloor = Decal.newDecal(TILE_SIZE, TILE_SIZE, Assets.inst.staticSprite.floorGrass);
+			dFloor.setPosition(x * TILE_SIZE, 0f, z * TILE_SIZE - TILE_SIZE / 2f);
+			dFloor.rotateX(90f);
+			
+			decals.add(dFloor);
+		}
+		else if(boxType.equals(BoxType.CORN))
+		{
+			// TODO: Positional rendering is a bit wonky, instead of partitioning specifically on x and z axis, instead use -x + z, x + z, -x - z, x - z
+			
+			Decal dBush = Decal.newDecal(13f, 24f, Assets.inst.staticSprite.corn, true);
+			dBush.setPosition(x * TILE_SIZE, dBush.getHeight() / 2f, z * TILE_SIZE - TILE_SIZE / 2f);
+			dBush.rotateY(45f);
+			dBush.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+			Decal dBush2 = Decal.newDecal(13f, dBush.getHeight(), Assets.inst.staticSprite.corn, true);
+			dBush2.setPosition(x * TILE_SIZE, dBush2.getHeight() / 2f, z * TILE_SIZE - TILE_SIZE / 2f);
+			dBush2.rotateY(45f + 90f);
+			dBush2.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+			
+			alphaDecals.add(new PlantDecal(dBush, dBush2));
+			
+			Decal dFloor = Decal.newDecal(TILE_SIZE, TILE_SIZE, Assets.inst.staticSprite.farmland);
 			dFloor.setPosition(x * TILE_SIZE, 0f, z * TILE_SIZE - TILE_SIZE / 2f);
 			dFloor.rotateX(90f);
 			

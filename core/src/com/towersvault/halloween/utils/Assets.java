@@ -34,6 +34,9 @@ public class Assets implements Disposable, AssetErrorListener
 		public AtlasRegion vendingMachineFront;
 		public AtlasRegion vendingMachineSide;
 		
+		public AtlasRegion farmland;
+		public AtlasRegion corn;
+		
 		public StaticSprite(TextureAtlas atlas)
 		{
 			moon = atlas.findRegion("static_moon");
@@ -50,6 +53,9 @@ public class Assets implements Disposable, AssetErrorListener
 			fence = atlas.findRegion("static_fence");
 			vendingMachineFront = atlas.findRegion("static_vending_machine_front");
 			vendingMachineSide = atlas.findRegion("static_vending_machine_side");
+			
+			farmland = atlas.findRegion("static_farmland");
+			corn = atlas.findRegion("static_corn");
 		}
 	}
 	

@@ -100,6 +100,8 @@ public class MapLoader
 					else if(cell.getTile().getProperties().containsKey("fence_br"))
 						BoxesHandler.inst.loadBox(null, BoxType.FENCE_BR, true, x, y, 0f);
 					
+					else if(cell.getTile().getProperties().containsKey("corn"))
+						BoxesHandler.inst.loadBox(null, BoxType.CORN, true, x, y, 0f);
 				}
 				catch(Exception e)
 				{
