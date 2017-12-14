@@ -24,44 +24,51 @@ static_stop_front
   orig: 15, 33
   offset: 0, 0
   index: -1
+static_scarecrow
+  rotate: false
+  xy: 18, 19
+  size: 17, 26
+  orig: 17, 26
+  offset: 0, 0
+  index: -1
+static_farmland
+  rotate: false
+  xy: 18, 1
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 static_corn
   rotate: false
-  xy: 18, 21
+  xy: 147, 68
   size: 13, 24
   orig: 13, 24
   offset: 0, 0
   index: -1
-static_stop_box_back
+static_floor_grass
   rotate: false
-  xy: 147, 62
-  size: 3, 30
-  orig: 3, 30
+  xy: 36, 1
+  size: 16, 16
+  orig: 16, 16
   offset: 0, 0
   index: -1
-static_stop_box_front
+static_stop_box_back
   rotate: false
   xy: 164, 97
   size: 3, 30
   orig: 3, 30
   offset: 0, 0
   index: -1
-static_farmland
+static_stop_box_front
   rotate: false
-  xy: 33, 29
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-static_floor_grass
-  rotate: false
-  xy: 169, 111
-  size: 16, 16
-  orig: 16, 16
+  xy: 169, 97
+  size: 3, 30
+  orig: 3, 30
   offset: 0, 0
   index: -1
 static_stop_box_side
   rotate: false
-  xy: 152, 62
+  xy: 174, 97
   size: 1, 30
   orig: 1, 30
   offset: 0, 0
@@ -75,56 +82,56 @@ item_burger
   index: -1
 static_vending_machine_front
   rotate: false
-  xy: 51, 30
+  xy: 37, 30
   size: 14, 15
   orig: 14, 15
   offset: 0, 0
   index: -1
 static_vending_machine_side
   rotate: false
-  xy: 187, 112
+  xy: 177, 112
   size: 14, 15
   orig: 14, 15
   offset: 0, 0
   index: -1
 static_bush
   rotate: false
-  xy: 169, 99
+  xy: 53, 35
   size: 16, 10
   orig: 16, 10
   offset: 0, 0
   index: -1
 static_fence
   rotate: false
-  xy: 67, 35
+  xy: 193, 117
   size: 16, 10
   orig: 16, 10
   offset: 0, 0
   index: -1
 static_fire_hydrant
   rotate: false
-  xy: 187, 99
+  xy: 147, 55
   size: 8, 11
   orig: 8, 11
   offset: 0, 0
   index: -1
 static_grass_blades
   rotate: false
-  xy: 33, 26
+  xy: 71, 44
   size: 16, 1
   orig: 16, 1
   offset: 0, 0
   index: -1
 static_grass_side
   rotate: false
-  xy: 203, 126
+  xy: 53, 32
   size: 16, 1
   orig: 16, 1
   offset: 0, 0
   index: -1
 static_side_walk
   rotate: false
-  xy: 67, 32
+  xy: 193, 114
   size: 16, 1
   orig: 16, 1
   offset: 0, 0

@@ -36,6 +36,7 @@ public class Assets implements Disposable, AssetErrorListener
 		
 		public AtlasRegion farmland;
 		public AtlasRegion corn;
+		public AtlasRegion scarecrow;
 		
 		public StaticSprite(TextureAtlas atlas)
 		{
@@ -56,6 +57,7 @@ public class Assets implements Disposable, AssetErrorListener
 			
 			farmland = atlas.findRegion("static_farmland");
 			corn = atlas.findRegion("static_corn");
+			scarecrow = atlas.findRegion("static_scarecrow");
 		}
 	}
 	

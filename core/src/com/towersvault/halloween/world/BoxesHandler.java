@@ -1,14 +1,11 @@
 package com.towersvault.halloween.world;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.IntArray;
@@ -53,7 +50,8 @@ public class BoxesHandler implements Disposable
 		FENCE_BR,
 		VENDING_MACHINE,
 		ITEM_BURGER,
-		CORN
+		CORN,
+		SCARECROW
 	}
 	
 	public void init(DecalBatch batch)
@@ -176,6 +174,8 @@ public class BoxesHandler implements Disposable
 			dFloor.rotateX(90f);
 			
 			decals.add(dFloor);
+			
+			WorldHandler.inst.createBodyBox(x, z, 2f);
 		}
 		else if(boxType.equals(BoxType.FIRE_HYDRANT))
 		{
@@ -217,14 +217,6 @@ public class BoxesHandler implements Disposable
 			
 			decals.add(dFloor);
 		}
-		/*else if(boxType.equals(BoxType.ITEM_BURGER))
-		{
-			Decal dBurger = Decal.newDecal(9f, 9f, Assets.inst.itemSprite.burger);
-			dBurger.setPosition(x * TILE_SIZE, dBurger.getHeight() / 2f + 2f, z * TILE_SIZE);
-			dBurger.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-			
-			alphaDecals.add(new ItemDecal(dBurger));
-		}*/
 		else if((boxType.equals(BoxType.STOP_N))
 				|| (boxType.equals(BoxType.STOP_S))
 				|| (boxType.equals(BoxType.STOP_E))
@@ -318,31 +310,6 @@ public class BoxesHandler implements Disposable
 			dSideWalk.rotateX(90f);
 			
 			decals.add(dSideWalk);
-			
-			/*Decal dTop = Decal.newDecal(TILE_SIZE, 1f, Assets.inst.staticSprite.pavementSide);
-			Decal dRight = Decal.newDecal(TILE_SIZE, 1f, Assets.inst.staticSprite.pavementSide);
-			Decal dBottom = Decal.newDecal(TILE_SIZE, 1f, Assets.inst.staticSprite.pavementSide);
-			Decal dLeft = Decal.newDecal(TILE_SIZE, 1f, Assets.inst.staticSprite.pavementSide);
-			
-			dTop.setPosition(TILE_SIZE * x, 
-					dSideWalk.getY() - 1f / 2f, 
-					TILE_SIZE * z);
-			dRight.setPosition(TILE_SIZE * x + TILE_SIZE / 2f, 
-					dTop.getY(), 
-					TILE_SIZE * z - TILE_SIZE / 2f);
-			dRight.rotateY(90f);
-			dBottom.setPosition(TILE_SIZE * x, 
-					dTop.getY(), 
-					TILE_SIZE * z - TILE_SIZE);
-			dLeft.setPosition(TILE_SIZE * x - TILE_SIZE / 2f, 
-					dTop.getY(), 
-					TILE_SIZE * z - TILE_SIZE / 2f);
-			dLeft.rotateY(90f);
-			
-			decals.add(dTop);
-			decals.add(dRight);
-			decals.add(dBottom);
-			decals.add(dLeft);*/
 		}
 		else if(boxType.equals(BoxType.ROAD))
 		{
@@ -513,6 +480,23 @@ public class BoxesHandler implements Disposable
 			decals.add(dVendingFront);
 			decals.add(dVendingSide1);
 			decals.add(dVendingSide2);
+		}
+		else if(boxType.equals(BoxType.SCARECROW))
+		{
+			Decal dScarecrow = Decal.newDecal(17f, 26f, Assets.inst.staticSprite.scarecrow);
+			dScarecrow.setPosition(x * TILE_SIZE,
+					dScarecrow.getHeight() / 2f,
+					(z - 0.5f) * TILE_SIZE);
+			dScarecrow.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+			alphaDecals.add(new EntityDecal(dScarecrow));
+			
+			Decal dFloor = Decal.newDecal(TILE_SIZE, TILE_SIZE, Assets.inst.staticSprite.farmland);
+			dFloor.setPosition(x * TILE_SIZE, 0f, z * TILE_SIZE - TILE_SIZE / 2f);
+			dFloor.rotateX(90f);
+			
+			decals.add(dFloor);
+			
+			WorldHandler.inst.createBodyBox(x, z, 2f);
 		}
 	}
 	

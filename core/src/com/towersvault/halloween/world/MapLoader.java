@@ -28,7 +28,7 @@ public class MapLoader
 			
 		}
 		
-		tiledMap = new TmxMapLoader().load("maps/world1.tmx");
+		tiledMap = new TmxMapLoader().load("maps/debug.tmx");
 		//WorldHandler.inst.buildMapShapes(tiledMap, "Collision");
 		
 		TiledMapTileLayer layer = (TiledMapTileLayer)tiledMap.getLayers().get(0);
@@ -102,6 +102,8 @@ public class MapLoader
 					
 					else if(cell.getTile().getProperties().containsKey("corn"))
 						BoxesHandler.inst.loadBox(null, BoxType.CORN, true, x, y, 0f);
+					else if(cell.getTile().getProperties().containsKey("ol pump"))
+						BoxesHandler.inst.loadBox(null, BoxType.SCARECROW, true, x, y, 0f);
 				}
 				catch(Exception e)
 				{

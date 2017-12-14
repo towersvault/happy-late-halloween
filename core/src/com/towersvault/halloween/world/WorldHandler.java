@@ -290,6 +290,11 @@ public class WorldHandler implements Disposable
 		return playerBody.getPosition().y + 0f;
 	}
 	
+	public Vector2 getBodyPosition()
+	{
+		return playerBody.getPosition();
+	}
+	
 	public int getBodyTileX()
 	{
 		return (int)((getBodyX() + TILE_WIDTH / 2f) / TILE_WIDTH);
