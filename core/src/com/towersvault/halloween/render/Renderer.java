@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import com.towersvault.halloween.utils.CustomCameraStrategy;
@@ -18,6 +20,7 @@ import com.towersvault.halloween.world.ItemHandler;
 import com.towersvault.halloween.world.MapLoader;
 import com.towersvault.halloween.world.WorldHandler;
 import com.badlogic.gdx.Input.Keys;
+import com.towersvault.halloween.world.entities.EntityController;
 
 public class Renderer implements Disposable
 {
@@ -30,6 +33,9 @@ public class Renderer implements Disposable
 	private Sprite sprSky;
 	
 	private static final float MOVEMENT_SPEED = 55f;
+	
+	/*private float cameraRotation = 0f;*/
+	private Vector2 listener = new Vector2();
 	
 	public void init()
 	{
@@ -101,6 +107,12 @@ public class Renderer implements Disposable
 				
 				dragX = screenX;
 				
+				/*cameraRotation += x * rotateSpeed;
+				cameraRotation = cameraRotation % 360f;*/
+				
+				listener.rotate(x * rotateSpeed);
+				listener.sub(WorldHandler.inst.getBodyPosition()).nor();
+				
 				return true;
 			}
 			
@@ -109,6 +121,8 @@ public class Renderer implements Disposable
 		});
 		
 		ItemHandler.inst.createItem(ItemHandler.Item.BURGER, 5, 5);
+		
+		EntityController.inst.init();
 	}
 	
 	public void render()
@@ -130,6 +144,15 @@ public class Renderer implements Disposable
 		
 		WorldHandler.inst.update();
 		WorldHandler.inst.resetBodyVelocity();
+	}
+	
+	public Vector2 getListener()
+	{
+		/*if(cameraRotation < 0f)
+			return 360 + cameraRotation;
+		return MathUtils.degreesToRadians * cameraRotation;*/
+		
+		return listener;
 	}
 	
 	private void updateCameraMovement()

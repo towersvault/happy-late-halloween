@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.towersvault.halloween.render.Renderer;
 import com.towersvault.halloween.utils.Assets;
 import com.towersvault.halloween.utils.InputHandler;
+import com.towersvault.halloween.utils.audio.AudioController;
 
 public class MainScreen extends AbstractGameScreen
 {
@@ -40,6 +41,8 @@ public class MainScreen extends AbstractGameScreen
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		
 		Renderer.inst.render();
+		
+		AudioController.inst.update();
 	}
 	
 	@Override
@@ -64,6 +67,8 @@ public class MainScreen extends AbstractGameScreen
 		Gdx.input.setCursorCatched(true);
 		
 		Renderer.inst.init();
+		
+		AudioController.inst.init();
 	}
 	
 	@Override

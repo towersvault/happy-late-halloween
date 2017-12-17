@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.IntArray;
 import com.towersvault.halloween.utils.Assets;
 import com.towersvault.halloween.world.decals.*;
+import com.towersvault.halloween.world.entities.AbstractEntity;
+import com.towersvault.halloween.world.entities.PlaneEntity;
 
 public class BoxesHandler implements Disposable
 {
@@ -500,6 +502,11 @@ public class BoxesHandler implements Disposable
 		}
 	}
 	
+	public void createEntityDecal(AbstractEntity decals)
+	{
+		alphaDecals.add(decals);
+	}
+	
 	public void createItemDecal(int x, int z, ItemHandler.Item item)
 	{
 		switch(item)
@@ -613,15 +620,23 @@ public class BoxesHandler implements Disposable
 		{
 			alphaDecals.get(i).updateRenderOrder();
 			
-			if(!alphaDecals.get(i).renderOnlyOneSide
-					&& !alphaDecals.get(i).onlyOneDecal)
+			if(!alphaDecals.get(i).multiDecal)
 			{
-				batch.add(alphaDecals.get(i).decals.get(0));
-				batch.add(alphaDecals.get(i).decals.get(1));
+				if(!alphaDecals.get(i).renderOnlyOneSide
+						&& !alphaDecals.get(i).onlyOneDecal)
+				{
+					batch.add(alphaDecals.get(i).decals.get(0));
+					batch.add(alphaDecals.get(i).decals.get(1));
+				}
+				else
+				{
+					batch.add(alphaDecals.get(i).decals.get(0));
+				}
 			}
 			else
 			{
-				batch.add(alphaDecals.get(i).decals.get(0));
+				for(int j = 0; j < alphaDecals.get(i).decals.size; j++)
+					batch.add(alphaDecals.get(i).decals.get(j));
 			}
 		}
 		batch.flush();

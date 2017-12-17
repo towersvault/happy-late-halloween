@@ -16,6 +16,7 @@ public class Assets implements Disposable, AssetErrorListener
 	
 	public StaticSprite staticSprite;
 	public ItemSprite itemSprite;
+	public EntitySprite entitySprite;
 	
 	public class StaticSprite
 	{
@@ -71,6 +72,30 @@ public class Assets implements Disposable, AssetErrorListener
 		}
 	}
 	
+	public class EntitySprite
+	{
+		public AtlasRegion planeSide;
+		public AtlasRegion planeWingFront;
+		public AtlasRegion planeWingBack;
+		public AtlasRegion planeWingVert;
+		public AtlasRegion planeProp;
+		public AtlasRegion planeFront;
+		public AtlasRegion planeBack;
+		public AtlasRegion bomb;
+		
+		public EntitySprite(TextureAtlas atlas)
+		{
+			planeSide = atlas.findRegion("plane_side");
+			planeWingFront = atlas.findRegion("plane_wing");
+			planeWingBack = atlas.findRegion("plane_wing_rear");
+			planeWingVert = atlas.findRegion("plane_wing_vert");
+			planeProp = atlas.findRegion("plane_propeller");
+			planeFront = atlas.findRegion("plane_front");
+			planeBack = atlas.findRegion("plane_back");
+			bomb = atlas.findRegion("entity_bomb");
+		}
+	}
+	
 	public void init()
 	{
 		this.am = new AssetManager();
@@ -86,6 +111,7 @@ public class Assets implements Disposable, AssetErrorListener
 		
 		staticSprite = new StaticSprite(atlas);
 		itemSprite = new ItemSprite(atlas);
+		entitySprite = new EntitySprite(atlas);
 	}
 	
 	@Override
