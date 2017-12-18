@@ -42,7 +42,7 @@ public class MainScreen extends AbstractGameScreen
 		
 		Renderer.inst.render();
 		
-		AudioController.inst.update();
+		//AudioController.inst.update();
 	}
 	
 	@Override
@@ -68,7 +68,7 @@ public class MainScreen extends AbstractGameScreen
 		
 		Renderer.inst.init();
 		
-		AudioController.inst.init();
+		//AudioController.inst.init();
 	}
 	
 	@Override
