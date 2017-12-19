@@ -22,7 +22,9 @@ public class EntityDecal extends AbstractDecal
 		entityVec.set(super.decals.get(0).getX(), super.decals.get(0).getZ());
 		pointingDirection = (int)entityVec.sub(WorldHandler.inst.getBodyPosition()).angle();
 		
-		// TODO: Fix the below.
+		super.decals.get(0).setRotationY(-(float)pointingDirection - 90f);
+		
+		/*// TODO: Fix the below.
 		if(pointingDirection >= 0 && pointingDirection < 45)
 			super.decals.get(0).setRotationY(0f);
 		else if(pointingDirection >= 45 && pointingDirection < 90)
@@ -36,6 +38,6 @@ public class EntityDecal extends AbstractDecal
 		else if(pointingDirection >= 270 && pointingDirection < 315)
 			super.decals.get(0).setRotationY(270f);
 		else if(pointingDirection >= 315 && pointingDirection < 360)
-			super.decals.get(0).setRotationY(315f);
+			super.decals.get(0).setRotationY(315f);*/
 	}
 }

@@ -24,6 +24,8 @@ public class WorldHandler implements Disposable
 	
 	private Array<Body> interactionBodies = new Array<Body>();
 	
+	private Vector2 newPlayerCoordinates = new Vector2();
+	
 	public void init()
 	{
 		world = new World(new Vector2(0, 0), false);
@@ -305,8 +307,21 @@ public class WorldHandler implements Disposable
 		return (int)((getBodyY() - 2f) / TILE_WIDTH);
 	}
 	
+	public void setPlayerPosition(float x, float y)
+	{
+		newPlayerCoordinates.x = x;
+		newPlayerCoordinates.y = y;
+	}
+	
 	public void update()
 	{
+		if((newPlayerCoordinates.x != 0f) || (newPlayerCoordinates.y != 0f))
+		{
+			playerBody.setTransform(newPlayerCoordinates, playerBody.getAngle());
+			newPlayerCoordinates.x = 0f;
+			newPlayerCoordinates.y = 0f;
+		}
+		
 		world.step(1f / 60f, 6, 2);
 		
 		if(Constants.DYNAMIC_PHYSICS)

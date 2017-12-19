@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -31,11 +32,14 @@ public class Renderer implements Disposable
 	private OrthographicCamera orthographicCamera;
 	private SpriteBatch spriteBatch;
 	private Sprite sprSky;
+	private Sprite sprVignette;
 	
 	private static final float MOVEMENT_SPEED = 55f;
 	
 	/*private float cameraRotation = 0f;*/
 	private Vector2 listener = new Vector2();
+	
+	private ShaderProgram shader;
 	
 	public void init()
 	{
@@ -51,6 +55,13 @@ public class Renderer implements Disposable
 		sprSky.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 0.65f);
 		sprSky.setX(-Gdx.graphics.getWidth() / 2f);
 		sprSky.setY(-Gdx.graphics.getHeight() / 2f);
+		
+		TextureRegion tVignette = new TextureRegion(new Texture(Gdx.files.internal("vignette.png")));
+		
+		sprVignette = new Sprite(tVignette);
+		sprVignette.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		sprVignette.setX(-Gdx.graphics.getWidth() / 2f);
+		sprVignette.setY(-Gdx.graphics.getHeight() / 2f);
 		
 		spriteBatch = new SpriteBatch();
 		
@@ -123,10 +134,20 @@ public class Renderer implements Disposable
 		ItemHandler.inst.createItem(ItemHandler.Item.BURGER, 5, 5);
 		
 		EntityController.inst.init();
+		
+		/*ShaderProgram.pedantic = false;
+		shader = new ShaderProgram(Gdx.files.internal("shaders/vignette.vsh"), Gdx.files.internal("shaders/vignette.fsh"));
+		spriteBatch.setShader(shader);
+		
+		System.out.println(shader.isCompiled() ? "Shader works!" : shader.getLog());*/
 	}
 	
 	public void render()
 	{
+		/*shader.begin();
+		shader.setUniformf("u_distort", MathUtils.random(4), MathUtils.random(4), 0);
+		shader.end();*/
+		
 		spriteBatch.setProjectionMatrix(orthographicCamera.combined);
 		spriteBatch.begin();
 		sprSky.draw(spriteBatch);
@@ -139,6 +160,11 @@ public class Renderer implements Disposable
 		Gdx.gl.glCullFace(GL20.GL_NONE);
 		
 		BoxesHandler.inst.render(camera.position, camera);
+		
+		spriteBatch.setProjectionMatrix(orthographicCamera.combined);
+		spriteBatch.begin();
+		sprVignette.draw(spriteBatch);
+		spriteBatch.end();
 		
 		updateCameraMovement();
 		
@@ -153,6 +179,13 @@ public class Renderer implements Disposable
 		return MathUtils.degreesToRadians * cameraRotation;*/
 		
 		return listener;
+	}
+	
+	public void setCameraRotation(float rotation)
+	{
+		camera.direction.set(0, 0, 1);
+		camera.up.set(0, 1, 0);
+		camera.update();
 	}
 	
 	private void updateCameraMovement()

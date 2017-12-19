@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.IntArray;
 import com.towersvault.halloween.utils.Assets;
+import com.towersvault.halloween.utils.CinemaController;
 import com.towersvault.halloween.world.decals.*;
 import com.towersvault.halloween.world.entities.AbstractEntity;
 import com.towersvault.halloween.world.entities.PlaneEntity;
@@ -457,6 +458,12 @@ public class BoxesHandler implements Disposable
 			{
 				alphaDecals.add(new FenceDecal(dFence1, dFence2));
 			}
+			
+			Decal dFloor = Decal.newDecal(TILE_SIZE, TILE_SIZE, Assets.inst.staticSprite.floorGrass);
+			dFloor.setPosition(x * TILE_SIZE, 0f, z * TILE_SIZE - TILE_SIZE / 2f);
+			dFloor.rotateX(90f);
+			
+			decals.add(dFloor);
 		}
 		else if(boxType.equals(BoxType.VENDING_MACHINE))
 		{
@@ -499,6 +506,9 @@ public class BoxesHandler implements Disposable
 			decals.add(dFloor);
 			
 			WorldHandler.inst.createBodyBox(x, z, 2f);
+			
+			CinemaController.inst.scarecrowCoordinates.x = dScarecrow.getX();
+			CinemaController.inst.scarecrowCoordinates.y = dScarecrow.getZ();
 		}
 	}
 	
@@ -532,6 +542,19 @@ public class BoxesHandler implements Disposable
 			if(alphaDecals.get(i).decals.get(0).getX() == x
 					&& alphaDecals.get(i).decals.get(0).getZ() == z)
 				alphaDecals.removeIndex(i);
+		}
+	}
+	
+	public void setTexture(float x, float z, TextureRegion texture)
+	{
+		for(int i = alphaDecals.size; --i >= 0;)
+		{
+			if(alphaDecals.get(i).decals.get(0).getX() == x
+					&& alphaDecals.get(i).decals.get(0).getZ() == z)
+			{
+				System.out.println("Updating sprite.");
+				alphaDecals.get(i).decals.get(0).setTextureRegion(texture);
+			}
 		}
 	}
 	
@@ -613,7 +636,7 @@ public class BoxesHandler implements Disposable
 		}
 		batch.flush();
 		
-		dMoon.setPosition(WorldHandler.inst.getBodyX() + 120f, 80f, WorldHandler.inst.getBodyY() - 120f);
+		dMoon.setPosition(WorldHandler.inst.getBodyX() + 120f, 80f, WorldHandler.inst.getBodyY() + 120f);
 		dMoon.lookAt(camPosition, cam.up);
 		
 		for(int i = 0; i < alphaDecals.size; i++)
