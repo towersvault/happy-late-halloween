@@ -15,7 +15,8 @@ public class EntityController
 	public enum Entity
 	{
 		PLANE,
-		BOMB
+		BOMB,
+		SKELETON
 	}
 	
 	private Array<AbstractEntity> entities = new Array<AbstractEntity>();
@@ -27,6 +28,7 @@ public class EntityController
 		
 		createEntity(Entity.PLANE, -2, 1, -2);
 		createEntity(Entity.BOMB, -2, 0, -2);
+		createEntity(Entity.SKELETON, 20f, 0, 8f);
 	}
 	
 	public void createEntity(Entity entity, float x, float y, float z)
@@ -97,6 +99,17 @@ public class EntityController
 				BombEntity bomb = new BombEntity(entitySwap);
 				BoxesHandler.inst.createEntityDecal(bomb);
 				entities.add(bomb);
+				break;
+			case SKELETON:
+				Decal dSkeleton = Decal.newDecal(15f, 20f, Assets.inst.entitySprite.skeletonIdle);
+				dSkeleton.setPosition(x * BoxesHandler.TILE_SIZE, y * BoxesHandler.TILE_SIZE + dSkeleton.getHeight() / 2f, z * BoxesHandler.TILE_SIZE);
+				dSkeleton.setBlending(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+				
+				entitySwap.add(dSkeleton);
+				
+				TrackingEntity skeleton = new TrackingEntity(entitySwap);
+				BoxesHandler.inst.createEntityDecal(skeleton);
+				entities.add(skeleton);
 				break;
 			default:
 				break;

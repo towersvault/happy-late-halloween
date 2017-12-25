@@ -84,6 +84,7 @@ public class Assets implements Disposable, AssetErrorListener
 		public AtlasRegion planeFront;
 		public AtlasRegion planeBack;
 		public AtlasRegion bomb;
+		public AtlasRegion skeletonIdle;
 		
 		public EntitySprite(TextureAtlas atlas)
 		{
@@ -95,6 +96,7 @@ public class Assets implements Disposable, AssetErrorListener
 			planeFront = atlas.findRegion("plane_front");
 			planeBack = atlas.findRegion("plane_back");
 			bomb = atlas.findRegion("entity_bomb");
+			skeletonIdle = atlas.findRegion("entity_skeleton_idle");
 		}
 	}
 	

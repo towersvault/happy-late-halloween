@@ -52,11 +52,25 @@ static_corn
   orig: 13, 24
   offset: 0, 0
   index: -1
+entity_skeleton_idle
+  rotate: false
+  xy: 37, 25
+  size: 15, 20
+  orig: 15, 20
+  offset: 0, 0
+  index: -1
 static_floor_grass
   rotate: false
   xy: 36, 1
   size: 16, 16
   orig: 16, 16
+  offset: 0, 0
+  index: -1
+plane_wing_rear
+  rotate: false
+  xy: 37, 19
+  size: 13, 4
+  orig: 13, 4
   offset: 0, 0
   index: -1
 plane_wing
@@ -75,7 +89,7 @@ item_burger
   index: -1
 static_vending_machine_front
   rotate: false
-  xy: 37, 30
+  xy: 54, 30
   size: 14, 15
   orig: 14, 15
   offset: 0, 0
@@ -89,14 +103,14 @@ static_vending_machine_side
   index: -1
 static_bush
   rotate: false
-  xy: 53, 35
+  xy: 70, 35
   size: 16, 10
   orig: 16, 10
   offset: 0, 0
   index: -1
 static_fence
   rotate: false
-  xy: 71, 35
+  xy: 88, 35
   size: 16, 10
   orig: 16, 10
   offset: 0, 0
@@ -122,16 +136,9 @@ static_stop_box_side
   orig: 1, 30
   offset: 0, 0
   index: -1
-plane_wing_rear
-  rotate: false
-  xy: 147, 62
-  size: 13, 4
-  orig: 13, 4
-  offset: 0, 0
-  index: -1
 plane_side
   rotate: false
-  xy: 175, 83
+  xy: 147, 50
   size: 5, 16
   orig: 5, 16
   offset: 0, 0
@@ -145,7 +152,7 @@ static_fire_hydrant
   index: -1
 entity_bomb
   rotate: false
-  xy: 89, 35
+  xy: 106, 35
   size: 7, 10
   orig: 7, 10
   offset: 0, 0
@@ -159,21 +166,21 @@ static_grass_blades
   index: -1
 static_grass_side
   rotate: false
-  xy: 53, 32
+  xy: 70, 32
   size: 16, 1
   orig: 16, 1
   offset: 0, 0
   index: -1
 static_side_walk
   rotate: false
-  xy: 147, 59
+  xy: 115, 44
   size: 16, 1
   orig: 16, 1
   offset: 0, 0
   index: -1
 plane_wing_vert
   rotate: false
-  xy: 37, 21
+  xy: 115, 35
   size: 7, 7
   orig: 7, 7
   offset: 0, 0
@@ -187,14 +194,14 @@ plane_back
   index: -1
 plane_front
   rotate: false
-  xy: 175, 76
+  xy: 175, 94
   size: 5, 5
   orig: 5, 5
   offset: 0, 0
   index: -1
 plane_propeller
   rotate: false
-  xy: 98, 42
+  xy: 54, 25
   size: 7, 3
   orig: 7, 3
   offset: 0, 0
