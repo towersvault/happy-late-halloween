@@ -1,7 +1,10 @@
 package com.towersvault.halloween.world.entities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
+import com.badlogic.gdx.math.Plane;
 import com.badlogic.gdx.utils.Array;
 import com.towersvault.halloween.utils.Assets;
 import com.towersvault.halloween.world.BoxesHandler;
@@ -75,15 +78,15 @@ public class EntityController
 				dProp.setPosition(dBottom.getX(), dBottom.getY() + dBottom.getWidth() / 2f, dBottom.getZ() + dBottom.getHeight() / 2f + 1f);
 				//dProp.rotateX(90f);
 				
-				entitySwap.add(dBottom);
-				entitySwap.add(dSide1);
-				entitySwap.add(dSide2);
-				entitySwap.add(dFront);
-				entitySwap.add(dBack);
-				entitySwap.add(dWing);
-				/*entitySwap.add(dWingVert);
-				entitySwap.add(dWingBack);
-				entitySwap.add(dProp);*/
+				entitySwap.add(dBottom);        // 0
+				entitySwap.add(dSide1);         // 1
+				entitySwap.add(dSide2);         // 2
+				entitySwap.add(dFront);         // 3
+				entitySwap.add(dBack);          // 4
+				entitySwap.add(dWing);          // 5
+				entitySwap.add(dWingVert);      // 6
+				entitySwap.add(dWingBack);      // 7
+				entitySwap.add(dProp);          // 8
 				
 				PlaneEntity plane = new PlaneEntity(entitySwap);
 				BoxesHandler.inst.createEntityDecal(plane);
@@ -114,5 +117,21 @@ public class EntityController
 			default:
 				break;
 		}
+	}
+	
+	public void update()
+	{
+		if(Gdx.input.isKeyJustPressed(Input.Keys.Z))
+			for(int i = 0; i < entities.size; i++)
+			{
+				if(entities.get(i) instanceof PlaneEntity)
+					((PlaneEntity) entities.get(i)).rotateLeft();
+			}
+		else if(Gdx.input.isKeyJustPressed(Input.Keys.X))
+			for(int i = 0; i < entities.size; i++)
+			{
+				if(entities.get(i) instanceof PlaneEntity)
+					((PlaneEntity) entities.get(i)).rotateRight();
+			}
 	}
 }

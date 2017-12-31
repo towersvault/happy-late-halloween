@@ -1,5 +1,7 @@
 package com.towersvault.halloween.world.entities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.utils.Array;
 import com.towersvault.halloween.world.BoxesHandler;
@@ -14,72 +16,82 @@ public class PlaneEntity extends AbstractEntity
 	 */
 	private int rotation = 0;
 	private int counter = 0;
+	private boolean moveUp = true;
+	private float baseY = 0f;
 	
 	public PlaneEntity(Array<Decal> decals)
 	{
 		super(decals);
+		baseY = decals.get(0).getY();
 		
-		rotate(1);
+		rotate(0);
 	}
 	
 	@Override
 	public void updateRenderOrder()
 	{
-		/*counter++;
-		
-		if(counter == 60)
+		if(moveUp)
 		{
-			counter = 0;
-			rotation++;
-			if(rotation <= 3)
+			if(decals.get(0).getY() < baseY + 1f)
 			{
-				rotate(rotation);
+				for(int i = 0; i < decals.size; i++)
+				{
+					decals.get(i).translateY(0.05f);
+				}
 			}
 			else
+				moveUp = false;
+		}
+		else
+		{
+			if(decals.get(0).getY() > baseY)
 			{
-				rotation = 0;
-				rotate(rotation);
+				for(int i = 0; i < decals.size; i++)
+				{
+					decals.get(i).translateY(-0.05f);
+				}
 			}
-		}*/
+			else
+				moveUp = true;
+		}
 		
-		/*decals.get(decals.size - 1).rotateZ(-22f);*/
+		decals.get(8).rotateZ(-16f);
 		
-		/*if(rotation == 0)
+		if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
+			move();
+	}
+	
+	public void rotateLeft()
+	{
+		if(rotation >= 3)
+			rotation = 0;
+		else
+			rotation += 1;
+		rotate(rotation);
+	}
+	
+	public void rotateRight()
+	{
+		if(rotation <= 0)
+			rotation = 3;
+		else
+			rotation -= 1;
+		rotate(rotation);
+	}
+	
+	private void move()
+	{
+		for(int i = 0; i < decals.size; i++)
 		{
-			for(int i = 0; i < decals.size; i++)
-			{
-				decals.get(i).translateZ(0.25f);
-			}
-			if(decals.get(0).getZ() >= 5f * BoxesHandler.TILE_SIZE)
-				rotate(1);
+			if(rotation == 0)
+				decals.get(i).translateZ(1f);
+			else if(rotation == 1)
+				decals.get(i).translateX(1f);
+			else if(rotation == 2)
+				decals.get(i).translateZ(-1f);
+			else
+				decals.get(i).translateX(-1f);
 		}
-		else if(rotation == 1)
-		{
-			for(int i = 0; i < decals.size; i++)
-			{
-				decals.get(i).translateX(-0.25f);
-			}
-			if(decals.get(0).getX() <= -5f * BoxesHandler.TILE_SIZE)
-				rotate(2);
-		}
-		else if(rotation == 2)
-		{
-			for(int i = 0; i < decals.size; i++)
-			{
-				decals.get(i).translateZ(-0.25f);
-			}
-			if(decals.get(0).getZ() <= 0f)
-				rotate(3);
-		}
-		else if(rotation == 3)
-		{
-			for(int i = 0; i < decals.size; i++)
-			{
-				decals.get(i).translateX(0.25f);
-			}
-			if(decals.get(0).getX() >= 0f)
-				rotate(0);
-		}*/
 	}
 	
 	private void rotate(int rotation)
@@ -104,6 +116,14 @@ public class PlaneEntity extends AbstractEntity
 			decals.get(5).setPosition(decals.get(0).getX(), decals.get(0).getY() + decals.get(0).getWidth() / 2f, decals.get(0).getZ() + 0.5f);
 			decals.get(5).setRotation(0f, 90f, 0f);
 			
+			decals.get(6).setPosition(decals.get(0).getX(), decals.get(0).getY() + decals.get(6).getHeight() / 2f, decals.get(0).getZ() - decals.get(0).getHeight() / 2f);
+			decals.get(6).setRotation(90f, 0f, 0f);
+			
+			decals.get(7).setPosition(decals.get(0).getX(), decals.get(0).getY() + decals.get(0).getWidth() / 2f, decals.get(0).getZ() - decals.get(0).getHeight() / 2f);
+			decals.get(7).setRotation(0f, 90f, 0f);
+			
+			decals.get(8).setPosition(decals.get(0).getX(), decals.get(0).getY() + decals.get(0).getWidth() / 2f, decals.get(0).getZ() + decals.get(0).getHeight() / 2f + 1f);
+			decals.get(8).setRotation(0f, 0f, 0f);
 		}
 		else if(rotation == 1)
 		{
@@ -123,6 +143,15 @@ public class PlaneEntity extends AbstractEntity
 			
 			decals.get(5).setPosition(decals.get(0).getX() + 0.5f, decals.get(0).getY() + decals.get(0).getWidth() / 2f, decals.get(0).getZ());
 			decals.get(5).setRotation(90f, 90f, 0f);
+			
+			decals.get(6).setPosition(decals.get(0).getX() - decals.get(0).getHeight() / 2f, decals.get(0).getY() + decals.get(6).getHeight() / 2f, decals.get(0).getZ());
+			decals.get(6).setRotation(180f, 0f, 0f);
+			
+			decals.get(7).setPosition(decals.get(0).getX() - decals.get(0).getHeight() / 2f, decals.get(0).getY() + decals.get(0).getWidth() / 2f, decals.get(0).getZ());
+			decals.get(7).setRotation(0f, 90f, 270f);
+			
+			decals.get(8).setPosition(decals.get(0).getX() + decals.get(0).getHeight() / 2f + 1f, decals.get(0).getY() + decals.get(0).getWidth() / 2f, decals.get(0).getZ());
+			decals.get(8).setRotation(90f, 0f, 0f);
 		}
 		else if(rotation == 2)
 		{
@@ -142,6 +171,15 @@ public class PlaneEntity extends AbstractEntity
 			
 			decals.get(5).setPosition(decals.get(0).getX(), decals.get(0).getY() + decals.get(0).getWidth() / 2f, decals.get(0).getZ() - 0.5f);
 			decals.get(5).setRotation(180f, 90f, 0f);
+			
+			decals.get(6).setPosition(decals.get(0).getX(), decals.get(0).getY() + decals.get(6).getHeight() / 2f, decals.get(0).getZ() + decals.get(0).getHeight() / 2f);
+			decals.get(6).setRotation(270f, 0f, 0f);
+			
+			decals.get(7).setPosition(decals.get(0).getX(), decals.get(0).getY() + decals.get(0).getWidth() / 2f, decals.get(0).getZ() + decals.get(0).getHeight() / 2f);
+			decals.get(7).setRotation(0f, 270f, 0f);
+			
+			decals.get(8).setPosition(decals.get(0).getX(), decals.get(0).getY() + decals.get(0).getWidth() / 2f, decals.get(0).getZ() - decals.get(0).getHeight() / 2f - 1f);
+			decals.get(8).setRotation(0f, 180f, 0f);
 		}
 		else
 		{
@@ -161,6 +199,15 @@ public class PlaneEntity extends AbstractEntity
 			
 			decals.get(5).setPosition(decals.get(0).getX() - 0.5f, decals.get(0).getY() + decals.get(0).getWidth() / 2f, decals.get(0).getZ());
 			decals.get(5).setRotation(270f, 90f, 0f);
+			
+			decals.get(6).setPosition(decals.get(0).getX() + decals.get(0).getHeight() / 2f, decals.get(0).getY() + decals.get(6).getHeight() / 2f, decals.get(0).getZ());
+			decals.get(6).setRotation(0f, 0f, 0f);
+			
+			decals.get(7).setPosition(decals.get(0).getX() + decals.get(0).getHeight() / 2f, decals.get(0).getY() + decals.get(0).getWidth() / 2f, decals.get(0).getZ());
+			decals.get(7).setRotation(0f, 270f, 90f);
+			
+			decals.get(8).setPosition(decals.get(0).getX() - decals.get(0).getHeight() / 2f - 1f, decals.get(0).getY() + decals.get(0).getWidth() / 2f, decals.get(0).getZ());
+			decals.get(8).setRotation(270f, 0f, 0f);
 		}
 	}
 }

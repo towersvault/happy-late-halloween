@@ -12,6 +12,7 @@ import com.towersvault.halloween.utils.Assets;
 import com.towersvault.halloween.utils.CinemaController;
 import com.towersvault.halloween.utils.InputHandler;
 import com.towersvault.halloween.utils.audio.AudioController;
+import com.towersvault.halloween.world.entities.EntityController;
 
 public class MainScreen extends AbstractGameScreen
 {
@@ -43,9 +44,11 @@ public class MainScreen extends AbstractGameScreen
 		
 		Renderer.inst.render();
 		
-		CinemaController.inst.checkInput();
+		//CinemaController.inst.checkInput();
 		
 		//AudioController.inst.update();
+		
+		EntityController.inst.update();
 	}
 	
 	@Override
