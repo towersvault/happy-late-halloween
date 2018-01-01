@@ -136,9 +136,16 @@ static_stop_box_side
   orig: 1, 30
   offset: 0, 0
   index: -1
-plane_side
+plane_shadow
   rotate: false
   xy: 147, 50
+  size: 5, 16
+  orig: 5, 16
+  offset: 0, 0
+  index: -1
+plane_side
+  rotate: false
+  xy: 175, 83
   size: 5, 16
   orig: 5, 16
   offset: 0, 0
@@ -194,7 +201,7 @@ plane_back
   index: -1
 plane_front
   rotate: false
-  xy: 175, 94
+  xy: 154, 61
   size: 5, 5
   orig: 5, 5
   offset: 0, 0

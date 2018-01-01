@@ -28,7 +28,7 @@ public class MapLoader
 			
 		}
 		
-		tiledMap = new TmxMapLoader().load("maps/debug.tmx");
+		tiledMap = new TmxMapLoader().load("maps/wicker.tmx");
 		//WorldHandler.inst.buildMapShapes(tiledMap, "Collision");
 		
 		TiledMapTileLayer layer = (TiledMapTileLayer)tiledMap.getLayers().get(0);

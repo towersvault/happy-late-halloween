@@ -70,6 +70,7 @@ public class Renderer implements Disposable
 		orthographicCamera.update();
 		
 		WorldHandler.inst.init();
+		WorldHandler.inst.setPlayerPosition(55f * BoxesHandler.TILE_SIZE, 24f * BoxesHandler.TILE_SIZE);
 		
 		BoxesHandler.inst.init(new DecalBatch(new CustomCameraStrategy(camera)));
 		

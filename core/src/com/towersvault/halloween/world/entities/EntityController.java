@@ -78,6 +78,10 @@ public class EntityController
 				dProp.setPosition(dBottom.getX(), dBottom.getY() + dBottom.getWidth() / 2f, dBottom.getZ() + dBottom.getHeight() / 2f + 1f);
 				//dProp.rotateX(90f);
 				
+				Decal dShadow = Decal.newDecal(5f, 16f, Assets.inst.entitySprite.planeShadow);
+				dShadow.setPosition(dBottom.getX(), 0f, dBottom.getZ());
+				dShadow.rotateX(90f);
+				
 				entitySwap.add(dBottom);        // 0
 				entitySwap.add(dSide1);         // 1
 				entitySwap.add(dSide2);         // 2
@@ -87,6 +91,7 @@ public class EntityController
 				entitySwap.add(dWingVert);      // 6
 				entitySwap.add(dWingBack);      // 7
 				entitySwap.add(dProp);          // 8
+				entitySwap.add(dShadow);          // 9
 				
 				PlaneEntity plane = new PlaneEntity(entitySwap);
 				BoxesHandler.inst.createEntityDecal(plane);

@@ -34,7 +34,7 @@ public class PlaneEntity extends AbstractEntity
 		{
 			if(decals.get(0).getY() < baseY + 1f)
 			{
-				for(int i = 0; i < decals.size; i++)
+				for(int i = 0; i < decals.size - 1; i++)
 				{
 					decals.get(i).translateY(0.05f);
 				}
@@ -46,7 +46,7 @@ public class PlaneEntity extends AbstractEntity
 		{
 			if(decals.get(0).getY() > baseY)
 			{
-				for(int i = 0; i < decals.size; i++)
+				for(int i = 0; i < decals.size - 1; i++)
 				{
 					decals.get(i).translateY(-0.05f);
 				}
@@ -124,6 +124,9 @@ public class PlaneEntity extends AbstractEntity
 			
 			decals.get(8).setPosition(decals.get(0).getX(), decals.get(0).getY() + decals.get(0).getWidth() / 2f, decals.get(0).getZ() + decals.get(0).getHeight() / 2f + 1f);
 			decals.get(8).setRotation(0f, 0f, 0f);
+			
+			decals.get(9).setPosition(decals.get(0).getX(), 0.5f, decals.get(0).getZ());
+			decals.get(9).setRotation(0f, 90f, 0f);
 		}
 		else if(rotation == 1)
 		{
@@ -152,6 +155,9 @@ public class PlaneEntity extends AbstractEntity
 			
 			decals.get(8).setPosition(decals.get(0).getX() + decals.get(0).getHeight() / 2f + 1f, decals.get(0).getY() + decals.get(0).getWidth() / 2f, decals.get(0).getZ());
 			decals.get(8).setRotation(90f, 0f, 0f);
+			
+			decals.get(9).setPosition(decals.get(0).getX(), 0.5f, decals.get(0).getZ());
+			decals.get(9).setRotation(90f, 90f, 0f);
 		}
 		else if(rotation == 2)
 		{
@@ -180,6 +186,9 @@ public class PlaneEntity extends AbstractEntity
 			
 			decals.get(8).setPosition(decals.get(0).getX(), decals.get(0).getY() + decals.get(0).getWidth() / 2f, decals.get(0).getZ() - decals.get(0).getHeight() / 2f - 1f);
 			decals.get(8).setRotation(0f, 180f, 0f);
+			
+			decals.get(9).setPosition(decals.get(0).getX(), 0.5f, decals.get(0).getZ());
+			decals.get(9).setRotation(0f, 90f, 0f);
 		}
 		else
 		{
@@ -208,6 +217,9 @@ public class PlaneEntity extends AbstractEntity
 			
 			decals.get(8).setPosition(decals.get(0).getX() - decals.get(0).getHeight() / 2f - 1f, decals.get(0).getY() + decals.get(0).getWidth() / 2f, decals.get(0).getZ());
 			decals.get(8).setRotation(270f, 0f, 0f);
+			
+			decals.get(9).setPosition(decals.get(0).getX(), 0.5f, decals.get(0).getZ());
+			decals.get(9).setRotation(90f, 90f, 0f);
 		}
 	}
 }
