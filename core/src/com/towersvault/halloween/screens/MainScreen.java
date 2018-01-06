@@ -3,16 +3,25 @@ package com.towersvault.halloween.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.controllers.ControllerListener;
+import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.towersvault.halloween.render.Renderer;
 import com.towersvault.halloween.utils.Assets;
 import com.towersvault.halloween.utils.CinemaController;
+import com.towersvault.halloween.utils.Constants;
 import com.towersvault.halloween.utils.InputHandler;
 import com.towersvault.halloween.utils.audio.AudioController;
 import com.towersvault.halloween.world.entities.EntityController;
+import com.badlogic.gdx.controllers.Controller;
+
+import javax.sound.midi.ControllerEventListener;
+import javax.sound.midi.ShortMessage;
 
 public class MainScreen extends AbstractGameScreen
 {
@@ -73,6 +82,8 @@ public class MainScreen extends AbstractGameScreen
 		Gdx.input.setCursorCatched(true);
 		
 		Renderer.inst.init();
+		
+		InputHandler.inst.init();
 		
 		//AudioController.inst.init();
 	}

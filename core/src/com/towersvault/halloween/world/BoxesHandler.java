@@ -13,6 +13,7 @@ import com.towersvault.halloween.utils.Assets;
 import com.towersvault.halloween.utils.CinemaController;
 import com.towersvault.halloween.world.decals.*;
 import com.towersvault.halloween.world.entities.AbstractEntity;
+import com.towersvault.halloween.world.entities.EntityController;
 import com.towersvault.halloween.world.entities.PlaneEntity;
 
 public class BoxesHandler implements Disposable
@@ -66,7 +67,7 @@ public class BoxesHandler implements Disposable
 		dMoon = Decal.newDecal(144f, 80f, Assets.inst.staticSprite.moon);
 		dMoon.setPosition(40f, 60f, 40f);
 		
-		decals.add(dMoon);
+		//decals.add(dMoon);
 	}
 	
 	public void loadBox(TextureRegion tex, BoxType boxType, boolean physics, int x, int z, float addY)
@@ -630,8 +631,26 @@ public class BoxesHandler implements Disposable
 	
 	public void render(Vector3 camPosition, PerspectiveCamera cam)
 	{
+		batch.add(dMoon);
+		
 		for(int i = 0; i < decals.size; i++)
 		{
+			if((decals.get(i).getX() < WorldHandler.inst.getBodyX() - WorldHandler.inst.TILE_WIDTH * 2f ||
+					decals.get(i).getX() > WorldHandler.inst.getBodyX() + WorldHandler.inst.TILE_WIDTH * 2f)
+					|| (decals.get(i).getZ() < WorldHandler.inst.getBodyY() - WorldHandler.inst.TILE_WIDTH * 2f ||
+					decals.get(i).getZ() > WorldHandler.inst.getBodyY() + WorldHandler.inst.TILE_WIDTH * 2f))
+			{
+				if((decals.get(i).getX() < WorldHandler.inst.getBodyX() - WorldHandler.inst.TILE_WIDTH * 7f ||
+						decals.get(i).getX() > WorldHandler.inst.getBodyX() + WorldHandler.inst.TILE_WIDTH * 7f)
+						|| (decals.get(i).getZ() < WorldHandler.inst.getBodyY() - WorldHandler.inst.TILE_WIDTH * 7f ||
+						decals.get(i).getZ() > WorldHandler.inst.getBodyY() + WorldHandler.inst.TILE_WIDTH * 7f))
+					decals.get(i).setColor(75f / 255f, 75f / 255f, 75f / 255f, decals.get(i).getColor().a);
+				else
+					decals.get(i).setColor(150f / 255f, 150f / 255f, 150f / 255f, decals.get(i).getColor().a);
+			}
+			else
+				decals.get(i).setColor(1f, 1f, 1f, decals.get(i).getColor().a);
+			
 			batch.add(decals.get(i));
 		}
 		batch.flush();

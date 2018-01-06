@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
+import com.towersvault.halloween.utils.Constants;
 import com.towersvault.halloween.utils.CustomCameraStrategy;
 import com.towersvault.halloween.world.BoxesHandler;
 import com.towersvault.halloween.world.ItemHandler;
@@ -35,6 +36,9 @@ public class Renderer implements Disposable
 	private Sprite sprVignette;
 	
 	private static final float MOVEMENT_SPEED = 55f;
+	
+	public static int CONTROLLER_X = 0;
+	public static int CONTROLLER_Y = 0;
 	
 	/*private float cameraRotation = 0f;*/
 	private Vector2 listener = new Vector2();
@@ -189,6 +193,75 @@ public class Renderer implements Disposable
 		camera.update();
 	}
 	
+	public void rotateCamera(float yRotation)
+	{
+		camera.rotate(Vector3.Y, yRotation);
+		camera.update();
+	}
+	
+	/**
+	 * For Xbox360 Controller
+	 * @param xMultiplier
+	 */
+	public void updateCameraControllerX(float xMultiplier)
+	{
+		if(xMultiplier > 0f)
+		{
+			Vector3 v = camera.direction.cpy();
+			v.y = 0f;
+			v.rotate(Vector3.Y, -90);
+			v.x *= (MOVEMENT_SPEED * xMultiplier) * Gdx.graphics.getDeltaTime();
+			v.z *= (MOVEMENT_SPEED * xMultiplier) * Gdx.graphics.getDeltaTime();
+			WorldHandler.inst.moveBody(v.x, v.z);
+		}
+		else
+		{
+			Vector3 v = camera.direction.cpy();
+			v.y = 0f;
+			v.rotate(Vector3.Y, 90);
+			v.x *= (MOVEMENT_SPEED * (xMultiplier * -1f)) * Gdx.graphics.getDeltaTime();
+			v.z *= (MOVEMENT_SPEED * (xMultiplier * -1f)) * Gdx.graphics.getDeltaTime();
+			WorldHandler.inst.moveBody(v.x, v.z);
+		}
+		
+		camera.position.x = WorldHandler.inst.getBodyX();
+		camera.position.z = WorldHandler.inst.getBodyY();
+		camera.update();
+	}
+	
+	/**
+	 * For Xbox360 Controller
+	 * @param yMultiplier
+	 */
+	public void updateCameraControllerY(float yMultiplier)
+	{
+		if(yMultiplier < 0f)
+		{
+			Vector3 v = camera.direction.cpy();
+			v.y = 0f;
+			v.x *= (MOVEMENT_SPEED * (yMultiplier * -1f)) * Gdx.graphics.getDeltaTime();
+			v.z *= (MOVEMENT_SPEED * (yMultiplier * -1f)) * Gdx.graphics.getDeltaTime();
+			WorldHandler.inst.moveBody(v.x, v.z);
+		}
+		else
+		{
+			Vector3 v = camera.direction.cpy();
+			v.y = 0f;
+			v.x = -v.x;
+			v.z = -v.z;
+			v.x *= (MOVEMENT_SPEED * yMultiplier) * Gdx.graphics.getDeltaTime();
+			v.z *= (MOVEMENT_SPEED * yMultiplier) * Gdx.graphics.getDeltaTime();
+			WorldHandler.inst.moveBody(v.x, v.z);
+		}
+		
+		camera.position.x = WorldHandler.inst.getBodyX();
+		camera.position.z = WorldHandler.inst.getBodyY();
+		camera.update();
+	}
+	
+	/**
+	 * For WASD Input
+	 */
 	private void updateCameraMovement()
 	{
 		if(Gdx.input.isKeyPressed(Keys.W))
