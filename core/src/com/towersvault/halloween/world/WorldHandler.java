@@ -248,19 +248,6 @@ public class WorldHandler implements Disposable
 		shape.dispose();
 	}
 	
-	public void buildMapShapes(TiledMap tiledMap, String layerName)
-	{
-		try
-		{
-			MapBodyBuilder.buildShapes(tiledMap, 1f, world, layerName);
-		}
-		catch(Exception e)
-		{
-			System.out.println("Tiledmap missing layer " + layerName + ".");
-			e.printStackTrace();
-		}
-	}
-	
 	public void resetBodyVelocity()
 	{
 		playerBody.setLinearVelocity(playerBody.getLinearVelocity().x / 2f, playerBody.getLinearVelocity().y / 2f);

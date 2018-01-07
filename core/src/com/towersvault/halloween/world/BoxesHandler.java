@@ -1,5 +1,6 @@
 package com.towersvault.halloween.world;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -559,6 +560,83 @@ public class BoxesHandler implements Disposable
 		}
 	}
 	
+	public void loadWallBoxes(String[][] walls0, String[][] walls1, int mapWidth, int mapHeight)
+	{
+		for(int x = 1; x < mapWidth - 1; x++)
+		{
+			for(int y = 1; y < mapHeight - 1; y++)
+			{
+				if(walls0[y][x].equals("W"))
+				{
+					if(!walls0[y + 1][x].equals("W"))
+					{
+						Decal dTop = Decal.newDecal(TILE_SIZE, TILE_SIZE, MapLoader.inst.getTexture(0, x, y));
+						dTop.setPosition(TILE_SIZE * x, TILE_SIZE / 2f, TILE_SIZE * y);
+						decals.add(dTop);
+					}
+					if(!walls0[y - 1][x].equals("W"))
+					{
+						Decal dBottom = Decal.newDecal(TILE_SIZE, TILE_SIZE, MapLoader.inst.getTexture(0, x, y));
+						dBottom.setPosition(TILE_SIZE * x, TILE_SIZE / 2f, TILE_SIZE * y - TILE_SIZE);
+						decals.add(dBottom);
+					}
+					if(!walls0[y][x + 1].equals("W"))
+					{
+						Decal dRight = Decal.newDecal(TILE_SIZE, TILE_SIZE, MapLoader.inst.getTexture(0, x, y));
+						dRight.setPosition(TILE_SIZE * x + TILE_SIZE / 2f, TILE_SIZE / 2f, TILE_SIZE * y - TILE_SIZE / 2f);
+						dRight.rotateY(90f);
+						decals.add(dRight);
+					}
+					if(!walls0[y][x - 1].equals("W"))
+					{
+						Decal dLeft = Decal.newDecal(TILE_SIZE, TILE_SIZE, MapLoader.inst.getTexture(0, x, y));
+						dLeft.setPosition(TILE_SIZE * x - TILE_SIZE / 2f, TILE_SIZE / 2f, TILE_SIZE * y - TILE_SIZE / 2f);
+						dLeft.rotateY(90f);
+						decals.add(dLeft);
+					}
+				}
+			}
+		}
+		
+		for(int x = 1; x < mapWidth - 1; x++)
+		{
+			for(int y = 1; y < mapHeight - 1; y++)
+			{
+				if(walls1[y][x].equals("W"))
+				{
+					if(!walls1[y + 1][x].equals("W"))
+					{
+						Decal dTop = Decal.newDecal(TILE_SIZE, TILE_SIZE, MapLoader.inst.getTexture(1, x, y));
+						dTop.setPosition(TILE_SIZE * x, TILE_SIZE / 2f + TILE_SIZE, TILE_SIZE * y);
+						decals.add(dTop);
+					}
+					if(!walls1[y - 1][x].equals("W"))
+					{
+						Decal dBottom = Decal.newDecal(TILE_SIZE, TILE_SIZE, MapLoader.inst.getTexture(1, x, y));
+						dBottom.setPosition(TILE_SIZE * x, TILE_SIZE / 2f + TILE_SIZE, TILE_SIZE * y - TILE_SIZE);
+						decals.add(dBottom);
+					}
+					if(!walls1[y][x + 1].equals("W"))
+					{
+						Decal dRight = Decal.newDecal(TILE_SIZE, TILE_SIZE, MapLoader.inst.getTexture(1, x, y));
+						dRight.setPosition(TILE_SIZE * x + TILE_SIZE / 2f, TILE_SIZE / 2f + TILE_SIZE, TILE_SIZE * y - TILE_SIZE / 2f);
+						dRight.rotateY(90f);
+						decals.add(dRight);
+					}
+					if(!walls1[y][x - 1].equals("W"))
+					{
+						Decal dLeft = Decal.newDecal(TILE_SIZE, TILE_SIZE, MapLoader.inst.getTexture(1, x, y));
+						dLeft.setPosition(TILE_SIZE * x - TILE_SIZE / 2f, TILE_SIZE / 2f + TILE_SIZE, TILE_SIZE * y - TILE_SIZE / 2f);
+						dLeft.rotateY(90f);
+						decals.add(dLeft);
+					}
+				}
+			}
+		}
+		
+		System.out.println("RAM: " + (Gdx.app.getJavaHeap() / 1000000) + "Mb");
+	}
+	
 	public void optimizeBoxes(String[][] collisionMap0, String[][] collisionMap1)
 	{
 		Array<Decal> newDecals = new Array<Decal>();
@@ -644,9 +722,17 @@ public class BoxesHandler implements Disposable
 						decals.get(i).getX() > WorldHandler.inst.getBodyX() + WorldHandler.inst.TILE_WIDTH * 7f)
 						|| (decals.get(i).getZ() < WorldHandler.inst.getBodyY() - WorldHandler.inst.TILE_WIDTH * 7f ||
 						decals.get(i).getZ() > WorldHandler.inst.getBodyY() + WorldHandler.inst.TILE_WIDTH * 7f))
-					decals.get(i).setColor(75f / 255f, 75f / 255f, 75f / 255f, decals.get(i).getColor().a);
+				{
+					if((decals.get(i).getX() < WorldHandler.inst.getBodyX() - WorldHandler.inst.TILE_WIDTH * 13f ||
+							decals.get(i).getX() > WorldHandler.inst.getBodyX() + WorldHandler.inst.TILE_WIDTH * 13f)
+							|| (decals.get(i).getZ() < WorldHandler.inst.getBodyY() - WorldHandler.inst.TILE_WIDTH * 13f ||
+							decals.get(i).getZ() > WorldHandler.inst.getBodyY() + WorldHandler.inst.TILE_WIDTH * 13f))
+						decals.get(i).setColor(23f / 255f, 28f / 255f, 30f / 255f, decals.get(i).getColor().a);
+					else
+						decals.get(i).setColor(48f / 255f, 58f / 255f, 63f / 255f, decals.get(i).getColor().a);
+				}
 				else
-					decals.get(i).setColor(150f / 255f, 150f / 255f, 150f / 255f, decals.get(i).getColor().a);
+					decals.get(i).setColor(98f / 255f, 119f / 255f, 130f / 255f, decals.get(i).getColor().a);
 			}
 			else
 				decals.get(i).setColor(1f, 1f, 1f, decals.get(i).getColor().a);

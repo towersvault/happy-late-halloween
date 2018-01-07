@@ -1,10 +1,13 @@
 package com.towersvault.halloween.world;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.towersvault.halloween.world.BoxesHandler.BoxType;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+
+import javax.swing.*;
 
 public class MapLoader
 {
@@ -29,7 +32,6 @@ public class MapLoader
 		}
 		
 		tiledMap = new TmxMapLoader().load("maps/wicker.tmx");
-		//WorldHandler.inst.buildMapShapes(tiledMap, "Collision");
 		
 		TiledMapTileLayer layer = (TiledMapTileLayer)tiledMap.getLayers().get(0);
 		Cell cell;
@@ -49,7 +51,7 @@ public class MapLoader
 				{
 					if(cell.getTile().getProperties().containsKey("wall"))
 					{
-						BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.WALL, true, x, y, 0f);
+						//BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.WALL, true, x, y, 0f);
 						collisionMap0[y][x] = "W";
 					}
 					else if(cell.getTile().getProperties().containsKey("floor"))
@@ -130,7 +132,7 @@ public class MapLoader
 					}
 					else if(cell.getTile().getProperties().containsKey("wall"))
 					{
-						BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.WALL, false, x, y, BoxesHandler.TILE_SIZE);
+						//BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.WALL, false, x, y, BoxesHandler.TILE_SIZE);
 						collisionMap1[y][x] = "W";
 					}
 					else if(cell.getTile().getProperties().containsKey("grass_side"))
@@ -162,10 +164,6 @@ public class MapLoader
 					{
 						BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.ROOF, false, x, y, 0f);
 					}
-					/*else if(cell.getTile().getProperties().containsKey("chimney"))
-					{
-						BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.WALL, false, x, y, BoxesHandler.TILE_SIZE * 2f);
-					}*/
 				}
 				catch(Exception e)
 				{
@@ -197,7 +195,14 @@ public class MapLoader
 		}
 		
 		BoxesHandler.inst.optimizeBoxes(collisionMap0, collisionMap1);
+		BoxesHandler.inst.loadWallBoxes(collisionMap0, collisionMap1, layer.getWidth(), layer.getHeight());
 		
 		WorldHandler.inst.setCollsionMap(collisionMap0);
+	}
+	
+	public TextureRegion getTexture(int layer, int x, int y)
+	{
+		TiledMapTileLayer mapLayer = (TiledMapTileLayer)tiledMap.getLayers().get(layer);
+		return mapLayer.getCell(x, y).getTile().getTextureRegion();
 	}
 }

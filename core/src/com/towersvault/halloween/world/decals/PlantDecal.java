@@ -60,13 +60,21 @@ public class PlantDecal extends AbstractDecal
 					|| (super.decals.get(i).getZ() < WorldHandler.inst.getBodyY() - WorldHandler.inst.TILE_WIDTH * 2f ||
 					super.decals.get(i).getZ() > WorldHandler.inst.getBodyY() + WorldHandler.inst.TILE_WIDTH * 2f))
 			{
-				if((super.decals.get(i).getX() < WorldHandler.inst.getBodyX() - WorldHandler.inst.TILE_WIDTH * 5f ||
-						super.decals.get(i).getX() > WorldHandler.inst.getBodyX() + WorldHandler.inst.TILE_WIDTH * 5f)
-						|| (super.decals.get(i).getZ() < WorldHandler.inst.getBodyY() - WorldHandler.inst.TILE_WIDTH * 5f ||
-						super.decals.get(i).getZ() > WorldHandler.inst.getBodyY() + WorldHandler.inst.TILE_WIDTH * 5f))
-					super.decals.get(i).setColor(75f / 255f, 75f / 255f, 75f / 255f, super.decals.get(i).getColor().a);
+				if((super.decals.get(i).getX() < WorldHandler.inst.getBodyX() - WorldHandler.inst.TILE_WIDTH * 7f ||
+						super.decals.get(i).getX() > WorldHandler.inst.getBodyX() + WorldHandler.inst.TILE_WIDTH * 7f)
+						|| (super.decals.get(i).getZ() < WorldHandler.inst.getBodyY() - WorldHandler.inst.TILE_WIDTH * 7f ||
+						super.decals.get(i).getZ() > WorldHandler.inst.getBodyY() + WorldHandler.inst.TILE_WIDTH * 7f))
+				{
+					if((super.decals.get(i).getX() < WorldHandler.inst.getBodyX() - WorldHandler.inst.TILE_WIDTH * 13f ||
+							super.decals.get(i).getX() > WorldHandler.inst.getBodyX() + WorldHandler.inst.TILE_WIDTH * 13f)
+							|| (super.decals.get(i).getZ() < WorldHandler.inst.getBodyY() - WorldHandler.inst.TILE_WIDTH * 13f ||
+							super.decals.get(i).getZ() > WorldHandler.inst.getBodyY() + WorldHandler.inst.TILE_WIDTH * 13f))
+						super.decals.get(i).setColor(23f / 255f, 28f / 255f, 30f / 255f, super.decals.get(i).getColor().a);
+					else
+						super.decals.get(i).setColor(48f / 255f, 58f / 255f, 63f / 255f, super.decals.get(i).getColor().a);
+				}
 				else
-					super.decals.get(i).setColor(150f / 255f, 150f / 255f, 150f / 255f, super.decals.get(i).getColor().a);
+					super.decals.get(i).setColor(98f / 255f, 119f / 255f, 130f / 255f, super.decals.get(i).getColor().a);
 			}
 			else
 				super.decals.get(i).setColor(1f, 1f, 1f, super.decals.get(i).getColor().a);
