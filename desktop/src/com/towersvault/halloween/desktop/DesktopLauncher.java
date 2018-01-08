@@ -3,6 +3,7 @@ package com.towersvault.halloween.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.towersvault.halloween.HalloweenMain;
+import com.towersvault.halloween.utils.AspectRatioHelper;
 
 public class DesktopLauncher
 {
@@ -10,10 +11,10 @@ public class DesktopLauncher
 	{
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		
-		/*int fullscreenWidth = LwjglApplicationConfiguration.getDesktopDisplayMode().width;
+		int fullscreenWidth = LwjglApplicationConfiguration.getDesktopDisplayMode().width;
 		int fullscreenHeight = LwjglApplicationConfiguration.getDesktopDisplayMode().height;
 		
-		config.width = fullscreenWidth;
+		/*config.width = fullscreenWidth;
 		config.height = fullscreenHeight;
 		
 		config.fullscreen = true;*/
@@ -23,7 +24,9 @@ public class DesktopLauncher
 		
 		config.resizable = false;
 		
-		config.title = "Super Secret Project";
+		config.title = "Happy Late Halloween - " + config.width + "x" + config.height;
+		
+		AspectRatioHelper.inst.baseRatio = (float)fullscreenWidth / (float)fullscreenHeight;
 		
 		new LwjglApplication(new HalloweenMain(), config);
 	}

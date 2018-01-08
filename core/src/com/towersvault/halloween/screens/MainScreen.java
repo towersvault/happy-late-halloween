@@ -12,10 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.towersvault.halloween.render.Renderer;
-import com.towersvault.halloween.utils.Assets;
-import com.towersvault.halloween.utils.CinemaController;
-import com.towersvault.halloween.utils.Constants;
-import com.towersvault.halloween.utils.InputHandler;
+import com.towersvault.halloween.utils.*;
 import com.towersvault.halloween.utils.audio.AudioController;
 import com.towersvault.halloween.world.entities.EntityController;
 import com.badlogic.gdx.controllers.Controller;
@@ -40,6 +37,15 @@ public class MainScreen extends AbstractGameScreen
 		
 		stage.addActor(stack);
 		stack.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
+		addActors();
+	}
+	
+	private void addActors()
+	{
+		Scene2DHelper.inst.init();
+		
+		stack.addActor(Scene2DHelper.inst.buildInventoryIcons());
 	}
 	
 	@Override
@@ -58,6 +64,9 @@ public class MainScreen extends AbstractGameScreen
 		//AudioController.inst.update();
 		
 		EntityController.inst.update();
+		
+		stage.act(deltaTime);
+		stage.draw();
 	}
 	
 	@Override
@@ -69,7 +78,7 @@ public class MainScreen extends AbstractGameScreen
 	@Override
 	public void show()
 	{
-		//AspectRatioHelper.inst.findAspectRatio();
+		AspectRatioHelper.inst.findAspectRatio();
 		
 		Assets.inst.init();
 		

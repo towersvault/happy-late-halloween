@@ -15,7 +15,7 @@ public class AspectRatioHelper
 	private int ratioWidth;
 	private int ratioHeight;
 	
-	public static final float GAME_SCREEN_HEIGHT = 100f;
+	public static final float GAME_SCREEN_HEIGHT = 140f;
 	
 	public void findAspectRatio()
 	{
