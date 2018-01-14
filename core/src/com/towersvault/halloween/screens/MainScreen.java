@@ -39,6 +39,8 @@ public class MainScreen extends AbstractGameScreen
 		stack.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		addActors();
+		
+		Scene2DCrt.inst.init();
 	}
 	
 	private void addActors()
@@ -67,6 +69,8 @@ public class MainScreen extends AbstractGameScreen
 		
 		stage.act(deltaTime);
 		stage.draw();
+		
+		Scene2DCrt.inst.render(deltaTime);
 	}
 	
 	@Override

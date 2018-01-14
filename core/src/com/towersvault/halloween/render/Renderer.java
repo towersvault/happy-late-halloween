@@ -15,8 +15,10 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
+import com.towersvault.halloween.utils.Assets;
 import com.towersvault.halloween.utils.Constants;
 import com.towersvault.halloween.utils.CustomCameraStrategy;
+import com.towersvault.halloween.utils.MathHelper;
 import com.towersvault.halloween.world.BoxesHandler;
 import com.towersvault.halloween.world.ItemHandler;
 import com.towersvault.halloween.world.MapLoader;
@@ -34,6 +36,7 @@ public class Renderer implements Disposable
 	private SpriteBatch spriteBatch;
 	private Sprite sprSky;
 	private Sprite sprVignette;
+	private SpriteBatch uiBatch;
 	
 	private static final float MOVEMENT_SPEED = 55f;
 	
@@ -44,6 +47,8 @@ public class Renderer implements Disposable
 	private Vector2 listener = new Vector2();
 	
 	private ShaderProgram shader;
+	
+	private Sprite testUi;
 	
 	public void init()
 	{
@@ -140,18 +145,23 @@ public class Renderer implements Disposable
 		
 		EntityController.inst.init();
 		
-		/*ShaderProgram.pedantic = false;
-		shader = new ShaderProgram(Gdx.files.internal("shaders/vignette.vsh"), Gdx.files.internal("shaders/vignette.fsh"));
-		spriteBatch.setShader(shader);
+		uiBatch = new SpriteBatch();
 		
-		System.out.println(shader.isCompiled() ? "Shader works!" : shader.getLog());*/
+		ShaderProgram.pedantic = false;
+		shader = new ShaderProgram(Gdx.files.internal("shaders/vignette.vsh"), Gdx.files.internal("shaders/vignette.fsh"));
+		uiBatch.setShader(shader);
+		
+		System.out.println(shader.isCompiled() ? "Shader works!" : shader.getLog());
+		
+		testUi = new Sprite(Assets.inst.entitySprite.bomb);
+		testUi.setSize(testUi.getWidth() * Constants.resize(), testUi.getHeight() * Constants.resize());
 	}
 	
 	public void render()
 	{
-		/*shader.begin();
+		shader.begin();
 		shader.setUniformf("u_distort", MathUtils.random(4), MathUtils.random(4), 0);
-		shader.end();*/
+		shader.end();
 		
 		spriteBatch.setProjectionMatrix(orthographicCamera.combined);
 		spriteBatch.begin();
@@ -175,6 +185,11 @@ public class Renderer implements Disposable
 		
 		WorldHandler.inst.update();
 		WorldHandler.inst.resetBodyVelocity();
+		
+		uiBatch.setProjectionMatrix(camera.combined);
+		uiBatch.begin();
+		testUi.draw(uiBatch);
+		uiBatch.end();
 	}
 	
 	public Vector2 getListener()
