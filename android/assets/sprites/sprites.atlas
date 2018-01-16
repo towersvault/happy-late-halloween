@@ -10,6 +10,13 @@ static_moon
   orig: 144, 80
   offset: 0, 0
   index: -1
+ui_messaging_mockup
+  rotate: false
+  xy: 147, 19
+  size: 68, 108
+  orig: 68, 108
+  offset: 0, 0
+  index: -1
 inventomatic2500
   rotate: false
   xy: 1, 38
@@ -19,7 +26,7 @@ inventomatic2500
   index: -1
 static_stop_back
   rotate: false
-  xy: 147, 94
+  xy: 217, 94
   size: 15, 33
   orig: 15, 33
   offset: 0, 0
@@ -33,7 +40,7 @@ static_stop_front
   index: -1
 static_scarecrow
   rotate: false
-  xy: 164, 101
+  xy: 234, 101
   size: 17, 26
   orig: 17, 26
   offset: 0, 0
@@ -47,30 +54,51 @@ static_scarecrow_on
   index: -1
 static_corn
   rotate: false
-  xy: 147, 68
+  xy: 217, 68
   size: 13, 24
   orig: 13, 24
   offset: 0, 0
   index: -1
 entity_skeleton_idle
   rotate: false
-  xy: 183, 107
+  xy: 37, 16
   size: 15, 20
   orig: 15, 20
   offset: 0, 0
   index: -1
+static_stop_box_back
+  rotate: false
+  xy: 217, 36
+  size: 3, 30
+  orig: 3, 30
+  offset: 0, 0
+  index: -1
+static_stop_box_front
+  rotate: false
+  xy: 222, 36
+  size: 3, 30
+  orig: 3, 30
+  offset: 0, 0
+  index: -1
 static_farmland
   rotate: false
-  xy: 37, 20
+  xy: 54, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 static_floor_grass
   rotate: false
-  xy: 200, 111
+  xy: 72, 20
   size: 16, 16
   orig: 16, 16
+  offset: 0, 0
+  index: -1
+static_stop_box_side
+  rotate: false
+  xy: 227, 36
+  size: 1, 30
+  orig: 1, 30
   offset: 0, 0
   index: -1
 plane_wing
@@ -82,65 +110,16 @@ plane_wing
   index: -1
 static_vending_machine_front
   rotate: false
-  xy: 55, 21
+  xy: 90, 23
   size: 14, 15
   orig: 14, 15
   offset: 0, 0
   index: -1
 static_vending_machine_side
   rotate: false
-  xy: 218, 112
+  xy: 217, 19
   size: 14, 15
   orig: 14, 15
-  offset: 0, 0
-  index: -1
-static_bush
-  rotate: false
-  xy: 71, 26
-  size: 16, 10
-  orig: 16, 10
-  offset: 0, 0
-  index: -1
-static_fence
-  rotate: false
-  xy: 89, 28
-  size: 16, 10
-  orig: 16, 10
-  offset: 0, 0
-  index: -1
-static_stop_box_back
-  rotate: false
-  xy: 162, 62
-  size: 3, 30
-  orig: 3, 30
-  offset: 0, 0
-  index: -1
-static_stop_box_front
-  rotate: false
-  xy: 167, 69
-  size: 3, 30
-  orig: 3, 30
-  offset: 0, 0
-  index: -1
-static_stop_box_side
-  rotate: false
-  xy: 172, 69
-  size: 1, 30
-  orig: 1, 30
-  offset: 0, 0
-  index: -1
-plane_wing_rear
-  rotate: false
-  xy: 147, 62
-  size: 13, 4
-  orig: 13, 4
-  offset: 0, 0
-  index: -1
-plane_shadow
-  rotate: false
-  xy: 175, 83
-  size: 5, 16
-  orig: 5, 16
   offset: 0, 0
   index: -1
 plane_wing_vert
@@ -150,149 +129,191 @@ plane_wing_vert
   orig: 7, 7
   offset: 0, 0
   index: -1
-plane_side
+static_bush
   rotate: false
-  xy: 234, 111
+  xy: 234, 89
+  size: 16, 10
+  orig: 16, 10
+  offset: 0, 0
+  index: -1
+static_fence
+  rotate: false
+  xy: 232, 77
+  size: 16, 10
+  orig: 16, 10
+  offset: 0, 0
+  index: -1
+plane_shadow
+  rotate: false
+  xy: 250, 71
   size: 5, 16
   orig: 5, 16
   offset: 0, 0
   index: -1
-static_fire_hydrant
+plane_side
   rotate: false
-  xy: 147, 49
-  size: 8, 11
-  orig: 8, 11
-  offset: 0, 0
-  index: -1
-item_burger
-  rotate: false
-  xy: 241, 118
-  size: 9, 9
-  orig: 9, 9
-  offset: 0, 0
-  index: -1
-entity_bomb
-  rotate: false
-  xy: 107, 28
-  size: 7, 10
-  orig: 7, 10
-  offset: 0, 0
-  index: -1
-item_chocolate
-  rotate: false
-  xy: 116, 36
-  size: 9, 9
-  orig: 9, 9
-  offset: 0, 0
-  index: -1
-item_gem
-  rotate: false
-  xy: 127, 36
-  size: 9, 9
-  orig: 9, 9
-  offset: 0, 0
-  index: -1
-item_soda
-  rotate: false
-  xy: 37, 9
-  size: 9, 9
-  orig: 9, 9
-  offset: 0, 0
-  index: -1
-item_trumpet
-  rotate: false
-  xy: 157, 51
-  size: 9, 9
-  orig: 9, 9
+  xy: 106, 22
+  size: 5, 16
+  orig: 5, 16
   offset: 0, 0
   index: -1
 static_grass_blades
   rotate: false
-  xy: 200, 108
+  xy: 232, 74
   size: 16, 1
   orig: 16, 1
   offset: 0, 0
   index: -1
 static_grass_side
   rotate: false
-  xy: 71, 23
+  xy: 232, 71
   size: 16, 1
   orig: 16, 1
+  offset: 0, 0
+  index: -1
+plane_wing_rear
+  rotate: false
+  xy: 37, 10
+  size: 13, 4
+  orig: 13, 4
   offset: 0, 0
   index: -1
 static_side_walk
   rotate: false
-  xy: 89, 25
+  xy: 54, 17
   size: 16, 1
   orig: 16, 1
   offset: 0, 0
   index: -1
-ui_heart_full
+ui_icon_chat
   rotate: false
-  xy: 116, 26
-  size: 9, 8
-  orig: 9, 8
+  xy: 116, 35
+  size: 10, 10
+  orig: 10, 10
   offset: 0, 0
   index: -1
-ui_heart_empty
+ui_icon_inventory
   rotate: false
-  xy: 138, 39
-  size: 7, 6
-  orig: 7, 6
+  xy: 128, 35
+  size: 10, 10
+  orig: 10, 10
   offset: 0, 0
   index: -1
 plane_back
   rotate: false
-  xy: 167, 62
+  xy: 140, 40
   size: 5, 5
   orig: 5, 5
   offset: 0, 0
   index: -1
-ui_dock
+static_fire_hydrant
   rotate: false
-  xy: 175, 71
-  size: 1, 10
-  orig: 1, 10
+  xy: 113, 22
+  size: 8, 11
+  orig: 8, 11
   offset: 0, 0
   index: -1
-item_left
+item_burger
   rotate: false
-  xy: 147, 41
-  size: 4, 6
-  orig: 4, 6
-  offset: 0, 0
-  index: -1
-item_right
-  rotate: false
-  xy: 48, 12
-  size: 4, 6
-  orig: 4, 6
+  xy: 123, 24
+  size: 9, 9
+  orig: 9, 9
   offset: 0, 0
   index: -1
 plane_front
   rotate: false
-  xy: 241, 111
+  xy: 140, 33
   size: 5, 5
   orig: 5, 5
   offset: 0, 0
   index: -1
+ui_heart_empty
+  rotate: false
+  xy: 27, 2
+  size: 7, 6
+  orig: 7, 6
+  offset: 0, 0
+  index: -1
+item_left
+  rotate: false
+  xy: 134, 27
+  size: 4, 6
+  orig: 4, 6
+  offset: 0, 0
+  index: -1
+ui_dock
+  rotate: false
+  xy: 252, 89
+  size: 1, 10
+  orig: 1, 10
+  offset: 0, 0
+  index: -1
+entity_bomb
+  rotate: false
+  xy: 230, 56
+  size: 7, 10
+  orig: 7, 10
+  offset: 0, 0
+  index: -1
+item_chocolate
+  rotate: false
+  xy: 230, 45
+  size: 9, 9
+  orig: 9, 9
+  offset: 0, 0
+  index: -1
+item_gem
+  rotate: false
+  xy: 239, 60
+  size: 9, 9
+  orig: 9, 9
+  offset: 0, 0
+  index: -1
+item_soda
+  rotate: false
+  xy: 241, 49
+  size: 9, 9
+  orig: 9, 9
+  offset: 0, 0
+  index: -1
+item_trumpet
+  rotate: false
+  xy: 241, 38
+  size: 9, 9
+  orig: 9, 9
+  offset: 0, 0
+  index: -1
+item_right
+  rotate: false
+  xy: 36, 2
+  size: 4, 6
+  orig: 4, 6
+  offset: 0, 0
+  index: -1
 plane_propeller
   rotate: false
-  xy: 183, 102
+  xy: 230, 40
   size: 7, 3
   orig: 7, 3
   offset: 0, 0
   index: -1
+ui_heart_full
+  rotate: false
+  xy: 90, 13
+  size: 9, 8
+  orig: 9, 8
+  offset: 0, 0
+  index: -1
 ui_background
   rotate: false
-  xy: 164, 98
+  xy: 113, 37
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 ui_background
   rotate: false
-  xy: 164, 95
+  xy: 232, 68
   size: 1, 1
   orig: 1, 1
   offset: 0, 0

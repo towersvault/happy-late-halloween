@@ -76,7 +76,7 @@ public class Scene2DCrt
 		imgBurger.setSize(imgBurger.getWidth() * Constants.resize(), imgBurger.getHeight() * Constants.resize());
 		imgBurger.setX(Gdx.graphics.getWidth() / 2f);
 		imgBurger.setY(Gdx.graphics.getHeight() / 2f);
-		layer.add(imgBurger);
+		/*layer.add(imgBurger);*/
 		
 		Image imgLetterBox1 = new Image(Scene2DHelper.inst.skin, "ui_dock");
 		imgLetterBox1.setSize(Gdx.graphics.getWidth(), imgLetterBox1.getHeight() * Constants.resize());
@@ -105,6 +105,24 @@ public class Scene2DCrt
 		imgInvento.setSize(imgInvento.getWidth() * Constants.resize(), imgInvento.getHeight() * Constants.resize());
 		imgInvento.setY(Gdx.graphics.getHeight() - imgInvento.getHeight() - MathHelper.inst.pxToScreen(2f));
 		imgInvento.setX(Gdx.graphics.getWidth() / 2f - imgInvento.getWidth() / 2f);
+		
+		/*Image imgMsg = new Image(Scene2DHelper.inst.skin, "ui_messaging_mockup");
+		layer.add(imgMsg);
+		imgMsg.setSize(imgMsg.getWidth() * Constants.resize(), imgMsg.getHeight() * Constants.resize());
+		imgMsg.setY(Gdx.graphics.getHeight() / 2f - imgMsg.getHeight() / 2f);
+		imgMsg.setX(Gdx.graphics.getWidth() / 2f - imgMsg.getWidth() / 2f);*/
+		
+		Image imgInventory = new Image(Scene2DHelper.inst.skin, "ui_icon_inventory");
+		layer.add(imgInventory);
+		imgInventory.setSize(imgInventory.getWidth() * Constants.resize(), imgInventory.getHeight() * Constants.resize());
+		imgInventory.setX(Gdx.graphics.getWidth() / 2f);
+		imgInventory.setY(Gdx.graphics.getHeight() / 2f);
+		
+		Image imgChat = new Image(Scene2DHelper.inst.skin, "ui_icon_chat");
+		layer.add(imgChat);
+		imgChat.setSize(imgChat.getWidth() * Constants.resize(), imgChat.getHeight() * Constants.resize());
+		imgChat.setX(Gdx.graphics.getWidth() / 2f + imgChat.getWidth() + MathHelper.inst.pxToScreen(4f));
+		imgChat.setY(Gdx.graphics.getHeight() / 2f);
 		
 		stack.add(layer);
 	}
