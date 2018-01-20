@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
+import com.towersvault.halloween.screens.Scene2DCrt;
 import com.towersvault.halloween.utils.Assets;
 import com.towersvault.halloween.utils.Constants;
 import com.towersvault.halloween.utils.CustomCameraStrategy;
@@ -106,33 +107,26 @@ public class Renderer implements Disposable
 			public boolean touchUp(int screenX, int screenY, int pointer, int button) { return false; }
 			
 			@Override
-			public boolean touchDragged(int screenX, int screenY, int pointer)
-			{
-				float x = dragX - screenX;
-				
-				camera.rotate(Vector3.Y, x * rotateSpeed);
-				camera.update();
-				
-				dragX = screenX;
-				
-				return true;
-			}
+			public boolean touchDragged(int screenX, int screenY, int pointer) { return false; }
 			
 			@Override
 			public boolean mouseMoved(int screenX, int screenY)
 			{
-				float x = dragX - screenX;
-				
-				camera.rotate(Vector3.Y, x * rotateSpeed);
-				camera.update();
-				
-				dragX = screenX;
-				
-				/*cameraRotation += x * rotateSpeed;
-				cameraRotation = cameraRotation % 360f;*/
-				
-				listener.rotate(x * rotateSpeed);
-				listener.sub(WorldHandler.inst.getBodyPosition()).nor();
+				if(Scene2DCrt.inst.catchingCursor())
+				{
+					float x = dragX - screenX;
+					
+					camera.rotate(Vector3.Y, x * rotateSpeed);
+					camera.update();
+					
+					dragX = screenX;
+					
+					/*cameraRotation += x * rotateSpeed;
+					cameraRotation = cameraRotation % 360f;*/
+					
+					listener.rotate(x * rotateSpeed);
+					listener.sub(WorldHandler.inst.getBodyPosition()).nor();
+				}
 				
 				return true;
 			}
