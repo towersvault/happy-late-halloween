@@ -51,6 +51,8 @@ public class Renderer implements Disposable
 	
 	private Sprite testUi;
 	
+	private InputProcessor inputProcessor;
+	
 	public void init()
 	{
 		camera = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -86,7 +88,7 @@ public class Renderer implements Disposable
 		
 		MapLoader.inst.loadMap(MapLoader.Map.WORLD1);
 		
-		Gdx.input.setInputProcessor(new InputProcessor()
+		inputProcessor = new InputProcessor()
 		{
 			private int dragX;
 			float rotateSpeed = 0.14f;
@@ -120,9 +122,7 @@ public class Renderer implements Disposable
 					camera.update();
 					
 					dragX = screenX;
-					
-					/*cameraRotation += x * rotateSpeed;
-					cameraRotation = cameraRotation % 360f;*/
+					Scene2DCrt.inst.setCursorX(dragX);
 					
 					listener.rotate(x * rotateSpeed);
 					listener.sub(WorldHandler.inst.getBodyPosition()).nor();
@@ -133,7 +133,7 @@ public class Renderer implements Disposable
 			
 			@Override
 			public boolean scrolled(int amount) { return false; }
-		});
+		};
 		
 		ItemHandler.inst.createItem(ItemHandler.Item.BURGER, 5, 5);
 		
@@ -149,6 +149,11 @@ public class Renderer implements Disposable
 		
 		testUi = new Sprite(Assets.inst.entitySprite.bomb);
 		testUi.setSize(testUi.getWidth() * Constants.resize(), testUi.getHeight() * Constants.resize());
+	}
+	
+	public void setAsInputProcessor()
+	{
+		Gdx.input.setInputProcessor(inputProcessor);
 	}
 	
 	public void render()
@@ -175,7 +180,8 @@ public class Renderer implements Disposable
 		sprVignette.draw(spriteBatch);
 		spriteBatch.end();
 		
-		updateCameraMovement();
+		if(Scene2DCrt.inst.catchingCursor())
+			updateCameraMovement();
 		
 		WorldHandler.inst.update();
 		WorldHandler.inst.resetBodyVelocity();

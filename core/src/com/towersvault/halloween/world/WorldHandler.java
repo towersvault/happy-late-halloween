@@ -23,8 +23,23 @@ public class WorldHandler implements Disposable
 	private int bodiesIterator = 0;
 	
 	private Array<Body> interactionBodies = new Array<Body>();
+	private Array<ItemData> interactionData = new Array<ItemData>();
 	
 	private Vector2 newPlayerCoordinates = new Vector2();
+	
+	private class ItemData
+	{
+		public ItemHandler.Item item;
+		public float x;
+		public float y;
+		
+		public ItemData(ItemHandler.Item item, float x, float y)
+		{
+			this.item = item;
+			this.x = x;
+			this.y = y;
+		}
+	}
 	
 	public void init()
 	{
@@ -34,6 +49,7 @@ public class WorldHandler implements Disposable
 		bodiesIterator = 0;
 		
 		interactionBodies.clear();
+		interactionData.clear();
 		
 		// Player body
 		BodyDef bd = new BodyDef();
@@ -69,9 +85,12 @@ public class WorldHandler implements Disposable
 						(contact.getFixtureA().getBody() == interactionBodies.get(i)
 						&& contact.getFixtureB().getBody() == playerBody))
 					{
-						// TODO: Add code for adding item to inventory.
-						ItemHandler.inst.destroyItem((int)interactionBodies.get(i).getPosition().x, (int)interactionBodies.get(i).getPosition().y);
-						interactionBodies.removeIndex(i);
+						if(ItemHandler.inst.inventoryAdd(interactionData.get(i).item))
+						{
+							ItemHandler.inst.destroyItem((int) interactionBodies.get(i).getPosition().x, (int) interactionBodies.get(i).getPosition().y);
+							interactionBodies.removeIndex(i);
+							interactionData.removeIndex(i);
+						}
 					}
 				}
 			}
@@ -183,7 +202,7 @@ public class WorldHandler implements Disposable
 		System.out.println("Bodies Loaded: " + world.getBodyCount());*/
 	}
 	
-	public void createInteractionBody(int x, int z)
+	public void createInteractionBody(int x, int z, ItemHandler.Item item)
 	{
 		BodyDef bd = new BodyDef();
 		bd.type = BodyDef.BodyType.StaticBody;
@@ -206,6 +225,8 @@ public class WorldHandler implements Disposable
 		shape.dispose();
 		
 		interactionBodies.add(body);
+		
+		interactionData.add(new ItemData(item, x * TILE_WIDTH, z * TILE_WIDTH - TILE_WIDTH / 2f));
 	}
 	
 	public void createBodyBox(float x, float y, float sideLength)

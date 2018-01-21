@@ -7,17 +7,22 @@
 	com.badlogic.gdx.graphics.Color:
 	{
 		white: { a: 1, b: 1, g: 1, r: 1 },
+		black: { a: 0, b: 0, g: 0, r: 1 },
 	},
 	com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle:
 	{
 		default: { font: default-font, fontColor: white },
 		smaller: { font: smaller-font, fontColor: white },
+		smaller_black: { font: smaller-font, fontColor: black },
 	},
 	com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle:
 	{
 	},
 	com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle:
 	{
+		use_item: { down: ui_use_highlight, up: ui_use_normal },
+		destroy_item: { down: ui_destroy_highlight, up: ui_destroy_normal },
+		blank: { down: item_blank, up: item_blank },
 	},
 	com.badlogic.gdx.scenes.scene2d.ui.Image:
 	{

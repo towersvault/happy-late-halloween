@@ -8,6 +8,7 @@ import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
 import com.towersvault.halloween.render.Renderer;
+import com.towersvault.halloween.screens.Scene2DCrt;
 
 public class InputHandler implements ControllerListener
 {
@@ -58,6 +59,9 @@ public class InputHandler implements ControllerListener
 		
 		if(Gdx.input.isKeyJustPressed(Input.Keys.V))
 			Constants.DYNAMIC_PHYSICS = !Constants.DYNAMIC_PHYSICS;
+		
+		if(Gdx.input.isKeyJustPressed(Input.Keys.E))
+			Scene2DCrt.inst.toggleInventory();
 		
 		if(isControllerConnected())
 		{

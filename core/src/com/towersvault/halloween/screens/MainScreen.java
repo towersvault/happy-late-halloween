@@ -39,8 +39,6 @@ public class MainScreen extends AbstractGameScreen
 		stack.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		addActors();
-		
-		Scene2DCrt.inst.init();
 	}
 	
 	private void addActors()
@@ -93,6 +91,8 @@ public class MainScreen extends AbstractGameScreen
 		
 		Gdx.input.setInputProcessor(stage);
 		Gdx.input.setCursorCatched(true);
+		
+		Scene2DCrt.inst.init();
 		
 		Renderer.inst.init();
 		
