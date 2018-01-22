@@ -90,6 +90,7 @@ public class Scene2DCrt
 		stack.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		Gdx.input.setInputProcessor(stage);
+		catchingMouseInput = false;
 		
 		uiLayer = new Table();
 		
@@ -168,35 +169,6 @@ public class Scene2DCrt
 			lblItemDescription[i].setX(Gdx.graphics.getWidth() / 2f + MathHelper.inst.pxToScreen(2f));
 			lblItemDescription[i].setY(imgHearts[0].getY() - glyphItemDescription.height - MathHelper.inst.pxToScreen(26f + (float)i * 7f));
 		}
-		
-		/*Label lblExplanation = new Label("A meaty meat disc", Scene2DHelper.inst.skin, "smaller");
-		layer.add(lblExplanation);
-		lblExplanation.getStyle().font.getData().setScale(Constants.resize());
-		
-		lblExplanation.setX(Gdx.graphics.getWidth() / 2f + MathHelper.inst.pxToScreen(2f));
-		lblExplanation.setY(imgHearts[0].getY() - glyphLayout.height - MathHelper.inst.pxToScreen(26f));
-		
-		Label lblExp1 = new Label("encased from top to", Scene2DHelper.inst.skin, "smaller");
-		layer.add(lblExp1);
-		lblExp1.getStyle().font.getData().setScale(Constants.resize());
-		
-		lblExp1.setX(Gdx.graphics.getWidth() / 2f + MathHelper.inst.pxToScreen(2f));
-		lblExp1.setY(imgHearts[0].getY() - glyphLayout.height - MathHelper.inst.pxToScreen(33f));
-		
-		Label lblExp2 = new Label("bottom by the world's", Scene2DHelper.inst.skin, "smaller");
-		layer.add(lblExp2);
-		lblExp2.getStyle().font.getData().setScale(Constants.resize());
-		
-		lblExp2.setX(Gdx.graphics.getWidth() / 2f + MathHelper.inst.pxToScreen(2f));
-		lblExp2.setY(imgHearts[0].getY() - glyphLayout.height - MathHelper.inst.pxToScreen(40f));
-		
-		Label lblExp3 = new Label("softest bun(tm)", Scene2DHelper.inst.skin, "smaller");
-		layer.add(lblExp3);
-		lblExp3.getStyle().font.getData().setScale(Constants.resize());
-		
-		lblExp3.setX(Gdx.graphics.getWidth() / 2f + MathHelper.inst.pxToScreen(2f));
-		lblExp3.setY(imgHearts[0].getY() - glyphLayout.height - MathHelper.inst.pxToScreen(47f));*/
-		
 		
 		imgItemSelect = new Image(Scene2DHelper.inst.skin, "ui_selected_item");
 		uiLayer.add(imgItemSelect);

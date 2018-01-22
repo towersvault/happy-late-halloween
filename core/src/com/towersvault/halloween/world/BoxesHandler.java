@@ -554,7 +554,6 @@ public class BoxesHandler implements Disposable
 			if(alphaDecals.get(i).decals.get(0).getX() == x
 					&& alphaDecals.get(i).decals.get(0).getZ() == z)
 			{
-				System.out.println("Updating sprite.");
 				alphaDecals.get(i).decals.get(0).setTextureRegion(texture);
 			}
 		}

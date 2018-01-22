@@ -37,7 +37,6 @@ public class Renderer implements Disposable
 	private SpriteBatch spriteBatch;
 	private Sprite sprSky;
 	private Sprite sprVignette;
-	private SpriteBatch uiBatch;
 	
 	private static final float MOVEMENT_SPEED = 55f;
 	
@@ -46,10 +45,6 @@ public class Renderer implements Disposable
 	
 	/*private float cameraRotation = 0f;*/
 	private Vector2 listener = new Vector2();
-	
-	private ShaderProgram shader;
-	
-	private Sprite testUi;
 	
 	private InputProcessor inputProcessor;
 	
@@ -82,7 +77,7 @@ public class Renderer implements Disposable
 		orthographicCamera.update();
 		
 		WorldHandler.inst.init();
-		WorldHandler.inst.setPlayerPosition(55f * BoxesHandler.TILE_SIZE, 24f * BoxesHandler.TILE_SIZE);
+		WorldHandler.inst.setPlayerPosition(0f * BoxesHandler.TILE_SIZE, 0f * BoxesHandler.TILE_SIZE);
 		
 		BoxesHandler.inst.init(new DecalBatch(new CustomCameraStrategy(camera)));
 		
@@ -138,17 +133,6 @@ public class Renderer implements Disposable
 		ItemHandler.inst.createItem(ItemHandler.Item.BURGER, 5, 5);
 		
 		EntityController.inst.init();
-		
-		uiBatch = new SpriteBatch();
-		
-		ShaderProgram.pedantic = false;
-		shader = new ShaderProgram(Gdx.files.internal("shaders/vignette.vsh"), Gdx.files.internal("shaders/vignette.fsh"));
-		uiBatch.setShader(shader);
-		
-		System.out.println(shader.isCompiled() ? "Shader works!" : shader.getLog());
-		
-		testUi = new Sprite(Assets.inst.entitySprite.bomb);
-		testUi.setSize(testUi.getWidth() * Constants.resize(), testUi.getHeight() * Constants.resize());
 	}
 	
 	public void setAsInputProcessor()
@@ -158,10 +142,6 @@ public class Renderer implements Disposable
 	
 	public void render()
 	{
-		shader.begin();
-		shader.setUniformf("u_distort", MathUtils.random(4), MathUtils.random(4), 0);
-		shader.end();
-		
 		spriteBatch.setProjectionMatrix(orthographicCamera.combined);
 		spriteBatch.begin();
 		sprSky.draw(spriteBatch);
@@ -180,24 +160,14 @@ public class Renderer implements Disposable
 		sprVignette.draw(spriteBatch);
 		spriteBatch.end();
 		
-		if(Scene2DCrt.inst.catchingCursor())
-			updateCameraMovement();
+		updateCameraMovement();
 		
 		WorldHandler.inst.update();
 		WorldHandler.inst.resetBodyVelocity();
-		
-		uiBatch.setProjectionMatrix(camera.combined);
-		uiBatch.begin();
-		testUi.draw(uiBatch);
-		uiBatch.end();
 	}
 	
 	public Vector2 getListener()
 	{
-		/*if(cameraRotation < 0f)
-			return 360 + cameraRotation;
-		return MathUtils.degreesToRadians * cameraRotation;*/
-		
 		return listener;
 	}
 	
@@ -220,23 +190,26 @@ public class Renderer implements Disposable
 	 */
 	public void updateCameraControllerX(float xMultiplier)
 	{
-		if(xMultiplier > 0f)
+		if(Scene2DCrt.inst.catchingCursor())
 		{
-			Vector3 v = camera.direction.cpy();
-			v.y = 0f;
-			v.rotate(Vector3.Y, -90);
-			v.x *= (MOVEMENT_SPEED * xMultiplier) * Gdx.graphics.getDeltaTime();
-			v.z *= (MOVEMENT_SPEED * xMultiplier) * Gdx.graphics.getDeltaTime();
-			WorldHandler.inst.moveBody(v.x, v.z);
-		}
-		else
-		{
-			Vector3 v = camera.direction.cpy();
-			v.y = 0f;
-			v.rotate(Vector3.Y, 90);
-			v.x *= (MOVEMENT_SPEED * (xMultiplier * -1f)) * Gdx.graphics.getDeltaTime();
-			v.z *= (MOVEMENT_SPEED * (xMultiplier * -1f)) * Gdx.graphics.getDeltaTime();
-			WorldHandler.inst.moveBody(v.x, v.z);
+			if(xMultiplier > 0f)
+			{
+				Vector3 v = camera.direction.cpy();
+				v.y = 0f;
+				v.rotate(Vector3.Y, -90);
+				v.x *= (MOVEMENT_SPEED * xMultiplier) * Gdx.graphics.getDeltaTime();
+				v.z *= (MOVEMENT_SPEED * xMultiplier) * Gdx.graphics.getDeltaTime();
+				WorldHandler.inst.moveBody(v.x, v.z);
+			}
+			else
+			{
+				Vector3 v = camera.direction.cpy();
+				v.y = 0f;
+				v.rotate(Vector3.Y, 90);
+				v.x *= (MOVEMENT_SPEED * (xMultiplier * -1f)) * Gdx.graphics.getDeltaTime();
+				v.z *= (MOVEMENT_SPEED * (xMultiplier * -1f)) * Gdx.graphics.getDeltaTime();
+				WorldHandler.inst.moveBody(v.x, v.z);
+			}
 		}
 		
 		camera.position.x = WorldHandler.inst.getBodyX();
@@ -250,23 +223,26 @@ public class Renderer implements Disposable
 	 */
 	public void updateCameraControllerY(float yMultiplier)
 	{
-		if(yMultiplier < 0f)
+		if(Scene2DCrt.inst.catchingCursor())
 		{
-			Vector3 v = camera.direction.cpy();
-			v.y = 0f;
-			v.x *= (MOVEMENT_SPEED * (yMultiplier * -1f)) * Gdx.graphics.getDeltaTime();
-			v.z *= (MOVEMENT_SPEED * (yMultiplier * -1f)) * Gdx.graphics.getDeltaTime();
-			WorldHandler.inst.moveBody(v.x, v.z);
-		}
-		else
-		{
-			Vector3 v = camera.direction.cpy();
-			v.y = 0f;
-			v.x = -v.x;
-			v.z = -v.z;
-			v.x *= (MOVEMENT_SPEED * yMultiplier) * Gdx.graphics.getDeltaTime();
-			v.z *= (MOVEMENT_SPEED * yMultiplier) * Gdx.graphics.getDeltaTime();
-			WorldHandler.inst.moveBody(v.x, v.z);
+			if(yMultiplier < 0f)
+			{
+				Vector3 v = camera.direction.cpy();
+				v.y = 0f;
+				v.x *= (MOVEMENT_SPEED * (yMultiplier * -1f)) * Gdx.graphics.getDeltaTime();
+				v.z *= (MOVEMENT_SPEED * (yMultiplier * -1f)) * Gdx.graphics.getDeltaTime();
+				WorldHandler.inst.moveBody(v.x, v.z);
+			}
+			else
+			{
+				Vector3 v = camera.direction.cpy();
+				v.y = 0f;
+				v.x = -v.x;
+				v.z = -v.z;
+				v.x *= (MOVEMENT_SPEED * yMultiplier) * Gdx.graphics.getDeltaTime();
+				v.z *= (MOVEMENT_SPEED * yMultiplier) * Gdx.graphics.getDeltaTime();
+				WorldHandler.inst.moveBody(v.x, v.z);
+			}
 		}
 		
 		camera.position.x = WorldHandler.inst.getBodyX();
@@ -279,41 +255,44 @@ public class Renderer implements Disposable
 	 */
 	private void updateCameraMovement()
 	{
-		if(Gdx.input.isKeyPressed(Keys.W))
+		if(Scene2DCrt.inst.catchingCursor())
 		{
-			Vector3 v = camera.direction.cpy();
-			v.y = 0f;
-			v.x *= MOVEMENT_SPEED * Gdx.graphics.getDeltaTime();
-			v.z *= MOVEMENT_SPEED * Gdx.graphics.getDeltaTime();
-			WorldHandler.inst.moveBody(v.x, v.z);
-		}
-		if(Gdx.input.isKeyPressed(Keys.S))
-		{
-			Vector3 v = camera.direction.cpy();
-			v.y = 0f;
-			v.x = -v.x;
-			v.z = -v.z;
-			v.x *= MOVEMENT_SPEED * Gdx.graphics.getDeltaTime();
-			v.z *= MOVEMENT_SPEED * Gdx.graphics.getDeltaTime();
-			WorldHandler.inst.moveBody(v.x, v.z);
-		}
-		if(Gdx.input.isKeyPressed(Keys.D))
-		{
-			Vector3 v = camera.direction.cpy();
-			v.y = 0f;
-			v.rotate(Vector3.Y, -90);
-			v.x *= MOVEMENT_SPEED * Gdx.graphics.getDeltaTime();
-			v.z *= MOVEMENT_SPEED * Gdx.graphics.getDeltaTime();
-			WorldHandler.inst.moveBody(v.x, v.z);
-		}
-		if(Gdx.input.isKeyPressed(Keys.A))
-		{
-			Vector3 v = camera.direction.cpy();
-			v.y = 0f;
-			v.rotate(Vector3.Y, 90);
-			v.x *= MOVEMENT_SPEED * Gdx.graphics.getDeltaTime();
-			v.z *= MOVEMENT_SPEED * Gdx.graphics.getDeltaTime();
-			WorldHandler.inst.moveBody(v.x, v.z);
+			if(Gdx.input.isKeyPressed(Keys.W))
+			{
+				Vector3 v = camera.direction.cpy();
+				v.y = 0f;
+				v.x *= MOVEMENT_SPEED * Gdx.graphics.getDeltaTime();
+				v.z *= MOVEMENT_SPEED * Gdx.graphics.getDeltaTime();
+				WorldHandler.inst.moveBody(v.x, v.z);
+			}
+			if(Gdx.input.isKeyPressed(Keys.S))
+			{
+				Vector3 v = camera.direction.cpy();
+				v.y = 0f;
+				v.x = -v.x;
+				v.z = -v.z;
+				v.x *= MOVEMENT_SPEED * Gdx.graphics.getDeltaTime();
+				v.z *= MOVEMENT_SPEED * Gdx.graphics.getDeltaTime();
+				WorldHandler.inst.moveBody(v.x, v.z);
+			}
+			if(Gdx.input.isKeyPressed(Keys.D))
+			{
+				Vector3 v = camera.direction.cpy();
+				v.y = 0f;
+				v.rotate(Vector3.Y, -90);
+				v.x *= MOVEMENT_SPEED * Gdx.graphics.getDeltaTime();
+				v.z *= MOVEMENT_SPEED * Gdx.graphics.getDeltaTime();
+				WorldHandler.inst.moveBody(v.x, v.z);
+			}
+			if(Gdx.input.isKeyPressed(Keys.A))
+			{
+				Vector3 v = camera.direction.cpy();
+				v.y = 0f;
+				v.rotate(Vector3.Y, 90);
+				v.x *= MOVEMENT_SPEED * Gdx.graphics.getDeltaTime();
+				v.z *= MOVEMENT_SPEED * Gdx.graphics.getDeltaTime();
+				WorldHandler.inst.moveBody(v.x, v.z);
+			}
 		}
 		
 		camera.position.x = WorldHandler.inst.getBodyX();

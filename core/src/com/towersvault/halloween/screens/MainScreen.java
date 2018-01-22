@@ -89,8 +89,8 @@ public class MainScreen extends AbstractGameScreen
 		
 		init();
 		
-		Gdx.input.setInputProcessor(stage);
-		Gdx.input.setCursorCatched(true);
+		//Gdx.input.setInputProcessor(stage);
+		//Gdx.input.setCursorCatched(true);
 		
 		Scene2DCrt.inst.init();
 		

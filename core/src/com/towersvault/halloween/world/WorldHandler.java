@@ -115,8 +115,8 @@ public class WorldHandler implements Disposable
 		
 		createWallBodies();
 		
-		for(int i = 0; i < wallBodies.size; i++)
-			System.out.println((int)(wallBodies.get(i).getPosition().x / TILE_WIDTH) + " " + (int)(wallBodies.get(i).getPosition().y / TILE_WIDTH));
+		/*for(int i = 0; i < wallBodies.size; i++)
+			System.out.println((int)(wallBodies.get(i).getPosition().x / TILE_WIDTH) + " " + (int)(wallBodies.get(i).getPosition().y / TILE_WIDTH));*/
 	}
 	
 	private void createWallBodies()
