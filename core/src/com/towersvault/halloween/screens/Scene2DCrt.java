@@ -39,8 +39,11 @@ public class Scene2DCrt
 	private Image[][] imgInventoryIcon = new Image[3][3];
 	private Button[][] btnInventoryIconOverlay = new Button[3][3];
 	private Image imgItemSelect;
+	
 	private Label lblItemName;
 	private Label[] lblItemDescription = new Label[4];
+	private String[] newDescription = new String[4];
+	
 	private Button btnUse;
 	private Button btnDestroy;
 	private Image[] imgHearts = new Image[3];
@@ -168,6 +171,8 @@ public class Scene2DCrt
 			lblItemDescription[i].getStyle().font.getData().setScale(Constants.resize());
 			lblItemDescription[i].setX(Gdx.graphics.getWidth() / 2f + MathHelper.inst.pxToScreen(2f));
 			lblItemDescription[i].setY(imgHearts[0].getY() - glyphItemDescription.height - MathHelper.inst.pxToScreen(26f + (float)i * 7f));
+			
+			newDescription[i] = "";
 		}
 		
 		imgItemSelect = new Image(Scene2DHelper.inst.skin, "ui_selected_item");
@@ -300,14 +305,16 @@ public class Scene2DCrt
 							line += text.get(0) + " ";
 							text.removeIndex(0);
 						}
-						lblItemDescription[yIndex].setText(line);
+						//lblItemDescription[yIndex].setText(line);
+						newDescription[yIndex] = line;
 						line = "";
 						break linePopulate;
 					}
 				}
 				if(line.length() > 0)
 				{
-					lblItemDescription[yIndex].setText(line);
+					//lblItemDescription[yIndex].setText(line);
+					newDescription[yIndex] = line;
 					break overflowText;
 				}
 			}
@@ -382,6 +389,12 @@ public class Scene2DCrt
 			catchingMouseInput = true;
 			Gdx.input.setCursorCatched(true);
 		}*/
+		
+		for(int y = 0; y < 4; y++)
+		{
+			if(lblItemDescription[y].getText().toString().length() < newDescription[y].length())
+				lblItemDescription[y].setText(newDescription[y].substring(0, lblItemDescription[y].getText().toString().length() + 1));
+		}
 	}
 	
 	private void initItemClickListeners()

@@ -60,7 +60,7 @@ public class InputHandler implements ControllerListener
 		if(Gdx.input.isKeyJustPressed(Input.Keys.V))
 			Constants.DYNAMIC_PHYSICS = !Constants.DYNAMIC_PHYSICS;
 		
-		if(Gdx.input.isKeyJustPressed(Input.Keys.E))
+		if(Gdx.input.isKeyJustPressed(Input.Keys.TAB))
 			Scene2DCrt.inst.toggleInventory();
 		
 		if(isControllerConnected())
