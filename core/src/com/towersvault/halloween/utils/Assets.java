@@ -40,6 +40,12 @@ public class Assets implements Disposable, AssetErrorListener
 		public AtlasRegion scarecrow;
 		public AtlasRegion scarecrowOn;
 		
+		public AtlasRegion brickWall;
+		public AtlasRegion carpet;
+		
+		public AtlasRegion slidingDoorLeft;
+		public AtlasRegion slidingDoorRight;
+		
 		public StaticSprite(TextureAtlas atlas)
 		{
 			moon = atlas.findRegion("static_moon");
@@ -61,6 +67,12 @@ public class Assets implements Disposable, AssetErrorListener
 			corn = atlas.findRegion("static_corn");
 			scarecrow = atlas.findRegion("static_scarecrow");
 			scarecrowOn = atlas.findRegion("static_scarecrow_on");
+			
+			brickWall = atlas.findRegion("static_brick_wall");
+			carpet = atlas.findRegion("static_carpet");
+			
+			slidingDoorLeft = atlas.findRegion("static_sliding_door_left");
+			slidingDoorRight = atlas.findRegion("static_sliding_door_right");
 		}
 	}
 	

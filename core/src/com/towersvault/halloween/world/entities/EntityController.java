@@ -24,6 +24,7 @@ public class EntityController
 	
 	private Array<AbstractEntity> entities = new Array<AbstractEntity>();
 	private Array<Decal> entitySwap = new Array<Decal>();
+	private int lastEntityId = -1; // Used for identification by AI and room stuff.
 	
 	public void init()
 	{
@@ -34,9 +35,10 @@ public class EntityController
 		createEntity(Entity.SKELETON, 20f, 0, 8f);
 	}
 	
-	public void createEntity(Entity entity, float x, float y, float z)
+	public int createEntity(Entity entity, float x, float y, float z)
 	{
 		entitySwap.clear();
+		lastEntityId += 1;
 		
 		switch(entity)
 		{
@@ -120,8 +122,10 @@ public class EntityController
 				entities.add(skeleton);
 				break;
 			default:
-				break;
+				return -1;
 		}
+		
+		return lastEntityId;
 	}
 	
 	public void update()

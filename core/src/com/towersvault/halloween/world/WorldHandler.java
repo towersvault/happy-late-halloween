@@ -54,8 +54,8 @@ public class WorldHandler implements Disposable
 		// Player body
 		BodyDef bd = new BodyDef();
 		bd.type = BodyDef.BodyType.DynamicBody;
-		bd.position.x = 0f;
-		bd.position.y = 0f;
+		bd.position.x = 40f * TILE_WIDTH;
+		bd.position.y = 20f * TILE_WIDTH;
 		bd.gravityScale = 0f;
 		
 		playerBody = world.createBody(bd);

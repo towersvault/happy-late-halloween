@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.utils.Array;
 import com.towersvault.halloween.world.BoxesHandler.BoxType;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
@@ -38,6 +39,32 @@ public class MapLoader
 		
 		String[][] collisionMap0 = new String[layer.getHeight()][layer.getWidth()];
 		String[][] collisionMap1 = new String[layer.getHeight()][layer.getWidth()];
+		
+		Array<TileData> tileData = new Array<TileData>();
+		
+		layer = (TiledMapTileLayer)tiledMap.getLayers().get(4);
+		
+		for(int x = 0; x < layer.getWidth(); x++)
+		{
+			for(int y = 0; y < layer.getHeight(); y++)
+			{
+				cell = layer.getCell(x, y);
+				
+				try
+				{
+					if(cell.getTile().getProperties().containsKey("1"))
+						tileData.add(new TileData(1, x, 0, y));
+					else if(cell.getTile().getProperties().containsKey("2"))
+						tileData.add(new TileData(2, x, 0, y));
+					else if(cell.getTile().getProperties().containsKey("3"))
+						tileData.add(new TileData(3, x, 0, y));
+				}
+				catch(Exception e) {}
+			}
+		}
+		LightRenderer.inst.setTileData(tileData);
+		
+		layer = (TiledMapTileLayer)tiledMap.getLayers().get(0);
 		
 		for(int x = 0; x < layer.getWidth(); x++)
 		{
@@ -106,6 +133,20 @@ public class MapLoader
 						BoxesHandler.inst.loadBox(null, BoxType.CORN, true, x, y, 0f);
 					else if(cell.getTile().getProperties().containsKey("ol pump"))
 						BoxesHandler.inst.loadBox(null, BoxType.SCARECROW, true, x, y, 0f);
+					
+					else if(cell.getTile().getProperties().containsKey("sliding_door"))
+					{
+						if(cell.getTile().getProperties().containsKey("n"))
+							BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.SLIDING_DOOR_N, true, x, y, 0f);
+						else if(cell.getTile().getProperties().containsKey("e"))
+							BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.SLIDING_DOOR_E, true, x, y, 0f);
+						else if(cell.getTile().getProperties().containsKey("s"))
+							BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.SLIDING_DOOR_S, true, x, y, 0f);
+						else if(cell.getTile().getProperties().containsKey("w"))
+							BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.SLIDING_DOOR_W, true, x, y, 0f);
+						else
+							BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.SLIDING_DOOR, true, x, y, 0f);
+					}
 				}
 				catch(Exception e)
 				{
@@ -132,8 +173,10 @@ public class MapLoader
 					}
 					else if(cell.getTile().getProperties().containsKey("wall"))
 					{
-						//BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.WALL, false, x, y, BoxesHandler.TILE_SIZE);
-						collisionMap1[y][x] = "W";
+						if(cell.getTile().getProperties().containsKey("shop"))
+							collisionMap1[y][x] = "WS";
+						else
+							collisionMap1[y][x] = "W";
 					}
 					else if(cell.getTile().getProperties().containsKey("grass_side"))
 					{
@@ -196,6 +239,9 @@ public class MapLoader
 		
 		BoxesHandler.inst.optimizeBoxes(collisionMap0, collisionMap1);
 		BoxesHandler.inst.loadWallBoxes(collisionMap0, collisionMap1, layer.getWidth(), layer.getHeight());
+		BoxesHandler.inst.updateShadows();
+		
+		//BoxesHandler.inst.printHash();
 		
 		WorldHandler.inst.setCollsionMap(collisionMap0);
 	}
