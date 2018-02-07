@@ -61,6 +61,13 @@ public class LightRenderer
 				BoxesHandler.inst.setDecalColor(tileData.get(i).getHashes(), 166f / 255f, 187f / 255f, 196f / 255f);
 			else if(tileData.get(i).lightLevel == 3)
 				BoxesHandler.inst.setDecalColor(tileData.get(i).getHashes(), 98f / 255f, 119f / 255f, 130f / 255f);
+			
+			if(tileData.get(i).lightLevel == 1)
+				BoxesHandler.inst.setAlphaDecalColor(tileData.get(i).getHashes(), 1f, 1f, 1f);
+			else if(tileData.get(i).lightLevel == 2)
+				BoxesHandler.inst.setAlphaDecalColor(tileData.get(i).getHashes(), 166f / 255f, 187f / 255f, 196f / 255f);
+			else if(tileData.get(i).lightLevel == 3)
+				BoxesHandler.inst.setAlphaDecalColor(tileData.get(i).getHashes(), 98f / 255f, 119f / 255f, 130f / 255f);
 		}
 	}
 }

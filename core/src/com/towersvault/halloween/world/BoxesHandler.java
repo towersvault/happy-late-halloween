@@ -62,7 +62,8 @@ public class BoxesHandler implements Disposable
 		SLIDING_DOOR_E,
 		SLIDING_DOOR_S,
 		SLIDING_DOOR_W,
-		SLIDING_DOOR
+		SLIDING_DOOR,
+		WATER
 	}
 	
 	public void init(DecalBatch batch)
@@ -102,6 +103,17 @@ public class BoxesHandler implements Disposable
 			{
 				WorldHandler.inst.createWallBody((float)x, (float)z);
 			}
+		}
+		else if(boxType.equals(BoxType.WATER))
+		{
+			Decal dWater = Decal.newDecal(TILE_SIZE, TILE_SIZE, tex);
+			dWater.setPosition(x * TILE_SIZE, -TILE_SIZE, z * TILE_SIZE - TILE_SIZE / 2f);
+			dWater.rotateX(90f);
+			
+			decals.add(dWater);
+			
+			if(LightRenderer.inst.hasLight(x, z))
+				LightRenderer.inst.addHash(x, z, dWater.hashCode());
 		}
 		else if(boxType.equals(BoxType.FLOOR))
 		{
@@ -208,6 +220,16 @@ public class BoxesHandler implements Disposable
 				LightRenderer.inst.addHash(x, z - 1, dTop2.hashCode());
 			
 			decals.add(dTop2);
+			
+			if(LightRenderer.inst.hasLight(x, z))
+			{
+				LightRenderer.inst.addHash(x, z, dDoor1.hashCode());
+				LightRenderer.inst.addHash(x, z, dDoor2.hashCode());
+				LightRenderer.inst.addHash(x, z, dFloor1.hashCode());
+				LightRenderer.inst.addHash(x, z, dFloor2.hashCode());
+				LightRenderer.inst.addHash(x, z, dTop1.hashCode());
+				LightRenderer.inst.addHash(x, z, dTop2.hashCode());
+			}
 		}
 		else if(boxType.equals(BoxType.BUSH))
 		{
@@ -227,6 +249,13 @@ public class BoxesHandler implements Disposable
 			dFloor.rotateX(90f);
 			
 			decals.add(dFloor);
+			
+			if(LightRenderer.inst.hasLight(x, z))
+			{
+				LightRenderer.inst.addHash(x, z, dFloor.hashCode());
+				LightRenderer.inst.addHash(x, z, dBush.hashCode());
+				LightRenderer.inst.addHash(x, z, dBush2.hashCode());
+			}
 		}
 		else if(boxType.equals(BoxType.CORN))
 		{
@@ -250,6 +279,13 @@ public class BoxesHandler implements Disposable
 			decals.add(dFloor);
 			
 			WorldHandler.inst.createBodyBox(x, z, 2f);
+			
+			if(LightRenderer.inst.hasLight(x, z))
+			{
+				LightRenderer.inst.addHash(x, z, dFloor.hashCode());
+				LightRenderer.inst.addHash(x, z, dBush.hashCode());
+				LightRenderer.inst.addHash(x, z, dBush2.hashCode());
+			}
 		}
 		else if(boxType.equals(BoxType.FIRE_HYDRANT))
 		{
@@ -271,6 +307,13 @@ public class BoxesHandler implements Disposable
 			decals.add(dFloor);
 			
 			WorldHandler.inst.createBodyBox(x, z, 2f);
+			
+			if(LightRenderer.inst.hasLight(x, z))
+			{
+				LightRenderer.inst.addHash(x, z, dFloor.hashCode());
+				LightRenderer.inst.addHash(x, z, dFireHydrant1.hashCode());
+				LightRenderer.inst.addHash(x, z, dFireHydrant2.hashCode());
+			}
 		}
 		else if(boxType.equals(BoxType.GRASS))
 		{
@@ -290,6 +333,13 @@ public class BoxesHandler implements Disposable
 			dFloor.rotateX(90f);
 			
 			decals.add(dFloor);
+			
+			if(LightRenderer.inst.hasLight(x, z))
+			{
+				LightRenderer.inst.addHash(x, z, dGrassBlades1.hashCode());
+				LightRenderer.inst.addHash(x, z, dGrassBlades2.hashCode());
+				LightRenderer.inst.addHash(x, z, dFloor.hashCode());
+			}
 		}
 		else if((boxType.equals(BoxType.STOP_N))
 				|| (boxType.equals(BoxType.STOP_S))
@@ -376,6 +426,17 @@ public class BoxesHandler implements Disposable
 			dFloor.rotateX(90f);
 			
 			decals.add(dFloor);
+			
+			if(LightRenderer.inst.hasLight(x, z))
+			{
+				LightRenderer.inst.addHash(x, z, dFloor.hashCode());
+				LightRenderer.inst.addHash(x, z, dStopFront.hashCode());
+				LightRenderer.inst.addHash(x, z, dStopBack.hashCode());
+				LightRenderer.inst.addHash(x, z, dBoxSide1.hashCode());
+				LightRenderer.inst.addHash(x, z, dBoxSide2.hashCode());
+				LightRenderer.inst.addHash(x, z, dBoxFront.hashCode());
+				LightRenderer.inst.addHash(x, z, dBoxBack.hashCode());
+			}
 		}
 		else if(boxType.equals(BoxType.SIDEWALK))
 		{
@@ -533,10 +594,19 @@ public class BoxesHandler implements Disposable
 			if(dFence2 == null)
 			{
 				alphaDecals.add(new FenceDecal(dFence1));
+				
+				if(LightRenderer.inst.hasLight(x, z))
+					LightRenderer.inst.addHash(x, z, dFence1.hashCode());
 			}
 			else
 			{
 				alphaDecals.add(new FenceDecal(dFence1, dFence2));
+				
+				if(LightRenderer.inst.hasLight(x, z))
+				{
+					LightRenderer.inst.addHash(x, z, dFence1.hashCode());
+					LightRenderer.inst.addHash(x, z, dFence2.hashCode());
+				}
 			}
 			
 			Decal dFloor = Decal.newDecal(TILE_SIZE, TILE_SIZE, Assets.inst.staticSprite.floorGrass);
@@ -781,6 +851,27 @@ public class BoxesHandler implements Disposable
 			decals.get(i).setColor(48f / 255f, 58f / 255f, 63f / 255f, decals.get(i).getColor().a);
 		}
 		
+		for(int i = 0; i < alphaDecals.size; i++)
+		{
+			if(!alphaDecals.get(i).multiDecal)
+			{
+				if(!alphaDecals.get(i).onlyOneDecal)
+				{
+					alphaDecals.get(i).decals.get(0).setColor(48f / 255f, 58f / 255f, 63f / 255f, 1f);
+					alphaDecals.get(i).decals.get(1).setColor(48f / 255f, 58f / 255f, 63f / 255f, 1f);
+				}
+				else
+				{
+					alphaDecals.get(i).decals.get(0).setColor(48f / 255f, 58f / 255f, 63f / 255f, 1f);
+				}
+			}
+			else
+			{
+				for(int k = 0; k < alphaDecals.get(i).decals.size; k++)
+					alphaDecals.get(i).decals.get(k).setColor(48f / 255f, 58f / 255f, 63f / 255f, 1f);
+			}
+		}
+		
 		LightRenderer.inst.update();
 	}
 	
@@ -882,6 +973,38 @@ public class BoxesHandler implements Disposable
 			{
 				if(decals.get(i).hashCode() == hashes.get(j))
 					decals.get(i).setColor(r, g, b, 1f);
+			}
+		}
+	}
+	
+	public void setAlphaDecalColor(IntArray hashes, float r, float g, float b)
+	{
+		for(int i = 0; i < alphaDecals.size; i++)
+		{
+			for(int j = 0; j < hashes.size; j++)
+			{
+				if(!alphaDecals.get(i).multiDecal)
+				{
+					if(!alphaDecals.get(i).onlyOneDecal)
+					{
+						if(alphaDecals.get(i).decals.get(0).hashCode() == hashes.get(j))
+							alphaDecals.get(i).decals.get(0).setColor(r, g, b, 1f);
+						
+						if(alphaDecals.get(i).decals.get(1).hashCode() == hashes.get(j))
+							alphaDecals.get(i).decals.get(1).setColor(r, g, b, 1f);
+					}
+					else
+					{
+						if(alphaDecals.get(i).decals.get(0).hashCode() == hashes.get(j))
+							alphaDecals.get(i).decals.get(0).setColor(r, g, b, 1f);
+					}
+				}
+				else
+				{
+					for(int k = 0; k < alphaDecals.get(i).decals.size; k++)
+						if(alphaDecals.get(i).decals.get(k).hashCode() == hashes.get(j))
+							alphaDecals.get(i).decals.get(k).setColor(r, g, b, 1f);
+				}
 			}
 		}
 	}

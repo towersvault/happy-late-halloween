@@ -147,6 +147,9 @@ public class MapLoader
 						else
 							BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.SLIDING_DOOR, true, x, y, 0f);
 					}
+					
+					else if(cell.getTile().getProperties().containsKey("water"))
+						BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.WATER, true, x, y, 0f);
 				}
 				catch(Exception e)
 				{

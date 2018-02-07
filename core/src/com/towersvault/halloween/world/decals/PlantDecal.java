@@ -53,7 +53,7 @@ public class PlantDecal extends AbstractDecal
 			}
 		}
 		
-		for(int i = 0; i < super.decals.size; i++)
+		/*for(int i = 0; i < super.decals.size; i++)
 		{
 			if((super.decals.get(i).getX() < WorldHandler.inst.getBodyX() - WorldHandler.inst.TILE_WIDTH * 2f ||
 					super.decals.get(i).getX() > WorldHandler.inst.getBodyX() + WorldHandler.inst.TILE_WIDTH * 2f)
@@ -78,6 +78,6 @@ public class PlantDecal extends AbstractDecal
 			}
 			else
 				super.decals.get(i).setColor(1f, 1f, 1f, super.decals.get(i).getColor().a);
-		}
+		}*/
 	}
 }
