@@ -1,9 +1,13 @@
 package com.towersvault.halloween.game.rooms;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.towersvault.halloween.game.AbstractRoom;
 import com.towersvault.halloween.game.RoomAction;
 import com.towersvault.halloween.game.RoomHandler;
+import com.towersvault.halloween.screens.Scene2DHelper;
+import com.towersvault.halloween.world.MapLoader;
+import com.towersvault.halloween.world.WorldHandler;
 
 public class Room1Joke extends AbstractRoom
 {
@@ -14,8 +18,9 @@ public class Room1Joke extends AbstractRoom
 		super(xTrigger, yTrigger, triggerRadius);
 		
 		this.addAction(RoomHandler.RoomActionState.TALK, "Hello world.")
-				.addAction(RoomHandler.RoomActionState.PAUSE, "3")
 				.addAction(RoomHandler.RoomActionState.TALK, "This is all a test.");
+		
+		System.out.println(MapLoader.inst.getMapHeight() - 82);
 	}
 	
 	@Override
@@ -42,32 +47,61 @@ public class Room1Joke extends AbstractRoom
 	@Override
 	public void update()
 	{
-		if(waitForClick)
+		if(WorldHandler.inst.getBodyTileX() == 48
+				&& WorldHandler.inst.getBodyTileZ() == MapLoader.inst.getMapHeight() - 82
+				&& waitingForTrigger)
 		{
-			delta += Gdx.graphics.getDeltaTime();
-			
-			if(delta >= 1f)
+			waitingForTrigger = false;
+		}
+		
+		if(!waitingForTrigger && !roomCompleted)
+		{
+			if(!waitForClick)
 			{
-				delta = 0f;
+				delta += Gdx.graphics.getDeltaTime();
 				
-				switch(super.roomActions.get(0).actionState)
+				if(delta >= 1f)
 				{
-					case PAUSE:
-						super.roomActions.get(0).pause -= 1;
-						if (super.roomActions.get(0).pause <= 0)
+					delta = 0f;
+					
+					switch(super.roomActions.get(0).actionState)
+					{
+						case PAUSE:
+							System.out.println("Pause");
+							super.roomActions.get(0).pause -= 1;
+							if (super.roomActions.get(0).pause <= 0)
+								removeCurrentAction = true;
+							break;
+						case TALK:
+							System.out.println(super.roomActions.get(0).talkOutput);
+							waitForClick = true;
 							removeCurrentAction = true;
-						break;
-					case END:
+							Scene2DHelper.inst.setDialogueText(super.roomActions.get(0).talkOutput);
+							break;
+						case END:
+							roomCompleted = true;
+							break;
+					}
+				}
+				
+				if(removeCurrentAction)
+				{
+					super.roomActions.removeIndex(0);
+					removeCurrentAction = false;
+					
+					if(super.roomActions.size == 0)
+					{
+						System.out.println("Room completed.");
 						roomCompleted = true;
-						break;
+					}
 				}
 			}
-			
-			if(removeCurrentAction)
-			{
-				super.roomActions.removeIndex(0);
-				removeCurrentAction = false;
-			}
 		}
+	}
+	
+	@Override
+	public void clear()
+	{
+		super.roomActions.clear();
 	}
 }

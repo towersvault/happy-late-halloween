@@ -6,6 +6,7 @@ public abstract class AbstractRoom
 {
 	public Array<RoomAction> roomActions = new Array<RoomAction>();
 	public float xTrigger, yTrigger, triggerRadius;
+	public boolean waitingForTrigger = true;
 	public boolean removeCurrentAction = false;
 	public boolean waitForClick = false;
 	public boolean roomCompleted = false;
@@ -25,4 +26,6 @@ public abstract class AbstractRoom
 	}
 	
 	public abstract void update();
+	
+	public abstract void clear();
 }

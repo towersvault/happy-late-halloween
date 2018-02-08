@@ -2,6 +2,7 @@
 	com.badlogic.gdx.graphics.g2d.BitmapFont:
 	{
 		default-font: { file: bitpotion.fnt },
+		default-font-2: { file: bitpotion.fnt },
 		smaller-font: { file: early34.fnt },
 	},
 	com.badlogic.gdx.graphics.Color:
@@ -14,6 +15,7 @@
 		default: { font: default-font, fontColor: white },
 		smaller: { font: smaller-font, fontColor: white },
 		smaller_black: { font: smaller-font, fontColor: black },
+		dialogue: { font: default-font-2, fontColor: white },
 	},
 	com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle:
 	{

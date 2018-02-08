@@ -21,6 +21,9 @@ public class MapLoader
 	
 	private TiledMap tiledMap;
 	
+	private float mapHeight = 0f;
+	private float mapWidth = 0f;
+	
 	public void loadMap(Map map)
 	{
 		try
@@ -36,6 +39,9 @@ public class MapLoader
 		
 		TiledMapTileLayer layer = (TiledMapTileLayer)tiledMap.getLayers().get(0);
 		Cell cell;
+		
+		mapHeight = layer.getHeight();
+		mapWidth = layer.getWidth();
 		
 		String[][] collisionMap0 = new String[layer.getHeight()][layer.getWidth()];
 		String[][] collisionMap1 = new String[layer.getHeight()][layer.getWidth()];
@@ -253,5 +259,15 @@ public class MapLoader
 	{
 		TiledMapTileLayer mapLayer = (TiledMapTileLayer)tiledMap.getLayers().get(layer);
 		return mapLayer.getCell(x, y).getTile().getTextureRegion();
+	}
+	
+	public float getMapHeight()
+	{
+		return mapHeight;
+	}
+	
+	public float getMapWidth()
+	{
+		return mapWidth;
 	}
 }

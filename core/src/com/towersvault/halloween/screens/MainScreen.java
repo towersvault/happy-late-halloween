@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.towersvault.halloween.game.RoomHandler;
 import com.towersvault.halloween.render.Renderer;
 import com.towersvault.halloween.utils.*;
 import com.towersvault.halloween.utils.audio.AudioController;
@@ -50,7 +51,9 @@ public class MainScreen extends AbstractGameScreen
 	{
 		Scene2DHelper.inst.init();
 		
+		stack.addActor(Scene2DHelper.inst.buildDebug());
 		stack.addActor(Scene2DHelper.inst.buildInventoryIcons());
+		stack.addActor(Scene2DHelper.inst.buildDialogue());
 	}
 	
 	@Override
@@ -59,15 +62,10 @@ public class MainScreen extends AbstractGameScreen
 		InputHandler.inst.checkInput();
 		
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		//Gdx.gl.glClearColor(0f / 255f, 16f / 255f, 24f / 255f, 1f);
 		Gdx.gl.glClearColor(0f / 255f, 25f / 255f, 38f / 255f, 1f);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);  //| (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0));
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		
 		Renderer.inst.render();
-		
-		//CinemaController.inst.checkInput();
-		
-		//AudioController.inst.update();
 		
 		EntityController.inst.update();
 		
@@ -77,6 +75,10 @@ public class MainScreen extends AbstractGameScreen
 		Scene2DCrt.inst.render(deltaTime);
 		
 		gif.update();
+		
+		RoomHandler.inst.update();
+		
+		Scene2DHelper.inst.update();
 	}
 	
 	@Override
@@ -97,19 +99,16 @@ public class MainScreen extends AbstractGameScreen
 		
 		init();
 		
-		//Gdx.input.setInputProcessor(stage);
-		//Gdx.input.setCursorCatched(true);
-		
 		Scene2DCrt.inst.init();
 		
 		Renderer.inst.init();
 		
 		InputHandler.inst.init();
 		
-		//AudioController.inst.init();
-		
 		gifBatch = new SpriteBatch();
 		gif = new GifRecorder(gifBatch);
+		
+		RoomHandler.inst.loadRoom(RoomHandler.Rooms.ROOM_1_JOKE);
 	}
 	
 	@Override
