@@ -107,6 +107,18 @@ public class Scene2DHelper
 		outputDelta = 0f;
 	}
 	
+	public void toggleDialogue(boolean visible)
+	{
+		if(visible)
+		{
+		
+		}
+		else
+		{
+		
+		}
+	}
+	
 	public void toggleBackground()
 	{
 		imgBackground.setVisible(!imgBackground.isVisible());
