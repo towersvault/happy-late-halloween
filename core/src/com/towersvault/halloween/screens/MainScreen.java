@@ -51,9 +51,10 @@ public class MainScreen extends AbstractGameScreen
 	{
 		Scene2DHelper.inst.init();
 		
-		stack.addActor(Scene2DHelper.inst.buildDebug());
 		stack.addActor(Scene2DHelper.inst.buildInventoryIcons());
 		stack.addActor(Scene2DHelper.inst.buildDialogue());
+		
+		stack.addActor(Scene2DHelper.inst.buildDebug());
 	}
 	
 	@Override
@@ -109,6 +110,9 @@ public class MainScreen extends AbstractGameScreen
 		gif = new GifRecorder(gifBatch);
 		
 		RoomHandler.inst.loadRoom(RoomHandler.Rooms.ROOM_1_JOKE);
+		
+		if(InputHandler.inst.isControllerConnected())
+			Gdx.input.setCursorCatched(true);
 	}
 	
 	@Override

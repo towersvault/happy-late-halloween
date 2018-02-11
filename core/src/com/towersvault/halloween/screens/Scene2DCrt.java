@@ -18,12 +18,21 @@ import com.bitfire.utils.ShaderLoader;
 import com.towersvault.halloween.render.Renderer;
 import com.towersvault.halloween.utils.Constants;
 import com.towersvault.halloween.utils.GameData;
+import com.towersvault.halloween.utils.InputHandler;
 import com.towersvault.halloween.utils.MathHelper;
 import com.towersvault.halloween.world.ItemHandler;
 
 public class Scene2DCrt
 {
 	public static final Scene2DCrt inst = new Scene2DCrt();
+	
+	public enum DPadDirection
+	{
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT
+	}
 	
 	private Stage stage;
 	private Stack stack;
@@ -39,6 +48,8 @@ public class Scene2DCrt
 	private Image[][] imgInventoryIcon = new Image[3][3];
 	private Button[][] btnInventoryIconOverlay = new Button[3][3];
 	private Image imgItemSelect;
+	private int selectedX = 1;
+	private int selectedY = 1;
 	
 	private Label lblItemName;
 	private Label[] lblItemDescription = new Label[4];
@@ -266,6 +277,9 @@ public class Scene2DCrt
 	
 	private void clickOnItem(int x, int y)
 	{
+		selectedX = x;
+		selectedY = y;
+		
 		imgItemSelect.setX(imgInventoryIcon[y][x].getX() - MathHelper.inst.pxToScreen(1f));
 		imgItemSelect.setY(imgInventoryIcon[y][x].getY() - MathHelper.inst.pxToScreen(1f));
 		lblItemName.setText(ItemHandler.inst.getItemAt(x, y).name);
@@ -319,6 +333,43 @@ public class Scene2DCrt
 				}
 			}
 		}
+		else
+		{
+			for(int i = 0; i < newDescription.length; i++)
+			{
+				newDescription[i] = "";
+				lblItemDescription[i].setText("");
+			}
+		}
+	}
+	
+	public void dPadInventorySelect(DPadDirection direction)
+	{
+		switch(direction)
+		{
+			case UP:
+				selectedY -= 1;
+				if(selectedY < 0)
+					selectedY = 2;
+				break;
+			case DOWN:
+				selectedY += 1;
+				if(selectedY > 2)
+					selectedY = 0;
+				break;
+			case LEFT:
+				selectedX -= 1;
+				if(selectedX < 0)
+					selectedX = 2;
+				break;
+			case RIGHT:
+				selectedX += 1;
+				if(selectedX > 2)
+					selectedX = 0;
+				break;
+		}
+		
+		clickOnItem(selectedX, selectedY);
 	}
 	
 	public void updateHealth()
@@ -348,7 +399,8 @@ public class Scene2DCrt
 		if(!uiLayer.isVisible())
 		{
 			catchingMouseInput = false;
-			Gdx.input.setCursorCatched(false);
+			if(!InputHandler.inst.isControllerConnected())
+				Gdx.input.setCursorCatched(false);
 			updateHealth();
 			clickOnItem(1, 1);
 			Gdx.input.setInputProcessor(stage);
@@ -357,7 +409,8 @@ public class Scene2DCrt
 		else
 		{
 			catchingMouseInput = true;
-			Gdx.input.setCursorCatched(true);
+			if(!InputHandler.inst.isControllerConnected())
+				Gdx.input.setCursorCatched(true);
 			Gdx.input.setCursorPosition(cursorX, cursorY);
 			Renderer.inst.setAsInputProcessor();
 		}

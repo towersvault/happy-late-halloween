@@ -15,7 +15,9 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
+import com.towersvault.halloween.game.RoomHandler;
 import com.towersvault.halloween.screens.Scene2DCrt;
+import com.towersvault.halloween.screens.Scene2DHelper;
 import com.towersvault.halloween.utils.Assets;
 import com.towersvault.halloween.utils.Constants;
 import com.towersvault.halloween.utils.CustomCameraStrategy;
@@ -190,7 +192,7 @@ public class Renderer implements Disposable
 	 */
 	public void updateCameraControllerX(float xMultiplier)
 	{
-		if(Scene2DCrt.inst.catchingCursor())
+		if(Scene2DCrt.inst.catchingCursor() && !Scene2DHelper.inst.isDialogueRunning())
 		{
 			if(xMultiplier > 0f)
 			{
@@ -223,7 +225,7 @@ public class Renderer implements Disposable
 	 */
 	public void updateCameraControllerY(float yMultiplier)
 	{
-		if(Scene2DCrt.inst.catchingCursor())
+		if(Scene2DCrt.inst.catchingCursor() && !Scene2DHelper.inst.isDialogueRunning())
 		{
 			if(yMultiplier < 0f)
 			{
@@ -255,7 +257,7 @@ public class Renderer implements Disposable
 	 */
 	private void updateCameraMovement()
 	{
-		if(Scene2DCrt.inst.catchingCursor())
+		if(Scene2DCrt.inst.catchingCursor() && !Scene2DHelper.inst.isDialogueRunning())
 		{
 			if(Gdx.input.isKeyPressed(Keys.W))
 			{

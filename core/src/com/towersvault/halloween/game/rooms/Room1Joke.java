@@ -17,8 +17,10 @@ public class Room1Joke extends AbstractRoom
 	{
 		super(xTrigger, yTrigger, triggerRadius);
 		
-		this.addAction(RoomHandler.RoomActionState.TALK, "Hello world.")
-				.addAction(RoomHandler.RoomActionState.TALK, "This is all a test.");
+		this.addAction(RoomHandler.RoomActionState.PAUSE, "1")
+				.addAction(RoomHandler.RoomActionState.TALK, "Hello world.")
+				.addAction(RoomHandler.RoomActionState.TALK, "This is all a test.")
+				.addAction(RoomHandler.RoomActionState.PAUSE, "1");
 		
 		System.out.println(MapLoader.inst.getMapHeight() - 82);
 	}
@@ -47,11 +49,13 @@ public class Room1Joke extends AbstractRoom
 	@Override
 	public void update()
 	{
-		if(WorldHandler.inst.getBodyTileX() == 48
-				&& WorldHandler.inst.getBodyTileZ() == MapLoader.inst.getMapHeight() - 82
+		if(WorldHandler.inst.getBodyTileX() == 34
+				&& WorldHandler.inst.getBodyTileZ() == MapLoader.inst.getMapHeight() - 99
 				&& waitingForTrigger)
 		{
 			waitingForTrigger = false;
+			
+			Scene2DHelper.inst.toggleDialogue(true);
 		}
 		
 		if(!waitingForTrigger && !roomCompleted)
@@ -93,6 +97,8 @@ public class Room1Joke extends AbstractRoom
 					{
 						System.out.println("Room completed.");
 						roomCompleted = true;
+						
+						Scene2DHelper.inst.toggleDialogue(false);
 					}
 				}
 			}

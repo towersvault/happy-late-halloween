@@ -7,8 +7,10 @@ import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
+import com.towersvault.halloween.game.RoomHandler;
 import com.towersvault.halloween.render.Renderer;
 import com.towersvault.halloween.screens.Scene2DCrt;
+import javafx.scene.Scene;
 
 public class InputHandler implements ControllerListener
 {
@@ -63,6 +65,9 @@ public class InputHandler implements ControllerListener
 		if(Gdx.input.isKeyJustPressed(Input.Keys.TAB))
 			Scene2DCrt.inst.toggleInventory();
 		
+		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
+			RoomHandler.inst.click();
+		
 		if(isControllerConnected())
 		{
 			if(controller.getAxis(Xbox360Pad.AXIS_LEFT_X) > 0.2f ||
@@ -80,6 +85,7 @@ public class InputHandler implements ControllerListener
 	
 	public boolean isControllerConnected()
 	{
+		//return false;
 		return controllerConnected;
 	}
 	
@@ -102,6 +108,12 @@ public class InputHandler implements ControllerListener
 	@Override
 	public boolean buttonDown(Controller controller, int buttonCode)
 	{
+		if(buttonCode == Xbox360Pad.BUTTON_Y)
+			Scene2DCrt.inst.toggleInventory();
+		
+		if(buttonCode == Xbox360Pad.BUTTON_A)
+			RoomHandler.inst.click();
+		
 		return false;
 	}
 	
@@ -143,6 +155,15 @@ public class InputHandler implements ControllerListener
 	@Override
 	public boolean povMoved(Controller controller, int povCode, PovDirection value)
 	{
+		if(value == PovDirection.north)
+			Scene2DCrt.inst.dPadInventorySelect(Scene2DCrt.DPadDirection.UP);
+		else if(value == PovDirection.south)
+			Scene2DCrt.inst.dPadInventorySelect(Scene2DCrt.DPadDirection.DOWN);
+		else if(value == PovDirection.west)
+			Scene2DCrt.inst.dPadInventorySelect(Scene2DCrt.DPadDirection.LEFT);
+		else if(value == PovDirection.east)
+			Scene2DCrt.inst.dPadInventorySelect(Scene2DCrt.DPadDirection.RIGHT);
+		
 		return false;
 	}
 	

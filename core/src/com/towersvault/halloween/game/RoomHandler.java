@@ -41,16 +41,22 @@ public class RoomHandler
 	
 	public void click()
 	{
-		room.gotClick();
+		if(Scene2DHelper.inst.dialogueOutputFinished() && room.waitForClick)
+			room.gotClick();
 		//Scene2DHelper.inst.setDialogueText("");
+	}
+	
+	public boolean currentRoomCompleted()
+	{
+		return room.roomCompleted;
 	}
 	
 	public void update()
 	{
 		room.update();
 		
-		if(room.waitForClick)
+		/*if(room.waitForClick)
 			if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
-				click();
+				click();*/
 	}
 }

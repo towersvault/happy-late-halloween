@@ -1,6 +1,7 @@
 package com.towersvault.halloween.game;
 
 import com.badlogic.gdx.utils.Array;
+import com.towersvault.halloween.screens.Scene2DHelper;
 
 public abstract class AbstractRoom
 {
@@ -22,6 +23,7 @@ public abstract class AbstractRoom
 	
 	public void gotClick()
 	{
+		Scene2DHelper.inst.setDialogueText("");
 		waitForClick = false;
 	}
 	
