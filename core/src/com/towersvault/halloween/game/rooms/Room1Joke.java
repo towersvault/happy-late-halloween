@@ -39,11 +39,21 @@ public class Room1Joke extends AbstractRoom
 			case END:
 				super.roomActions.add(new RoomAction(actionState, "END"));
 				break;
+			case MOVE_ACTOR:
+				String[] newActorData = interactionData.split(":");
+				super.roomActions.add(new RoomAction(actionState, newActorData));
+				break;
 			default:
 				break;
 		}
 		
 		return this;
+	}
+	
+	@Override
+	public AbstractRoom registerActor(String actorName, int decalHashcode, float spawnX, float spawnY, float spawnZ)
+	{
+		return null;
 	}
 	
 	@Override
@@ -60,7 +70,7 @@ public class Room1Joke extends AbstractRoom
 		
 		if(!waitingForTrigger && !roomCompleted)
 		{
-			if(!waitForClick)
+			if(!waitForClick && !waitForActor)
 			{
 				delta += Gdx.graphics.getDeltaTime();
 				
@@ -85,6 +95,22 @@ public class Room1Joke extends AbstractRoom
 						case END:
 							roomCompleted = true;
 							break;
+						case MOVE_ACTOR:
+							if(this.roomActors.size > 0)
+							{
+								for(int i = 0; i < roomActors.size; i++)
+								{
+									if(roomActors.get(i).actorName.equals(roomActions.get(0).actorName))
+									{
+										roomActors.get(i).moveTo(roomActions.get(0).x, roomActions.get(0).y, roomActions.get(0).z);
+										waitForActor = true;
+										break;
+									}
+								}
+							}
+						default:
+							removeCurrentAction = true;
+							break;
 					}
 				}
 				
@@ -99,6 +125,20 @@ public class Room1Joke extends AbstractRoom
 						roomCompleted = true;
 						
 						Scene2DHelper.inst.toggleDialogue(false);
+					}
+				}
+			}
+			else if(waitForActor)
+			{
+				waitForActorCheck:
+				for(int i = 0; i < roomActors.size; i++)
+				{
+					if(roomActors.get(i).reachedMoveDestination())
+						waitForActor = false;
+					else
+					{
+						waitForActor = true;
+						break waitForActorCheck;
 					}
 				}
 			}

@@ -16,7 +16,9 @@ public class RoomHandler
 	{
 		TALK,
 		PAUSE,
-		END
+		END,
+		MOVE_ACTOR,     // Normal move. Action loader waits until action is complete.
+		MOVE_ACTOR_FF   // Fire-and-forget move. Action loader will continue while actor moves.
 	}
 	
 	public enum Rooms

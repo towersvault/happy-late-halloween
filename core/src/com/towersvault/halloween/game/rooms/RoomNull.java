@@ -17,6 +17,12 @@ public class RoomNull extends AbstractRoom
 	}
 	
 	@Override
+	public AbstractRoom registerActor(String actorName, int decalHashcode, float spawnX, float spawnY, float spawnZ)
+	{
+		return null;
+	}
+	
+	@Override
 	public void update()
 	{
 	
