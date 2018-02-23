@@ -45,6 +45,9 @@ public class Assets implements Disposable, AssetErrorListener
 		
 		public AtlasRegion slidingDoorLeft;
 		public AtlasRegion slidingDoorRight;
+
+		public AtlasRegion crateExterior;
+		public AtlasRegion crateInterior;
 		
 		public StaticSprite(TextureAtlas atlas)
 		{
@@ -73,6 +76,9 @@ public class Assets implements Disposable, AssetErrorListener
 			
 			slidingDoorLeft = atlas.findRegion("static_sliding_door_left");
 			slidingDoorRight = atlas.findRegion("static_sliding_door_right");
+
+			crateExterior = atlas.findRegion("static_crate_exterior");
+			crateInterior = atlas.findRegion("static_crate_interior");
 		}
 	}
 	

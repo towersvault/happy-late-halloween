@@ -156,6 +156,9 @@ public class MapLoader
 					
 					else if(cell.getTile().getProperties().containsKey("water"))
 						BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.WATER, true, x, y, 0f);
+
+					else if(cell.getTile().getProperties().containsKey("crate"))
+						BoxesHandler.inst.loadBox(null, BoxType.CRATE, true, x, y, 0f);
 				}
 				catch(Exception e)
 				{

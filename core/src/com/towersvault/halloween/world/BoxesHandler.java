@@ -63,7 +63,8 @@ public class BoxesHandler implements Disposable
 		SLIDING_DOOR_S,
 		SLIDING_DOOR_W,
 		SLIDING_DOOR,
-		WATER
+		WATER,
+		CRATE
 	}
 	
 	public void init(DecalBatch batch)
@@ -103,6 +104,27 @@ public class BoxesHandler implements Disposable
 			{
 				WorldHandler.inst.createWallBody((float)x, (float)z);
 			}
+		}
+		else if(boxType.equals(BoxType.CRATE))
+		{
+			// TODO: Fix crate.
+
+			Decal dFrontE = Decal.newDecal(14f, 14f, Assets.inst.staticSprite.crateExterior);
+			Decal dBackE = Decal.newDecal(14f, 14f, Assets.inst.staticSprite.crateExterior);
+			Decal dLeftE = Decal.newDecal(14f, 14f, Assets.inst.staticSprite.crateExterior);
+			Decal dRightE = Decal.newDecal(14f, 14f, Assets.inst.staticSprite.crateExterior);
+
+			dFrontE.setPosition(TILE_SIZE * x, TILE_SIZE / 2f + addY, TILE_SIZE * z);
+			dRightE.setPosition(TILE_SIZE * x + TILE_SIZE / 2f, TILE_SIZE / 2f + addY, TILE_SIZE * z - TILE_SIZE / 2f);
+			dRightE.rotateY(90f);
+			dBackE.setPosition(TILE_SIZE * x, TILE_SIZE / 2f + addY, TILE_SIZE * z - TILE_SIZE);
+			dLeftE.setPosition(TILE_SIZE * x - TILE_SIZE / 2f, TILE_SIZE / 2f + addY, TILE_SIZE * z - TILE_SIZE / 2f);
+			dLeftE.rotateY(90f);
+
+			decals.add(dFrontE);
+			decals.add(dRightE);
+			decals.add(dBackE);
+			decals.add(dLeftE);
 		}
 		else if(boxType.equals(BoxType.WATER))
 		{

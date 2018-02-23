@@ -62,6 +62,21 @@ public class Scene2DHelper
 		
 		return layer;
 	}
+
+	public Table buildFilter()
+	{
+		Table layer = new Table();
+
+		layer.setLayoutEnabled(false);
+
+		Image imgFilter = new Image(skin, "ui_background_3");
+		layer.add(imgFilter);
+		imgFilter.setHeight(Gdx.graphics.getHeight());
+		imgFilter.setWidth(Gdx.graphics.getWidth());
+		imgFilter.setColor(imgFilter.getColor().r, imgFilter.getColor().g, imgFilter.getColor().b, 0.5f);
+
+		return layer;
+	}
 	
 	public Table buildDialogue()
 	{

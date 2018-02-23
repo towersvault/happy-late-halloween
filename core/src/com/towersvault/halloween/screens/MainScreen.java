@@ -50,7 +50,9 @@ public class MainScreen extends AbstractGameScreen
 	private void addActors()
 	{
 		Scene2DHelper.inst.init();
-		
+
+		//stack.addActor(Scene2DHelper.inst.buildFilter());
+
 		stack.addActor(Scene2DHelper.inst.buildInventoryIcons());
 		stack.addActor(Scene2DHelper.inst.buildDialogue());
 		
