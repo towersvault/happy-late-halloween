@@ -35,4 +35,9 @@ public class MathHelper
 	{
 		return (int)((y - 1f) * -1 / 3f);
 	}
+
+	public float getTriangleSlopeLength(float width, float height)
+	{
+		return (float)Math.sqrt((double)(width * width + height * height));
+	}
 }

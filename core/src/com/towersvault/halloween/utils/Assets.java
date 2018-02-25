@@ -48,6 +48,10 @@ public class Assets implements Disposable, AssetErrorListener
 
 		public AtlasRegion crateExterior;
 		public AtlasRegion crateInterior;
+
+		public AtlasRegion debugX, debugZ;
+
+		public AtlasRegion roof, roofEdgeLeft, roofEdgeRight;
 		
 		public StaticSprite(TextureAtlas atlas)
 		{
@@ -79,6 +83,11 @@ public class Assets implements Disposable, AssetErrorListener
 
 			crateExterior = atlas.findRegion("static_crate_exterior");
 			crateInterior = atlas.findRegion("static_crate_interior");
+
+			debugX = atlas.findRegion("debug_x");
+			debugZ = atlas.findRegion("debug_z");
+
+			roof = atlas.findRegion("static_roof");
 		}
 	}
 	

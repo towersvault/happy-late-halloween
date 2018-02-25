@@ -387,6 +387,16 @@
    <property name="ol pump" value=""/>
   </properties>
  </tile>
+ <tile id="78">
+  <properties>
+   <property name="roof_n" value=""/>
+  </properties>
+ </tile>
+ <tile id="79">
+  <properties>
+   <property name="roof_s" value=""/>
+  </properties>
+ </tile>
  <tile id="81">
   <properties>
    <property name="fence_tl" value=""/>

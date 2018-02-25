@@ -49,7 +49,8 @@ public class MapLoader
 		Array<TileData> tileData = new Array<TileData>();
 		
 		layer = (TiledMapTileLayer)tiledMap.getLayers().get(4);
-		
+
+		// Light Loader
 		for(int x = 0; x < layer.getWidth(); x++)
 		{
 			for(int y = 0; y < layer.getHeight(); y++)
@@ -71,7 +72,8 @@ public class MapLoader
 		LightRenderer.inst.setTileData(tileData);
 		
 		layer = (TiledMapTileLayer)tiledMap.getLayers().get(0);
-		
+
+		// Floor
 		for(int x = 0; x < layer.getWidth(); x++)
 		{
 			for(int y = 0; y < layer.getHeight(); y++)
@@ -168,7 +170,8 @@ public class MapLoader
 		}
 		
 		layer = (TiledMapTileLayer)tiledMap.getLayers().get(1);
-		
+
+		// Ceiling
 		for(int x = 0; x < layer.getWidth(); x++)
 		{
 			for(int y = 0; y < layer.getHeight(); y++)
@@ -206,7 +209,8 @@ public class MapLoader
 		}
 		
 		layer = (TiledMapTileLayer)tiledMap.getLayers().get(2);
-		
+
+		// Roof
 		for(int x = 0; x < layer.getWidth(); x++)
 		{
 			for(int y = 0; y < layer.getHeight(); y++)
@@ -219,6 +223,14 @@ public class MapLoader
 					{
 						BoxesHandler.inst.loadBox(cell.getTile().getTextureRegion(), BoxType.ROOF, false, x, y, 0f);
 					}
+					else if(cell.getTile().getProperties().containsKey("roof_n"))
+					{
+						BoxesHandler.inst.loadBox(null, BoxType.ROOF_N, false, x, y, 0f);
+					}
+					else if(cell.getTile().getProperties().containsKey("roof_s"))
+					{
+						BoxesHandler.inst.loadBox(null, BoxType.ROOF_S, false, x, y, 0f);
+					}
 				}
 				catch(Exception e)
 				{
@@ -228,7 +240,8 @@ public class MapLoader
 		}
 		
 		layer = (TiledMapTileLayer)tiledMap.getLayers().get(3);
-		
+
+		// Items, somewhat deprecated.
 		for(int x = 0; x < layer.getWidth(); x++)
 		{
 			for(int y = 0; y < layer.getHeight(); y++)

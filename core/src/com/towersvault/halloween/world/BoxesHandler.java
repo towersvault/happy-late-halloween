@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.IntArray;
 import com.towersvault.halloween.utils.Assets;
 import com.towersvault.halloween.utils.CinemaController;
+import com.towersvault.halloween.utils.MathHelper;
 import com.towersvault.halloween.world.decals.*;
 import com.towersvault.halloween.world.entities.AbstractEntity;
 import com.towersvault.halloween.world.entities.EntityController;
@@ -29,6 +30,7 @@ public class BoxesHandler implements Disposable
 	public static final float TILE_SIZE = 16f;
 	
 	private Decal dMoon;
+	private Decal dDebugX, dDebugZ;
 	
 	public enum BoxType
 	{
@@ -41,6 +43,8 @@ public class BoxesHandler implements Disposable
 		GRASS,
 		GRASS_SIDE,
 		ROOF,
+		ROOF_N,
+		ROOF_S,
 		FIRE_HYDRANT,
 		STOP_N,
 		STOP_S,
@@ -75,6 +79,12 @@ public class BoxesHandler implements Disposable
 		
 		dMoon = Decal.newDecal(144f, 80f, Assets.inst.staticSprite.moon);
 		dMoon.setPosition(40f, 60f, 40f);
+
+		dDebugX = Decal.newDecal(10f, 1f, Assets.inst.staticSprite.debugX);
+		dDebugX.rotateX(90f);
+
+		dDebugZ = Decal.newDecal(1f, 10f, Assets.inst.staticSprite.debugZ);
+		dDebugZ.rotateX(90f);
 		
 		//decals.add(dMoon);
 	}
@@ -109,22 +119,42 @@ public class BoxesHandler implements Disposable
 		{
 			// TODO: Fix crate.
 
-			Decal dFrontE = Decal.newDecal(14f, 14f, Assets.inst.staticSprite.crateExterior);
-			Decal dBackE = Decal.newDecal(14f, 14f, Assets.inst.staticSprite.crateExterior);
-			Decal dLeftE = Decal.newDecal(14f, 14f, Assets.inst.staticSprite.crateExterior);
-			Decal dRightE = Decal.newDecal(14f, 14f, Assets.inst.staticSprite.crateExterior);
+			Decal dExterior1 = Decal.newDecal(14f, 14f, Assets.inst.staticSprite.crateExterior);
+			Decal dExterior2 = Decal.newDecal(14f, 14f, Assets.inst.staticSprite.crateExterior);
+			//Decal dLeftE = Decal.newDecal(14f, 14f, Assets.inst.staticSprite.crateExterior);
+			//Decal dRightE = Decal.newDecal(14f, 14f, Assets.inst.staticSprite.crateExterior);
 
-			dFrontE.setPosition(TILE_SIZE * x, TILE_SIZE / 2f + addY, TILE_SIZE * z);
-			dRightE.setPosition(TILE_SIZE * x + TILE_SIZE / 2f, TILE_SIZE / 2f + addY, TILE_SIZE * z - TILE_SIZE / 2f);
-			dRightE.rotateY(90f);
-			dBackE.setPosition(TILE_SIZE * x, TILE_SIZE / 2f + addY, TILE_SIZE * z - TILE_SIZE);
-			dLeftE.setPosition(TILE_SIZE * x - TILE_SIZE / 2f, TILE_SIZE / 2f + addY, TILE_SIZE * z - TILE_SIZE / 2f);
-			dLeftE.rotateY(90f);
+			Decal dInteriorFront = Decal.newDecal(10f, 10f, Assets.inst.staticSprite.crateInterior);
+			Decal dInteriorBack = Decal.newDecal(10f, 10f, Assets.inst.staticSprite.crateInterior);
+			Decal dInteriorLeft = Decal.newDecal(10f, 10f, Assets.inst.staticSprite.crateInterior);
+			Decal dInteriorRight = Decal.newDecal(10f, 10f, Assets.inst.staticSprite.crateInterior);
 
-			decals.add(dFrontE);
-			decals.add(dRightE);
-			decals.add(dBackE);
-			decals.add(dLeftE);
+			dExterior1.setPosition(TILE_SIZE * x, TILE_SIZE / 2f + addY - 1f, TILE_SIZE * z - 1f);
+			//dRightE.setPosition(TILE_SIZE * x + TILE_SIZE / 2f - 1f, TILE_SIZE / 2f + addY - 1f, TILE_SIZE * z - TILE_SIZE / 2f);
+			//dRightE.rotateY(90f);
+			dExterior2.setPosition(TILE_SIZE * x, TILE_SIZE / 2f + addY - 1f, TILE_SIZE * z - TILE_SIZE + 1f);
+			//dLeftE.setPosition(TILE_SIZE * x - TILE_SIZE / 2f + 1f, TILE_SIZE / 2f + addY - 1f, TILE_SIZE * z - TILE_SIZE / 2f);
+			//dLeftE.rotateY(90f);
+
+			dInteriorFront.setPosition(TILE_SIZE * x, TILE_SIZE / 2f + addY - 1f, TILE_SIZE * z - 2f);
+			dInteriorRight.setPosition(TILE_SIZE * x + TILE_SIZE / 2f - 2f, TILE_SIZE / 2f + addY - 1f, TILE_SIZE * z - TILE_SIZE / 2f);
+			dInteriorRight.rotateY(90f);
+			dInteriorBack.setPosition(TILE_SIZE * x, TILE_SIZE / 2f + addY - 1f, TILE_SIZE * z - TILE_SIZE + 2f);
+			dInteriorLeft.setPosition(TILE_SIZE * x - TILE_SIZE / 2f + 2f, TILE_SIZE / 2f + addY - 1f, TILE_SIZE * z - TILE_SIZE / 2f);
+			dInteriorLeft.rotateY(90f);
+
+			//decals.add(dFrontE);
+			//decals.add(dRightE);
+			//decals.add(dBackE);
+			//decals.add(dLeftE);
+
+			decals.add(dInteriorFront);
+			decals.add(dInteriorBack);
+			decals.add(dInteriorLeft);
+			decals.add(dInteriorRight);
+
+			CrateDecal crate = new CrateDecal(dExterior1, dExterior2, x, z);
+			alphaDecals.add(crate);
 		}
 		else if(boxType.equals(BoxType.WATER))
 		{
@@ -491,6 +521,14 @@ public class BoxesHandler implements Disposable
 			if(LightRenderer.inst.hasLight(x, z))
 				LightRenderer.inst.addHash(x, z, dRoof.hashCode());
 			
+			decals.add(dRoof);
+		}
+		else if(boxType.equals(BoxType.ROOF_N))
+		{
+			Decal dRoof = Decal.newDecal(TILE_SIZE, MathHelper.inst.getTriangleSlopeLength(TILE_SIZE * 3f, TILE_SIZE * 3f), Assets.inst.staticSprite.roof);
+			dRoof.setPosition(x * TILE_SIZE, TILE_SIZE * 2f + TILE_SIZE * 1.5f, (z * TILE_SIZE - TILE_SIZE / 2f) + TILE_SIZE * 1f);
+			dRoof.rotateX(45f);
+
 			decals.add(dRoof);
 		}
 		else if((boxType.equals(BoxType.FENCE_TL))
@@ -1038,65 +1076,24 @@ public class BoxesHandler implements Disposable
 			System.out.println(decals.get(i).hashCode());
 		}
 	}
-	
+
 	public void render(Vector3 camPosition, PerspectiveCamera cam)
 	{
 		batch.add(dMoon);
+		batch.add(dDebugX);
+		batch.add(dDebugZ);
 		
 		for(int i = 0; i < decals.size; i++)
 		{
-			//decals.get(i).setColor(48f / 255f, 58f / 255f, 63f / 255f, decals.get(i).getColor().a);
-			
-			/*if((decals.get(i).getX() < WorldHandler.inst.getBodyX() - WorldHandler.inst.TILE_WIDTH * 2f ||
-					decals.get(i).getX() > WorldHandler.inst.getBodyX() + WorldHandler.inst.TILE_WIDTH * 2f)
-					|| (decals.get(i).getZ() < WorldHandler.inst.getBodyY() - WorldHandler.inst.TILE_WIDTH * 2f ||
-					decals.get(i).getZ() > WorldHandler.inst.getBodyY() + WorldHandler.inst.TILE_WIDTH * 2f))
-			{
-				if((decals.get(i).getX() < WorldHandler.inst.getBodyX() - WorldHandler.inst.TILE_WIDTH * 7f ||
-						decals.get(i).getX() > WorldHandler.inst.getBodyX() + WorldHandler.inst.TILE_WIDTH * 7f)
-						|| (decals.get(i).getZ() < WorldHandler.inst.getBodyY() - WorldHandler.inst.TILE_WIDTH * 7f ||
-						decals.get(i).getZ() > WorldHandler.inst.getBodyY() + WorldHandler.inst.TILE_WIDTH * 7f))
-				{
-					if((decals.get(i).getX() < WorldHandler.inst.getBodyX() - WorldHandler.inst.TILE_WIDTH * 13f ||
-							decals.get(i).getX() > WorldHandler.inst.getBodyX() + WorldHandler.inst.TILE_WIDTH * 13f)
-							|| (decals.get(i).getZ() < WorldHandler.inst.getBodyY() - WorldHandler.inst.TILE_WIDTH * 13f ||
-							decals.get(i).getZ() > WorldHandler.inst.getBodyY() + WorldHandler.inst.TILE_WIDTH * 13f))
-						decals.get(i).setColor(23f / 255f, 28f / 255f, 30f / 255f, decals.get(i).getColor().a);
-					else
-						decals.get(i).setColor(48f / 255f, 58f / 255f, 63f / 255f, decals.get(i).getColor().a);
-				}
-				else
-					decals.get(i).setColor(98f / 255f, 119f / 255f, 130f / 255f, decals.get(i).getColor().a);
-			}
-			else
-				decals.get(i).setColor(1f, 1f, 1f, decals.get(i).getColor().a);
-			
-			for(int j = 0; j < tileData.size; j++)
-			{
-				if((decals.get(i).getX() / TILE_SIZE == tileData.get(j).x
-						&& decals.get(i).getZ() / TILE_SIZE == tileData.get(j).z)
-						|| (decals.get(i).getX() / TILE_SIZE + 1f == tileData.get(j).x
-						&& decals.get(i).getZ() / TILE_SIZE == tileData.get(j).z)
-						|| (decals.get(i).getX() / TILE_SIZE + 1f == tileData.get(j).x
-						&& decals.get(i).getZ() / TILE_SIZE + 1f == tileData.get(j).z)
-						|| (decals.get(i).getX() / TILE_SIZE == tileData.get(j).x
-						&& decals.get(i).getZ() / TILE_SIZE + 1f == tileData.get(j).z))
-				{
-					if(tileData.get(j).lightLevel == 1)
-						decals.get(i).setColor(1f, 1f, 1f, decals.get(i).getColor().a);
-					else if(tileData.get(j).lightLevel == 2)
-						decals.get(i).setColor(98f / 255f, 119f / 255f, 130f / 255f, decals.get(i).getColor().a);
-					else if(tileData.get(j).lightLevel == 3)
-						decals.get(i).setColor(48f / 255f, 58f / 255f, 63f / 255f, decals.get(i).getColor().a);
-				}
-			}*/
-			
 			batch.add(decals.get(i));
 		}
 		batch.flush();
 		
 		dMoon.setPosition(WorldHandler.inst.getBodyX() + 120f, 80f, WorldHandler.inst.getBodyY() + 120f);
 		dMoon.lookAt(camPosition, cam.up);
+
+		dDebugX.setPosition(WorldHandler.inst.getBodyX() + 8f, 4f, WorldHandler.inst.getBodyY() + 8f);
+		dDebugZ.setPosition(WorldHandler.inst.getBodyX() + 2.5f, 4f, WorldHandler.inst.getBodyY() + 13.5f);
 		
 		for(int i = 0; i < alphaDecals.size; i++)
 		{
